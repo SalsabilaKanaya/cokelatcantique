@@ -18,6 +18,11 @@ class UserController extends Controller
         return view('beranda', compact('testimonis'));
     }
 
+    public function tentang()
+    {
+        return view('tentang');
+    }
+
     public function gift_idea()
     {
         return view('gift_idea');

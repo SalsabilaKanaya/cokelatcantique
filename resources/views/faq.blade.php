@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css"/>
 
-    <link rel="stylesheet" href="faq.css">
+    <link rel="stylesheet" href="{{ asset('css/faq.css')}}">
 </head>
 <body>
     <!--Navbar-->
@@ -26,43 +26,43 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 d-flex justify-content-between align-items-center">
-                    <a href="beranda.html">
-                        <img src="img/logo.png" alt="logo" width="150px">
+                    <a href="{{ route('beranda')}}">
+                        <img src="{{ asset('img/logo.png')}}" alt="logo" width="150px">
                     </a>
                     <div class="search-bar d-flex">
                         <input type="text" class="input-search flex-grow-1" placeholder="Search...">
                         <a href=""><i class="fa-solid fa-magnifying-glass"></i></a>
                     </div>
                     <div class="navbar-icons d-flex justify-content-between">
-                        <a href="keranjang.html" class="nav-link"><i class="fa-solid fa-cart-shopping"></i></a>
-                        <a href="histori.html" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i></a>
-                        <a href="profil.html" class="nav-link"><i class="fa-solid fa-user"></i></a>
+                        <a href="{{ route('keranjang')}}" class="nav-link"><i class="fa-solid fa-cart-shopping"></i></a>
+                        <a href="{{ route('histori')}}" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i></a>
+                        <a href="{{ route('profil')}}" class="nav-link"><i class="fa-solid fa-user"></i></a>
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="navbar-nav justify-content-center">
                         <ul class="nav justify-content-center">
                             <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="beranda.html">Beranda</a>
+                            <a class="nav-link" aria-current="page" href="{{ route('beranda')}}">Beranda</a>
                             </li>
                             <li class="nav-item">
-                            <a class="nav-link" href="tentang.html">Tentang Kami</a>
+                            <a class="nav-link" href="{{ route('tentang')}}">Tentang Kami</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Produk Kami
                                 </a>
                                 <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="gift_idea.html">Gift Idea</a></li>
-                                <li><a class="dropdown-item" href="jenis_cokelat.html">Jenis Cokelat</a></li>
-                                <li><a class="dropdown-item" href="karakter_cokelat.html">Karakter Cokelat</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('gift_idea')}}">Gift Idea</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('jenis_cokelat')}}">Jenis Cokelat</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('karakter_cokelat')}}">Karakter Cokelat</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="kustomisasi_cokelat.html">Kustomisasi Cokelat</a>
+                                <a class="nav-link" href="{{ route('kustomisasi_cokelat')}}">Kustomisasi Cokelat</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="kontak.html">Kontak Kami</a>
+                                <a class="nav-link" href="{{ route('kontak')}}">Kontak Kami</a>
                             </li>
                         </ul>
                     </div>
@@ -197,14 +197,14 @@
                 <div class="col-md-3">
                     <div class="logo-footer">
                         <a href="">
-                            <img src="img/logo.png" alt="" width="150px">
+                            <img src="{{ asset('img/logo.png')}}" alt="" width="150px">
                         </a>
                     </div>
                 </div>
                 <div class="col-md-3 footer-content">
                     <h1>Customer Support</h1>
-                    <a href="faq.html">FAQ</a>
-                    <a href="cara_pemesanan.html">Cara Pemesanan</a>
+                    <a href="{{ route('faq')}}">FAQ</a>
+                    <a href="{{ route('cara_pemesanan')}}">Cara Pemesanan</a>
                 </div>
                 <div class="col-md-4 footer-content">
                     <h1>Kontak Kami</h1>
@@ -216,13 +216,13 @@
                     <h1>Media Social</h1>
                     <div class="sosial-media justify-content-between align-items-center">
                         <a href="https://www.instagram.com/cokelat_cantique/">
-                            <img src="img/instagram.png" alt="">
+                            <img src="{{ asset('img/instagram.png')}}" alt="">
                         </a>
                         <a href="">
-                            <img src="img/facebook.png" alt="">
+                            <img src="{{ asset('img/facebook.png')}}" alt="">
                         </a>
                         <a href="https://www.tiktok.com/@cokelat_cantique?_t=8neVX6XFl6v&_r=1">
-                            <img src="img/tiktok.png" alt="">
+                            <img src="{{ asset('img/tiktok.png')}}" alt="">
                         </a>
                     </div>
                 </div>
@@ -230,25 +230,7 @@
         </div>
     </section>
 
-    <script>
-        const ItemHeaders = document.querySelectorAll(".header");
-        ItemHeaders.forEach(ItemHeader => {
-            ItemHeader.addEventListener("click", event => {
-                ItemHeader.classList.toggle("active");
-
-                const ItemBody = ItemHeader.nextElementSibling;
-                const ItemContent = ItemHeader.parentElement; // Get the parent .content element
-
-                if(ItemHeader.classList.contains("active")){
-                    ItemBody.style.maxHeight = ItemBody.scrollHeight + "px";
-                    ItemContent.classList.add("active"); // Add active class to .content
-                } else {
-                    ItemBody.style.maxHeight = 0;
-                    ItemContent.classList.remove("active"); // Remove active class from .content
-                }
-            });
-        });
-    </script>
+    <script src="{{ asset('js/faq.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
