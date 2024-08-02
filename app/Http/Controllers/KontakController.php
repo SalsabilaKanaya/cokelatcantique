@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kontak;
+use Shared\Models\Kontak;
 use Illuminate\Http\Request;
 
 class KontakController extends Controller
@@ -10,7 +10,7 @@ class KontakController extends Controller
     // Menampilkan daftar jenis cokelat
     public function index() {
         $kontak = Kontak::all();
-        return view('kontak', compact('Kontak')); // Pastikan view ini ada
+        return view('kontak', compact('kontak')); // Pastikan view ini ada
     }
 
     // Menampilkan form untuk menambah jenis cokelat
