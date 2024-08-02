@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css"/>
 
-    <link rel="stylesheet" href="kontak.css">
+    <link rel="stylesheet" href="{{ asset('css/kontak.css')}}">
 </head>
 <body>
 

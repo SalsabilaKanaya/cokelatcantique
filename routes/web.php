@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\KontakController;
 
 // Define the 'beranda' route and name it 'beranda'
 Route::get('/', [UserController::class, 'beranda'])->name('beranda');
@@ -42,3 +43,7 @@ Route::get('/profil', function () {
 Route::get('/faq', [UserController::class, 'faq'])->name('faq');
 
 Route::get('/cara_pemesanan', [UserController::class, 'caraPemesanan'])->name('cara_pemesanan');
+
+Route::get('/histori', [UserController::class, 'histori'])->name('histori');
+
+Route::get('/keranjang', [UserController::class, 'keranjang'])->name('keranjang');

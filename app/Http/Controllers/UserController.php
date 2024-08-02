@@ -37,4 +37,14 @@ class UserController extends Controller
     {
         return view('cara_pemesanan');
     }
+
+    public function histori()
+    {
+        return view('histori');
+    }
+
+    public function keranjang()
+    {
+        return view('keranjang');
+    }
 }
