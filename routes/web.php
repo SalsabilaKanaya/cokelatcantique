@@ -24,9 +24,8 @@ Route::get('/kustomisasi_cokelat', function () {
     return view('kustomisasi_cokelat');
 })->name('kustomisasi_cokelat');
 
-Route::get('/kontak', function () {
-    return view('kontak');
-})->name('kontak');
+Route::get('/kontak', [KontakController::class, 'create'])->name('kontak'); // Halaman form untuk menambah jenis cokelat
+Route::post('/kontak', [KontakController::class, 'store'])->name('kontak.store'); // Menyimpan data jenis cokelat
 
 Route::get('/keranjang', function () {
     return view('keranjang');

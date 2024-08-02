@@ -27,43 +27,43 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 d-flex justify-content-between align-items-center">
-                    <a href="beranda.html">
-                        <img src="img/logo.png" alt="logo" width="150px">
+                    <a href="{{ route('beranda')}}">
+                        <img src="{{ asset('img/logo.png')}}" alt="logo" width="150px">
                     </a>
                     <div class="search-bar d-flex">
                         <input type="text" class="input-search flex-grow-1" placeholder="Search...">
                         <a href=""><i class="fa-solid fa-magnifying-glass"></i></a>
                     </div>
                     <div class="navbar-icons d-flex justify-content-between">
-                        <a href="keranjang.html" class="nav-link"><i class="fa-solid fa-cart-shopping"></i></a>
-                        <a href="histori.html" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i></a>
-                        <a href="profil.html" class="nav-link"><i class="fa-solid fa-user"></i></a>
+                        <a href="{{ route('keranjang')}}" class="nav-link"><i class="fa-solid fa-cart-shopping"></i></a>
+                        <a href="{{ route('histori')}}" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i></a>
+                        <a href="{{ route('profil')}}" class="nav-link"><i class="fa-solid fa-user"></i></a>
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="navbar-nav justify-content-center">
                         <ul class="nav justify-content-center">
                             <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="beranda.html">Beranda</a>
+                            <a class="nav-link" aria-current="page" href="{{ route('beranda')}}">Beranda</a>
                             </li>
                             <li class="nav-item">
-                            <a class="nav-link" href="tentang.html">Tentang Kami</a>
+                            <a class="nav-link" href="{{ route('tentang')}}">Tentang Kami</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Produk Kami
                                 </a>
                                 <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="gift_idea.html">Gift Idea</a></li>
-                                <li><a class="dropdown-item" href="jenis_cokelat.html">Jenis Cokelat</a></li>
-                                <li><a class="dropdown-item" href="karakter_cokelat.html">Karakter Cokelat</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('gift_idea')}}">Gift Idea</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('jenis_cokelat')}}">Jenis Cokelat</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('karakter_cokelat')}}">Karakter Cokelat</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="kustomisasi_cokelat.html">Kustomisasi Cokelat</a>
+                                <a class="nav-link" href="{{ route('kustomisasi_cokelat')}}">Kustomisasi Cokelat</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="kontak.html">Kontak Kami</a>
+                                <a class="nav-link active" href="{{ route('kontak')}}">Kontak Kami</a>
                             </li>
                         </ul>
                     </div>
@@ -107,25 +107,26 @@
                 <div class="right-side">
                     <div class="title-text">Kirim kami pesan</div>
                     <p>Jika anda memiliki pertanyaan dan saran untuk kami, anda dapat mengirimi kami pesan dari sini. Dengan senang hati kami membantu anda.</p>
-                    <form action="#">
+                    <form action="{{ route('kontak.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
                         <div class="input-box">
-                            <label for="name">Nama</label>
-                            <input type="text" id="name" name="name" placeholder="Masukkan Nama">
+                            <label for="nama" class="form-label">Nama</label>
+                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama" required>
                         </div>
                         <div class="input-box">
-                            <label for="phone">No Telp</label>
-                            <input type="text" id="phone" name="phone" placeholder="08xxxxxxxx">
+                            <label for="no_telp" class="form-label">No Telp</label>
+                            <input type="text" class="form-control" id="no_telp" name="no_telp" placeholder="08xxxxxxxx" required>
                         </div>
                         <div class="input-box">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" placeholder="xxxx@gmail.com">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="xxxx@gmail.com" required>
                         </div>
                         <div class="input-box message-box">
-                            <label for="message">Pesan/Masukan</label>
-                            <textarea id="message" name="message" placeholder="Masukkan Pesan/Masukan"></textarea>
+                            <label for="pesan" class="form-label">Pesan/Masukan</label>
+                            <textarea id="pesan" class="form-control" name="pesan" placeholder="Masukkan Pesan/Masukan" required></textarea>
                         </div>
                         <div class="button">
-                            <input type="button" value="Kirim">
+                            <button type="submit" class="btn btn-submit">Simpan</button>
                         </div>
                     </form>
                 </div>
@@ -141,14 +142,14 @@
                 <div class="col-md-3">
                     <div class="logo-footer">
                         <a href="">
-                            <img src="img/logo.png" alt="" width="150px">
+                            <img src="{{ asset('img/logo.png')}}" alt="" width="150px">
                         </a>
                     </div>
                 </div>
                 <div class="col-md-3 footer-content">
                     <h1>Customer Support</h1>
-                    <a href="faq.html">FAQ</a>
-                    <a href="cara_pemesanan.html">Cara Pemesanan</a>
+                    <a href="{{ route('faq')}}">FAQ</a>
+                    <a href="{{ route('cara_pemesanan')}}">Cara Pemesanan</a>
                 </div>
                 <div class="col-md-4 footer-content">
                     <h1>Kontak Kami</h1>
@@ -160,13 +161,13 @@
                     <h1>Media Social</h1>
                     <div class="sosial-media justify-content-between align-items-center">
                         <a href="https://www.instagram.com/cokelat_cantique/">
-                            <img src="img/instagram.png" alt="">
+                            <img src="{{ asset('img/instagram.png')}}" alt="">
                         </a>
                         <a href="">
-                            <img src="img/facebook.png" alt="">
+                            <img src="{{ asset('img/facebook.png')}}" alt="">
                         </a>
                         <a href="https://www.tiktok.com/@cokelat_cantique?_t=8neVX6XFl6v&_r=1">
-                            <img src="img/tiktok.png" alt="">
+                            <img src="{{ asset('img/tiktok.png')}}" alt="">
                         </a>
                     </div>
                 </div>
