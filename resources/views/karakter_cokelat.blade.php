@@ -91,7 +91,7 @@
                       </div>
                 </div>
             </div>
-            <div class="row produk d-flex justify-content-between">
+            <div class="row produk justify-content-between">
                 @foreach ($karakterCokelat as $cokelat)
                 <div class="col-md-3 produk-card">
                     <div class="card">
