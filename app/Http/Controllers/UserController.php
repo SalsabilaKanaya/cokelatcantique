@@ -23,7 +23,7 @@ class UserController extends Controller
         return view('tentang');
     }
 
-    public function gift_idea()
+    public function giftIdea()
     {
         return view('gift_idea');
     }
