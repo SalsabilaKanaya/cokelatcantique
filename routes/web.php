@@ -16,8 +16,10 @@ Route::get('/tentang', [UserController::class, 'tentang'])->name('tentang');
 Route::get('/gift_idea', [UserController::class, 'giftIdea'])->name('gift_idea');
 
 Route::get('/jenis_cokelat', [JenisCokelatController::class, 'index'])->name('jenis_cokelat'); // Menampilkan daftar jenis cokelat
+Route::get('/jenis_cokelat/{id}', [JenisCokelatController::class, 'show'])->name('detail_jenis_cokelat.show');
 
 Route::get('/karakter_cokelat', [KarakterCokelatController::class, 'index'])->name('karakter_cokelat'); // Menampilkan daftar karakter cokelat
+Route::get('/karakter_cokelat/{id}', [KarakterCokelatController::class, 'show'])->name('detail_karakter_cokelat.show');
 
 Route::get('/kustomisasi_cokelat', [KustomisasiCokelatController::class, 'index'])->name('kustomisasi_cokelat');
 

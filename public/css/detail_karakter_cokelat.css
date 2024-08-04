@@ -101,8 +101,8 @@
 }
 
 .produk-content {
-    display: flex;
-    align-items: center;
+    display: flex; /* Ensure flexbox is used */
+    gap: 25px; /* Space between image and detail */
 }
 
 .produk-img {
@@ -110,21 +110,23 @@
     height: 400px;
     object-fit: cover;
     border-radius: 12px;
-    flex: 0 0 auto; /* Mengatur flex agar tidak mengubah ukuran */
+    flex: 0 0 400px;
     padding: 0px;
     box-sizing: border-box; /* Pastikan padding dan border dihitung dalam lebar */
     margin-right: 25px;
 }
 
 .produk-img img{
-    width: 400px;
-    height: 400px;
+    width: 100%;
+    height: auto;
     object-fit: cover;
     border-radius: 12px;
 }
 
-.produk-detail{
+.produk-detail {
     flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .produk-detail .title {
@@ -132,6 +134,7 @@
     font-size: 24px;
     color: black;
     font-weight: 700;
+    margin-bottom: 10px; /* Kurangi margin bawah */
 }
 
 .produk-detail .kategori {
@@ -139,12 +142,12 @@
     font-size: 16px;
     font-weight: 500;
     color: #958063;
-    margin-bottom: 0;
-}  color: #AAAAAA;
+    margin-bottom: 10px; /* Sesuaikan jaraknya sesuai kebutuhan */
+}
 
-.details {
-    width: auto;
-    margin-top: 20px;
+.deskripsi {
+    margin-top: 5px;
+    width: 90%;
 }
 
 .details p{
@@ -156,20 +159,8 @@
     line-height: 20px;
 }
 
-.button-detail {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    color: black;
-    background-color: #D2B48C;
-    width: 200px;
-    height: 33px;
-    border-radius: 100px;
-    margin-top: auto;
-}
-
 .related-products {
-    margin-top: 60px;
+    margin-top: 150px;
 }
 
 .related-products h3{
@@ -183,7 +174,7 @@
 
 .card{
     width: 225px;
-    height: 293px;
+    height: 265px;
     border-radius: 12px;
     box-shadow: 0 0 0 3px #DBC3A3;
     display: flex;
@@ -193,7 +184,7 @@
 
 .produk-card img{
     width: 225px;
-    height: 225px;
+    height: 200px;
     object-fit: cover;
     border-radius: 12px;
 }
@@ -215,16 +206,32 @@
 
 .card-body h5{
     font-family: 'Montserrat' sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
     color: black;
 }
 
 .card-body p{
     font-family: 'Montserrat' sans-serif;
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 14px;
+    font-weight: 400;
+    color: #404852;
+}
+
+.button-detail {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
     color: black;
+    background-color: #D2B48C;
+    width: 200px;
+    height: 33px;
+    border-radius: 100px;
+    margin-top: auto;
+}
+
+.button-detail:hover {
+    background-color: #D2B48C;
 }
 
 .related-detail .owl-carousel{

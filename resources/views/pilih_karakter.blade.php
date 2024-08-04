@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jenis Cokelat (Cokelat Cantique)</title>
+    <title>Pilih Karakter Cokelat Cantique</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css"/>
 
-    <link rel="stylesheet" href="{{ asset('css/jenis_cokelat.css')}}">
+    <link rel="stylesheet" href="pilih_karakter.css">
 </head>
 <body>
     <!--Navbar-->
@@ -49,7 +49,7 @@
                             <a class="nav-link" href="{{ route('tentang')}}">Tentang Kami</a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Produk Kami
                                 </a>
                                 <ul class="dropdown-menu">
@@ -74,23 +74,25 @@
     <!-- MAIN -->
     <section class="main-content">
         <div class="container">
-            <div class="row banner justify-content-between align-items-center">
+            <div class="row mt-5">
                 <div class="col-12">
-                    <img src="{{ asset('img/jenisbanner.JPG')}}" alt="Banner" class="img-fluid">
-                    <div class="overlay"></div>
-                    <h1 class="main-title">Sajikan kebahagiaan dalam setiap gigitan dengan cokelat karakter unik dari Cokelat Cantique, cocok untuk berbagai kesempatan istimewa.</h1>
+                    <a href="javascript:history.back()" class="btn button-back"><i class="fa-solid fa-chevron-left"></i></i> Kembali</a>
                 </div>
             </div>
-            <div class="row header justify-content-between">
-                <div class="col-md-6 title">
-                    <h2>Jenis Cokelat</h2>
+            <div class="row mt-3">
+                <div class="col-12 header">
+                    <h2>Pilih Karakter</h2>
+                    <p>Pilihlah Character sesuai dengan packages yang dipilih</p>
                 </div>
+            </div>
+            <div class="row mt-3 d-flex">
                 @php
-                    $kategoriLabels = [
-                        'kategori1' => 'Cokelat Box',
-                        'kategori2' => 'Cokelat Kiloan',
-                        'kategori3' => 'Cokelat Loli',
-                        'kategori4' => 'Cokelat Tenteng',
+                   $kategoriLabels = [
+                        'kategori1' => 'Huruf',
+                        'kategori2' => 'Kartun',
+                        'kategori3' => 'Makanan',
+                        'kategori4' => 'Hari Raya',
+                        'kategori5' => 'Orang',
                     ];
 
                     // Mendapatkan kategori yang dipilih dari request
@@ -99,33 +101,76 @@
                     // Mendapatkan label kategori yang dipilih, jika ada
                     $selectedLabel = $selectedKategori ? $kategoriLabels[$selectedKategori] ?? 'All' : 'All';
                 @endphp
-                <div class="col-md-6 produk-filter  d-flex justify-content-end">
-                    <div class="dropdown">
-                        <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ $selectedLabel }}
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('jenis_cokelat') }}">All</a></li>
-                            @foreach($kategoriLabels as $key => $label)
-                                <li><a class="dropdown-item" href="{{ route('jenis_cokelat', ['kategori' => $key]) }}">{{ $label }}</a></li>
-                            @endforeach
-                        </ul>
-                      </div>
+                <div class="col-md-8">
+                    <div class="produk-filter">
+                        <div class="dropdown">
+                            <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ $selectedLabel }}
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{ route('pilih_karakter') }}">All</a></li>
+                                @foreach($kategoriLabels as $key => $label)
+                                    <li><a class="dropdown-item" href="{{ route('pilih_karakter', ['kategori' => $key]) }}">{{ $label }}</a></li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row mt-3 produk d-flex justify-content-between">
+                        @foreach ($karakterCokelat as $cokelat)
+                        <div class="col-md-3 produk-card">
+                            <div class="card">
+                                <img src="{{ asset($cokelat->foto)}}" class="card-img-top" alt="{{ $cokelat->nama }}">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $cokelat->nama }}</h5>
+                                    @php
+                                        $kategoriLabels = [
+                                            'kategori1' => 'Huruf',
+                                            'kategori2' => 'Kartun',
+                                            'kategori3' => 'Makanan',
+                                            'kategori4' => 'Hari Raya',
+                                            'kategori5' => 'Orang',
+                                        ];
+                                        $namaKategori = $kategoriLabels[$cokelat->kategori] ?? 'Kategori Tidak Dikenal';
+                                    @endphp
+                                    <p class="card-text">{{ $namaKategori }}</p>
+                                    <a class="btn button-detail" href="#" role="button">Pilih Karakter</a>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
                 </div>
-            </div>
-            <div class="row produk justify-content-between">
-                @foreach ($jenisCokelat as $cokelat)
-                <div class="col-md-3 produk-card">
-                    <div class="card">
-                        <img src="{{ asset($cokelat->foto)}}" class="card-img-top" alt="{{ $cokelat->nama }}">
-                        <div class="card-body">
-                          <h5 class="card-title">{{ $cokelat->nama }}</h5>
-                          <p class="card-text">Rp {{ number_format($cokelat->harga, 0, ',', '.') }}</p>
-                          <a class="btn button-detail" href="{{ route('detail_jenis_cokelat.show', $cokelat->id) }}" role="button">Lihat Detail</a>
+                <div class="col-md-4">
+                    <div class="rekap-pilihan">
+                        <h5>Pilihan Anda</h5>
+                        <div class="jenis-pilihan">
+                            <p class="text">Cokelat Box (28 sekat)</p>
+                            <p class="harga">Rp 168.000</p>
+                        </div>
+                        <div class="karakter-pilihan">
+                            <div class="text-jumlah">
+                                <p class="text">Robocar Poly</p>
+                                <p class="jumlah">11</p>
+                            </div>
+                            <p class="catatan">-</p>
+                        </div>
+                        <div class="karakter-pilihan">
+                            <div class="text-jumlah">
+                                <p class="text">Tulisan</p>
+                                <p class="jumlah">17</p>
+                            </div>
+                            <p class="catatan">Happy Birthday Roni, warnanya kalau bisa dibuat dominan warna untuk cowok ya tapi jangan satu warna aja</p>
+                        </div>
+                        <div class="total-harga">
+                            <p>Total</p>
+                            <p class="harga">Rp 168.000</p>
+                        </div>
+                        <div class="button d-flex justify-content-between">
+                            <a class="btn button-keranjang" href="#" role="button">Keranjang</a>
+                            <a class="btn button-pesan" href="#" role="button">Pesan</a>
                         </div>
                     </div>
                 </div>
-                @endforeach
             </div>
         </div>
     </section>

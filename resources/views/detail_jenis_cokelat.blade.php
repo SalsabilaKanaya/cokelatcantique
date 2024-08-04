@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jenis Cokelat (Cokelat Cantique)</title>
+    <title>{{ $cokelat->nama }} - Cokelat Cantique</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css"/>
 
-    <link rel="stylesheet" href="{{ asset('css/jenis_cokelat.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/detail_jenis_cokelat.css')}}">
 </head>
 <body>
     <!--Navbar-->
@@ -49,7 +49,7 @@
                             <a class="nav-link" href="{{ route('tentang')}}">Tentang Kami</a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Produk Kami
                                 </a>
                                 <ul class="dropdown-menu">
@@ -71,64 +71,60 @@
         </div>
     </nav>
 
-    <!-- MAIN -->
+    <!--Main-->
     <section class="main-content">
         <div class="container">
-            <div class="row banner justify-content-between align-items-center">
+            <div class="row mt-5">
                 <div class="col-12">
-                    <img src="{{ asset('img/jenisbanner.JPG')}}" alt="Banner" class="img-fluid">
-                    <div class="overlay"></div>
-                    <h1 class="main-title">Sajikan kebahagiaan dalam setiap gigitan dengan cokelat karakter unik dari Cokelat Cantique, cocok untuk berbagai kesempatan istimewa.</h1>
+                    <a href="javascript:history.back()" class="btn button-back"><i class="fa-solid fa-chevron-left"></i> Kembali</a>
                 </div>
             </div>
-            <div class="row header justify-content-between">
-                <div class="col-md-6 title">
-                    <h2>Jenis Cokelat</h2>
+            <div class="row mt-3">
+                <div class="col-12 header">
+                    <h2>Detail Jenis - {{ $cokelat->nama }} </h2>
                 </div>
-                @php
-                    $kategoriLabels = [
+            </div>
+            <div class="row mt-3 d-flex produk-content">
+                <div class="col-md-6 produk-img">
+                    <img src="{{ asset($cokelat->foto) }}" class="img-fluid" alt="{{ $cokelat->nama }}">
+                </div>
+                <div class="col-md-6 produk-detail d-flex flex-column justify-content-center">
+                    @php
+                        $kategoriLabels = [
                         'kategori1' => 'Cokelat Box',
                         'kategori2' => 'Cokelat Kiloan',
                         'kategori3' => 'Cokelat Loli',
                         'kategori4' => 'Cokelat Tenteng',
-                    ];
-
-                    // Mendapatkan kategori yang dipilih dari request
-                    $selectedKategori = request('kategori');
-
-                    // Mendapatkan label kategori yang dipilih, jika ada
-                    $selectedLabel = $selectedKategori ? $kategoriLabels[$selectedKategori] ?? 'All' : 'All';
-                @endphp
-                <div class="col-md-6 produk-filter  d-flex justify-content-end">
-                    <div class="dropdown">
-                        <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ $selectedLabel }}
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('jenis_cokelat') }}">All</a></li>
-                            @foreach($kategoriLabels as $key => $label)
-                                <li><a class="dropdown-item" href="{{ route('jenis_cokelat', ['kategori' => $key]) }}">{{ $label }}</a></li>
-                            @endforeach
-                        </ul>
-                      </div>
+                        ];
+                        $namaKategori = $kategoriLabels[$cokelat->kategori] ?? 'Kategori Tidak Dikenal';
+                    @endphp
+                    <p class="kategori">{{ $namaKategori }}</p>
+                    <h1 class="title">{{ $cokelat->nama }}</h1>
+                    <p class="deskripsi">{!! nl2br(e($cokelat->deskripsi)) !!}</p>
+                    <p class="price">Rp {{ number_format($cokelat->harga, 0, ',', '.') }}</p>
+                    <button class="btn btn-kustomisasi">Kustomisasi Cokelat</button>
                 </div>
             </div>
-            <div class="row produk justify-content-between">
-                @foreach ($jenisCokelat as $cokelat)
-                <div class="col-md-3 produk-card">
-                    <div class="card">
-                        <img src="{{ asset($cokelat->foto)}}" class="card-img-top" alt="{{ $cokelat->nama }}">
-                        <div class="card-body">
-                          <h5 class="card-title">{{ $cokelat->nama }}</h5>
-                          <p class="card-text">Rp {{ number_format($cokelat->harga, 0, ',', '.') }}</p>
-                          <a class="btn button-detail" href="{{ route('detail_jenis_cokelat.show', $cokelat->id) }}" role="button">Lihat Detail</a>
+            <div class="related-products">
+                <h3>Pilihan Jenis Cokelat Lainnya</h3>
+                <div class="row related-detail justify-content-between owl-carousel owl-theme">
+                    @foreach ($jenisCokelatLainnya as $relatedCokelat)
+                    <div class="col-md-3 produk-card">
+                        <div class="card">
+                            <img src="{{ asset($relatedCokelat->foto)}}" class="card-img-top" alt="{{ $relatedCokelat->nama }}">
+                            <div class="card-body">
+                            <h5 class="card-title">{{ $relatedCokelat->nama }}</h5>
+                            <p class="card-text">Rp {{ number_format($relatedCokelat->harga, 0, ',', '.') }}</p>
+                            <a class="btn button-detail" href="{{ route('detail_jenis_cokelat.show', $cokelat->id) }}" role="button">Lihat Detail</a>
+                            </div>
                         </div>
                     </div>
+                    @endforeach
                 </div>
-                @endforeach
             </div>
         </div>
     </section>
+
 
     <!--Footer-->
     <section class="footer justify-content-between">
@@ -170,6 +166,33 @@
         </div>
     </section>
 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.related-detail').owlCarousel({
+                loop:true,
+                nav:false,
+                dots:true,
+                margin:50,
+                autoplay:true,
+                autoplayTimeout:4000,
+                smartSpeed:800,
+                responsive:{
+                    0:{
+                        items:1
+                    },
+                    600:{
+                        items:2
+                    },
+                    1000:{
+                        items:4
+                    }
+                }
+            });
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

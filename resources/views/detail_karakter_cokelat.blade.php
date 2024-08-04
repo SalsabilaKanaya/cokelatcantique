@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jenis Cokelat (Cokelat Cantique)</title>
+    <title>{{ $cokelat->nama }} - Cokelat Cantique</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/fontawesome.min.css"/>
 
     <!--FONT-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,10 +14,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"/>
 
-    <link rel="stylesheet" href="{{ asset('css/jenis_cokelat.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/detail_karakter_cokelat.css') }}">
 </head>
 <body>
     <!--Navbar-->
@@ -31,7 +30,7 @@
                     </a>
                     <div class="search-bar d-flex">
                         <input type="text" class="input-search flex-grow-1" placeholder="Search...">
-                        <a href=""><i class="fa-solid fa-magnifying-glass"></i></a>
+                        <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
                     </div>
                     <div class="navbar-icons d-flex justify-content-between">
                         <a href="{{ route('keranjang')}}" class="nav-link"><i class="fa-solid fa-cart-shopping"></i></a>
@@ -43,14 +42,14 @@
                     <div class="navbar-nav justify-content-center">
                         <ul class="nav justify-content-center">
                             <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="{{ route('beranda')}}">Beranda</a>
+                                <a class="nav-link" aria-current="page" href="{{ route('beranda')}}">Beranda</a>
                             </li>
                             <li class="nav-item">
-                            <a class="nav-link" href="{{ route('tentang')}}">Tentang Kami</a>
+                                <a class="nav-link" href="{{ route('tentang')}}">Tentang Kami</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Produk Kami
+                                    Produk Kami
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{ route('gift_idea')}}">Gift Idea</a></li>
@@ -71,61 +70,65 @@
         </div>
     </nav>
 
-    <!-- MAIN -->
+    <!--Main-->
     <section class="main-content">
         <div class="container">
-            <div class="row banner justify-content-between align-items-center">
+            <div class="row mt-5">
                 <div class="col-12">
-                    <img src="{{ asset('img/jenisbanner.JPG')}}" alt="Banner" class="img-fluid">
-                    <div class="overlay"></div>
-                    <h1 class="main-title">Sajikan kebahagiaan dalam setiap gigitan dengan cokelat karakter unik dari Cokelat Cantique, cocok untuk berbagai kesempatan istimewa.</h1>
+                    <a href="javascript:history.back()" class="btn button-back"><i class="fa-solid fa-chevron-left"></i> Kembali</a>
                 </div>
             </div>
-            <div class="row header justify-content-between">
-                <div class="col-md-6 title">
-                    <h2>Jenis Cokelat</h2>
-                </div>
-                @php
-                    $kategoriLabels = [
-                        'kategori1' => 'Cokelat Box',
-                        'kategori2' => 'Cokelat Kiloan',
-                        'kategori3' => 'Cokelat Loli',
-                        'kategori4' => 'Cokelat Tenteng',
-                    ];
-
-                    // Mendapatkan kategori yang dipilih dari request
-                    $selectedKategori = request('kategori');
-
-                    // Mendapatkan label kategori yang dipilih, jika ada
-                    $selectedLabel = $selectedKategori ? $kategoriLabels[$selectedKategori] ?? 'All' : 'All';
-                @endphp
-                <div class="col-md-6 produk-filter  d-flex justify-content-end">
-                    <div class="dropdown">
-                        <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ $selectedLabel }}
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('jenis_cokelat') }}">All</a></li>
-                            @foreach($kategoriLabels as $key => $label)
-                                <li><a class="dropdown-item" href="{{ route('jenis_cokelat', ['kategori' => $key]) }}">{{ $label }}</a></li>
-                            @endforeach
-                        </ul>
-                      </div>
+            <div class="row mt-3">
+                <div class="col-12 header">
+                    <h2>Detail Karakter - {{ $cokelat->nama }}</h2>
                 </div>
             </div>
-            <div class="row produk justify-content-between">
-                @foreach ($jenisCokelat as $cokelat)
-                <div class="col-md-3 produk-card">
-                    <div class="card">
-                        <img src="{{ asset($cokelat->foto)}}" class="card-img-top" alt="{{ $cokelat->nama }}">
-                        <div class="card-body">
-                          <h5 class="card-title">{{ $cokelat->nama }}</h5>
-                          <p class="card-text">Rp {{ number_format($cokelat->harga, 0, ',', '.') }}</p>
-                          <a class="btn button-detail" href="{{ route('detail_jenis_cokelat.show', $cokelat->id) }}" role="button">Lihat Detail</a>
+            <div class="row mt-3 d-flex produk-content">
+                <div class="col-md-6 produk-img">
+                    <img src="{{ asset($cokelat->foto) }}" class="img-fluid" alt="{{ $cokelat->nama }}">
+                </div>
+                <div class="col-md-6 produk-detail">
+                    @php
+                        $kategoriLabels = [
+                            'kategori1' => 'Huruf',
+                            'kategori2' => 'Kartun',
+                            'kategori3' => 'Makanan',
+                            'kategori4' => 'Hari Raya',
+                            'kategori5' => 'Orang',
+                        ];
+                        $namaKategori = $kategoriLabels[$cokelat->kategori] ?? 'Kategori Tidak Dikenal';
+                    @endphp
+                    <p class="kategori">{{ $namaKategori }}</p>
+                    <h1 class="title">{{ $cokelat->nama }}</h1>
+                    <p class="deskripsi">{!! nl2br(e($cokelat->deskripsi)) !!}</p>
+                </div>
+            </div>
+            <div class="related-products">
+                <h3>Pilihan Karakter Cokelat Lainnya</h3>
+                <div class="row related-detail justify-content-between owl-carousel owl-theme">
+                    @foreach ($karakterCokelatLainnya as $relatedCokelat)
+                    <div class="col-md-3 produk-card">
+                        <div class="card">
+                            <img src="{{ asset($relatedCokelat->foto)}}" class="card-img-top" alt="{{ $relatedCokelat->nama }}">
+                            <div class="card-body">
+                              <h5 class="card-title">{{ $relatedCokelat->nama }}</h5>
+                                @php
+                                    $kategoriLabels = [
+                                        'kategori1' => 'Huruf',
+                                        'kategori2' => 'Kartun',
+                                        'kategori3' => 'Makanan',
+                                        'kategori4' => 'Hari Raya',
+                                        'kategori5' => 'Orang',
+                                    ];
+                                    $namaKategori = $kategoriLabels[$cokelat->kategori] ?? 'Kategori Tidak Dikenal';
+                                @endphp
+                              <p class="card-text">{{ $namaKategori}}</p>
+                              <a class="btn button-detail" href="{{ route('detail_karakter_cokelat.show', $relatedCokelat->id) }}" role="button">Lihat Detail</a>
+                            </div>
                         </div>
                     </div>
+                    @endforeach
                 </div>
-                @endforeach
             </div>
         </div>
     </section>
@@ -148,21 +151,21 @@
                 </div>
                 <div class="col-md-4 footer-content">
                     <h1>Kontak Kami</h1>
-                    <a href=""><i class="bi bi-geo-alt"></i> Perumnas Blok PG/8, Karawang Barat, Jawa Barat</a>
-                    <a href=""><i class="bi bi-telephone"></i> 081399977070</a>
-                    <a href=""><i class="bi bi-envelope"></i> cokelatcantique@gmail.com</a>
+                    <a href="#"><i class="bi bi-geo-alt"></i> Perumnas Blok PG/8, Karawang Barat, Jawa Barat</a>
+                    <a href="#"><i class="bi bi-telephone"></i> 081399977070</a>
+                    <a href="#"><i class="bi bi-envelope"></i> cokelatcantique@gmail.com</a>
                 </div>
                 <div class="col-md-2 footer-content">
                     <h1>Media Social</h1>
                     <div class="sosial-media justify-content-between align-items-center">
                         <a href="https://www.instagram.com/cokelat_cantique/">
-                            <img src="{{ asset('img/instagram.png')}}" alt="">
+                            <img src="{{ asset('img/instagram.png')}}" alt="Instagram">
                         </a>
-                        <a href="">
-                            <img src="{{ asset('img/facebook.png')}}" alt="">
+                        <a href="#">
+                            <img src="{{ asset('img/facebook.png')}}" alt="Facebook">
                         </a>
                         <a href="https://www.tiktok.com/@cokelat_cantique?_t=8neVX6XFl6v&_r=1">
-                            <img src="{{ asset('img/tiktok.png')}}" alt="">
+                            <img src="{{ asset('img/tiktok.png')}}" alt="TikTok">
                         </a>
                     </div>
                 </div>
@@ -170,6 +173,32 @@
         </div>
     </section>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.related-detail').owlCarousel({
+                loop:true,
+                nav:false,
+                dots:true,
+                margin:50,
+                autoplay:true,
+                autoplayTimeout:4000,
+                smartSpeed:800,
+                responsive:{
+                    0:{
+                        items:1
+                    },
+                    600:{
+                        items:2
+                    },
+                    1000:{
+                        items:4
+                    }
+                }
+            });
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -25,4 +25,21 @@ class JenisCokelatController extends Controller
         return view('jenis_cokelat', compact('jenisCokelat', 'kategoris'));
     }
 
+    public function show($id)
+    {
+        // Ambil jenis cokelat yang sedang ditampilkan
+        $cokelat = JenisCokelat::findOrFail($id);
+
+        // Ambil maksimal 5 jenis cokelat lain yang bukan yang sedang ditampilkan
+        $jenisCokelatLainnya = JenisCokelat::where('id', '!=', $id)
+                                        ->limit(5)
+                                        ->get();
+
+        // Kirim data ke view
+        return view('detail_jenis_cokelat', [
+            'cokelat' => $cokelat,
+            'jenisCokelatLainnya' => $jenisCokelatLainnya
+        ]);
+    }
+
 }

@@ -101,8 +101,8 @@
 }
 
 .produk-content {
-    display: flex;
-    align-items: center;
+    display: flex; /* Ensure flexbox is used */
+    gap: 25px; /* Space between image and detail */
 }
 
 .produk-img {
@@ -110,21 +110,24 @@
     height: 400px;
     object-fit: cover;
     border-radius: 12px;
-    flex: 0 0 auto; /* Mengatur flex agar tidak mengubah ukuran */
+    flex: 0 0 400px;
     padding: 0px;
     box-sizing: border-box; /* Pastikan padding dan border dihitung dalam lebar */
     margin-right: 25px;
 }
 
-.produk-img img{
-    width: 400px;
-    height: 400px;
+.produk-img img {
+    width: 100%;
+    height: auto;
     object-fit: cover;
     border-radius: 12px;
 }
 
-.produk-detail{
-    width: auto;
+.produk-detail {
+    flex: 1; /* Take remaining space */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .produk-detail .title {
@@ -149,11 +152,12 @@
     color: black;
 }
 
-.details {
-    margin-top: 20px;
+.deskripsi {
+    margin-top: 10px;
+    width: 50%;
 }
 
-.details p{
+.deskripsi p{
     font-family: 'Montserrat', sans-serif;
     font-size: 14px;
     font-weight: 400;
@@ -167,10 +171,9 @@
     font-weight: 600;
     color: black;
     background-color: #D2B48C;
-    width: 200px;
+    width: 300px;
     height: 33px;
     border-radius: 100px;
-    margin-top: auto;
 }
 
 .btn-kustomisasi:hover{
@@ -178,7 +181,7 @@
 }
 
 .related-products {
-    margin-top: 60px;
+    margin-top: 150px;
 }
 
 .related-products h3{
@@ -192,7 +195,7 @@
 
 .card{
     width: 225px;
-    height: 293px;
+    height: 268px;
     border-radius: 12px;
     box-shadow: 0 0 0 3px #DBC3A3;
     display: flex;
@@ -202,7 +205,7 @@
 
 .produk-card img{
     width: 225px;
-    height: 225px;
+    height: 200px;
     object-fit: cover;
     border-radius: 12px;
 }
