@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css"/>
 
-    <link rel="stylesheet" href="pilih_karakter.css">
+    <link rel="stylesheet" href="{{ asset('css/pilih_karakter.css') }}">
 </head>
 <body>
     <!--Navbar-->
@@ -133,7 +133,7 @@
                                         $namaKategori = $kategoriLabels[$cokelat->kategori] ?? 'Kategori Tidak Dikenal';
                                     @endphp
                                     <p class="card-text">{{ $namaKategori }}</p>
-                                    <a class="btn button-detail" href="#" role="button">Pilih Karakter</a>
+                                    <a class="btn button-detail" href="#" role="button" data-id="{{ $cokelat->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Pilih Karakter</a>
                                 </div>
                             </div>
                         </div>
@@ -175,6 +175,47 @@
         </div>
     </section>
 
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Catatan Karakter</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Container untuk foto dan informasi karakter -->
+                    <div class="d-flex align-items-start mb-3">
+                        <img src="{{ asset($cokelat->foto)}}" alt="{{ $cokelat->nama }}" id="modal-foto" class="img-fluid">
+                        <div class="ms-3">
+                            <h5 class="modal-nama" id="modal-nama">{{ $cokelat->nama }}</h5>
+                            <div class="wrapper quantity mb-3">
+                                <span class="minus">-</span>
+                                <span class="num">01</span>
+                                <span class="plus">+</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Form deskripsi -->
+                    <form>
+                        <div class="mb-3 catatan">
+                            <label for="deskripsi" class="form-label catatan-title">Catatan Kustomisasi</label>
+                            <p class="note">Masukkan catatan kustomisasi seperti warna, tulisan, dan yang lainnya sesuai dengan keinginan</p>
+                            <textarea class="form-control" id="deskripsi" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-simpan">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
     <!--Footer-->
     <section class="footer justify-content-between">
         <div class="container">
@@ -215,6 +256,7 @@
         </div>
     </section>
 
+    <script src="{{ asset('js/popup_karakter.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

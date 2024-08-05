@@ -118,19 +118,20 @@
     color: black;
 }
 
-.row .produk {
+.produk {
     display: flex;
     flex-direction: row; 
     justify-content: space-between;
-}
-
-.produk{
     margin-top: 30px;
 }
 
+.produk-card{
+    margin-bottom: 30px;
+}
+
 .card{
-    width: 167px;
-    height: 218px;
+    width: 100%;
+    height: 213px;
     border-radius: 12px;
     box-shadow: 0 0 0 3px #DBC3A3;
     display: flex;
@@ -139,19 +140,21 @@
 }
 
 .produk-card img{
-    width: 167px;
+    width: 100%;
     height: 167px;
     object-fit: cover;
     border-radius: 12px;
 }
 
 .card-body{
-    width: 166px;
-    height: 123px;
+    position: absolute; /* Add absolute positioning */
+    top: 110px; /* Align to the top */
+    left: 0; /* Align to the left */
+    right: 0; /* Align to the right */
+    width: 100%;
+    padding: 10px;
     border-radius: 12px;
     background-color: rgba(210, 180, 140, 0.5);
-    position: relative;
-    top: -65px;
     backdrop-filter: blur(5px);
     display: flex;
     flex-direction: column;
@@ -187,6 +190,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.button-detail:hover {
+    background-color: #D2B48C;
 }
 
 .rekap-pilihan{
@@ -325,6 +332,120 @@
     box-shadow: 0 0 0 1px #D2B48C;
 }
 /* ----- Main Content -----*/
+
+
+/* Modal (Pop Up) */
+.modal-body {
+    display: flex;
+    flex-direction: column; /* Mengatur elemen menjadi kolom */
+}
+
+.modal-body .d-flex {
+    align-items: center; /* Menyelaraskan foto dan informasi karakter di tengah */
+}
+
+/* Menghilangkan garis bawah pada judul */
+.modal-header .modal-title {
+    border-bottom: none; /* Hilangkan border bawah jika ada */
+}
+
+.modal-title{
+    font-size: 20px;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.modal-body img {
+    width: 126px;
+    height: 126px;
+    border-radius: 10px;
+}
+
+.modal-nama{
+    font-size: 18px;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.wrapper {
+    height: 30px; /* Mengurangi tinggi wrapper */
+    width: 120px; /* Mengurangi lebar wrapper */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border-radius: 3px;
+    border: 1.5px solid #AAA;
+    margin-top: 20px;
+}
+
+.wrapper span {
+    width: 30%;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.wrapper span.num {
+    font-size: 14px;
+    border-right: 2px solid rgba(0, 0, 0, 0.2);
+    border-left: 2px solid rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.catatan-title{
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.note{
+    font-size: 12px;
+    font-weight: 400;
+    font-family: 'Montserrat', sans-serif;
+    color: #AAA;
+}
+
+.form-control {
+    margin-top: 10px; /* Menambah jarak di atas textarea jika perlu */
+}
+
+.modal-footer{
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-simpan {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: black;
+    background-color: #D2B48C;
+    width: 150px;
+    height: 33px;
+    border-radius: 100px;
+    margin-top: auto;
+}
+
+.btn-simpan:hover {
+    background-color: #D2B48C;
+}
+
+.btn-outline-danger{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    width: 150px;
+    height: 33px;
+    border-radius: 100px;
+    margin-top: auto;
+}
+/* Modal (Pop Up) */
+
+
 
 /* ----- FOOTER -----*/
 .footer{

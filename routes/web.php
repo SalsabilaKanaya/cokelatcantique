@@ -6,6 +6,7 @@ use App\Http\Controllers\KontakController;
 use App\Http\Controllers\JenisCokelatController;
 use App\Http\Controllers\KarakterCokelatController;
 use App\Http\Controllers\KustomisasiCokelatController;
+use App\Http\Controllers\PilihKarakterController;
 
 // Define the 'beranda' route and name it 'beranda'
 Route::get('/', [UserController::class, 'beranda'])->name('beranda');
@@ -22,6 +23,9 @@ Route::get('/karakter_cokelat', [KarakterCokelatController::class, 'index'])->na
 Route::get('/karakter_cokelat/{id}', [KarakterCokelatController::class, 'show'])->name('detail_karakter_cokelat.show');
 
 Route::get('/kustomisasi_cokelat', [KustomisasiCokelatController::class, 'index'])->name('kustomisasi_cokelat');
+
+Route::get('/pilih_karakter', [PilihKarakterController::class, 'index'])->name('pilih_karakter');
+Route::get('/karakter_cokelat/{id}', [KarakterController::class, 'getKarakterDetails'])->name('pilih_karakter.details');
 
 Route::get('/kontak', [KontakController::class, 'create'])->name('kontak'); // Halaman form untuk menambah jenis cokelat
 Route::post('/kontak', [KontakController::class, 'store'])->name('kontak.store'); // Menyimpan data jenis cokelat
