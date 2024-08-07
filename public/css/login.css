@@ -52,6 +52,7 @@
     margin-left: 50px;
     margin-right: 50px;
     text-align: center;
+    margin-bottom: 20px;
 }
 
 #sideright .body h1{
@@ -65,16 +66,48 @@
     color: #AAAAAA;
 }
 
-.btn{
+.form-label {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+.button {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-submit{
     background-color: #D2B48C;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     color: black;
-    width: 100%;
+    width: 50%;
+    height: auto;
     border-radius: 100px;
 }
 
-.btn:hover{
+.btn-submit:hover{
     background-color: #D2B48C;
     color: black;
 }
+
+.btn-text{
+    font-size: 14px;
+    color: #D2B48C;
+    padding: 0px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.btn-text:hover{
+    color: #BFA47F;
+    text-decoration: underline;
+}
+
+.btn-text .text{
+    margin-left: 8px;
+}
+
+

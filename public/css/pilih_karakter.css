@@ -415,7 +415,7 @@
 
 .modal-footer{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; 
 }
 
 .btn-simpan {

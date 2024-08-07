@@ -5,17 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Testimoni;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class WebController extends Controller
 {
     public function beranda()
     {
-        return view('beranda');
-    }
-    
-    public function testimoni()
-    {
         $testimonis = Testimoni::all();
-        return view('beranda', compact('testimonis'));
+        \Log::info('Data Testimoni:', $testimonis->toArray());
+        return view('beranda', compact('testimonis')); 
     }
 
     public function tentang()

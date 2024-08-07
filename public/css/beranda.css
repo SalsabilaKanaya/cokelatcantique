@@ -99,12 +99,15 @@
     border-radius: 500px;
     width: 350px;
     height: 350px;
+    display: flex; /* Menggunakan Flexbox */
+    justify-content: center; /* Memusatkan konten secara horizontal */
+    align-items: center; 
 }
 
 .header-image img {
     display: block;
     margin: 0 auto;
-    width: 80%; 
+    width: 70%; 
     height: auto;
 }
 /* ----- HEADER -----*/

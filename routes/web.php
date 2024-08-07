@@ -1,51 +1,48 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\WebController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KontakController;
 use App\Http\Controllers\JenisCokelatController;
 use App\Http\Controllers\KarakterCokelatController;
 use App\Http\Controllers\KustomisasiCokelatController;
 use App\Http\Controllers\PilihKarakterController;
 
-// Define the 'beranda' route and name it 'beranda'
-Route::get('/', [UserController::class, 'beranda'])->name('beranda');
-Route::get('/', [UserController::class, 'testimoni'])->name('beranda');
 
-Route::get('/tentang', [UserController::class, 'tentang'])->name('tentang');
+// Rute default untuk halaman login
+Route::get('/', function () {
+    return redirect()->route('login'); // Redirect ke halaman login
+})->name('home');
 
-Route::get('/gift_idea', [UserController::class, 'giftIdea'])->name('gift_idea');
+// Rute untuk login
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 
-Route::get('/jenis_cokelat', [JenisCokelatController::class, 'index'])->name('jenis_cokelat'); // Menampilkan daftar jenis cokelat
+// Rute untuk register
+Route::post('/register', [AuthController::class, 'register'])->name('register');
+
+// Route untuk login
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+
+// Rute untuk halaman beranda
+Route::get('/beranda', [WebController::class, 'beranda'])->name('beranda')->middleware('auth');
+
+// Rute lainnya
+Route::get('/tentang', [WebController::class, 'tentang'])->name('tentang');
+Route::get('/gift_idea', [WebController::class, 'giftIdea'])->name('gift_idea');
+Route::get('/jenis_cokelat', [JenisCokelatController::class, 'index'])->name('jenis_cokelat');
 Route::get('/jenis_cokelat/{id}', [JenisCokelatController::class, 'show'])->name('detail_jenis_cokelat.show');
-
-Route::get('/karakter_cokelat', [KarakterCokelatController::class, 'index'])->name('karakter_cokelat'); // Menampilkan daftar karakter cokelat
+Route::get('/karakter_cokelat', [KarakterCokelatController::class, 'index'])->name('karakter_cokelat');
 Route::get('/karakter_cokelat/{id}', [KarakterCokelatController::class, 'show'])->name('detail_karakter_cokelat.show');
-
 Route::get('/kustomisasi_cokelat', [KustomisasiCokelatController::class, 'index'])->name('kustomisasi_cokelat');
-
 Route::get('/pilih_karakter', [PilihKarakterController::class, 'index'])->name('pilih_karakter');
 Route::get('/karakter_cokelat/{id}', [KarakterController::class, 'getKarakterDetails'])->name('pilih_karakter.details');
-
-Route::get('/kontak', [KontakController::class, 'create'])->name('kontak'); // Halaman form untuk menambah jenis cokelat
-Route::post('/kontak', [KontakController::class, 'store'])->name('kontak.store'); // Menyimpan data jenis cokelat
-
-Route::get('/keranjang', function () {
-    return view('keranjang');
-})->name('keranjang');
-
-Route::get('/histori', function () {
-    return view('histori');
-})->name('histori');
-
+Route::get('/kontak', [KontakController::class, 'create'])->name('kontak');
+Route::post('/kontak', [KontakController::class, 'store'])->name('kontak.store');
+Route::get('/keranjang', [WebController::class, 'keranjang'])->name('keranjang');
+Route::get('/histori', [WebController::class, 'histori'])->name('histori');
 Route::get('/profil', function () {
     return view('profil');
 })->name('profil');
-
-Route::get('/faq', [UserController::class, 'faq'])->name('faq');
-
-Route::get('/cara_pemesanan', [UserController::class, 'caraPemesanan'])->name('cara_pemesanan');
-
-Route::get('/histori', [UserController::class, 'histori'])->name('histori');
-
-Route::get('/keranjang', [UserController::class, 'keranjang'])->name('keranjang');
+Route::get('/faq', [WebController::class, 'faq'])->name('faq');
+Route::get('/cara_pemesanan', [WebController::class, 'caraPemesanan'])->name('cara_pemesanan');
