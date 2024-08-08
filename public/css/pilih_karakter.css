@@ -177,7 +177,7 @@
     color: #404852;
 }
 
-.button-detail {
+.button-pilih {
     font-family: 'Montserrat', sans-serif;
     font-size: 12px;
     font-weight: 600;
@@ -192,7 +192,7 @@
     align-items: center;
 }
 
-.button-detail:hover {
+.button-pilih:hover {
     background-color: #D2B48C;
 }
 

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class PilihKarakterController extends Controller
 {
-    public function index(Request $request) // Tambahkan parameter Request
+    public function index(Request $request)
     {
         $kategori = $request->input('kategori'); // Mendapatkan input kategori dari request
 
@@ -22,14 +22,27 @@ class PilihKarakterController extends Controller
         // Mengambil semua kategori unik untuk dropdown
         $kategoris = KarakterCokelat::select('kategori')->distinct()->get();
 
-        return view('pilih_karakter', compact('karakterCokelat', 'kategoris', 'kategori'));
+        // Ambil data dari sesi jika ada
+        $selectedCokelat = session()->get('selected_cokelat', []);
+        $selectedKarakter = session()->get('selected_karakter', []);
+
+        return view('pilih_karakter', compact('karakterCokelat', 'kategoris', 'kategori', 'selectedCokelat', 'selectedKarakter'));
     }
 
-    public function getKarakterDetails($id)
+    public function storeSelection(Request $request)
     {
-        // Ambil data karakter berdasarkan ID
-        $karakter = KarakterCokelat::findOrFail($id);
+        $karakterId = $request->input('karakter_id');
+        $jumlah = $request->input('jumlah');
+        $catatan = $request->input('catatan');
 
-        return response()->json($karakter);
+        // Simpan data ke sesi
+        $selectedKarakter = session()->get('selected_karakter', []);
+        $selectedKarakter[$karakterId] = [
+            'jumlah' => $jumlah,
+            'catatan' => $catatan,
+        ];
+        session()->put('selected_karakter', $selectedKarakter);
+
+        return redirect()->route('pilih_karakter');
     }
 }

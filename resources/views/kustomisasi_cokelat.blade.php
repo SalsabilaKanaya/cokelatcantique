@@ -117,10 +117,14 @@
                 <div class="col-md-3 produk-card">
                     <div class="card">
                         <img src="{{ asset($cokelat->foto)}}" class="card-img-top" alt="{{ $cokelat->nama }}">
-                        <div class="card-body">
-                          <h5 class="card-title">{{ $cokelat->nama }}</h5>
-                          <p class="card-text">Rp {{ number_format($cokelat->harga, 0, ',', '.') }}</p>
-                          <a class="btn button-detail" href="detail_jenis_cokelat.html" role="button">Pilih</a>
+                            <div class="card-body">
+                            <h5 class="card-title">{{ $cokelat->nama }}</h5>
+                            <p class="card-text">Rp {{ number_format($cokelat->harga, 0, ',', '.') }}</p>
+                            <form action="{{ route('store_jenis_cokelat_selection') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="jenis_cokelat_id" value="{{ $cokelat->id }}">
+                                <button type="submit" class="btn button-detail">Pilih Jenis Cokelat</button>
+                            </form>
                         </div>
                     </div>
                 </div>

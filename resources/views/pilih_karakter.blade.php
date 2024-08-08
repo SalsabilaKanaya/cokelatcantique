@@ -133,7 +133,7 @@
                                         $namaKategori = $kategoriLabels[$cokelat->kategori] ?? 'Kategori Tidak Dikenal';
                                     @endphp
                                     <p class="card-text">{{ $namaKategori }}</p>
-                                    <a class="btn button-detail" href="#" role="button" data-id="{{ $cokelat->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Pilih Karakter</a>
+                                    <a class="btn button-pilih" href="#" role="button" data-id="{{ $cokelat->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Pilih Karakter</a>
                                 </div>
                             </div>
                         </div>
@@ -144,26 +144,30 @@
                     <div class="rekap-pilihan">
                         <h5>Pilihan Anda</h5>
                         <div class="jenis-pilihan">
-                            <p class="text">Cokelat Box (28 sekat)</p>
-                            <p class="harga">Rp 168.000</p>
+                            @foreach($selectedCokelat as $cokelat)
+                                @php
+                                    $cokelatDetails = \Shared\Models\JenisCokelat::find($cokelat['id']);
+                                @endphp
+                                <p class="text">{{ $cokelatDetails ? $cokelatDetails->nama : 'Jenis Cokelat Tidak Dikenal' }}</p>
+                                <p class="harga">{{ $cokelatDetails ? 'Rp ' . number_format($cokelatDetails->harga, 0, ',', '.') : 'Rp 0' }}</p>
+                            @endforeach
                         </div>
                         <div class="karakter-pilihan">
-                            <div class="text-jumlah">
-                                <p class="text">Robocar Poly</p>
-                                <p class="jumlah">11</p>
-                            </div>
-                            <p class="catatan">-</p>
-                        </div>
-                        <div class="karakter-pilihan">
-                            <div class="text-jumlah">
-                                <p class="text">Tulisan</p>
-                                <p class="jumlah">17</p>
-                            </div>
-                            <p class="catatan">Happy Birthday Roni, warnanya kalau bisa dibuat dominan warna untuk cowok ya tapi jangan satu warna aja</p>
+                            @foreach($selectedKarakter as $karakterId => $detail)
+                                @php
+                                    $karakter = \Shared\Models\KarakterCokelat::find($karakterId);
+                                    $namaKarakter = $karakter ? $karakter->nama : 'Karakter Tidak Dikenal';
+                                @endphp
+                                <div class="text-jumlah">
+                                    <p class="text">{{ $namaKarakter }}</p>
+                                    <p class="jumlah">{{ $detail['jumlah'] }}</p>
+                                </div>
+                                <p class="catatan">{{ $detail['catatan'] }}</p>
+                            @endforeach
                         </div>
                         <div class="total-harga">
                             <p>Total</p>
-                            <p class="harga">Rp 168.000</p>
+                            <p class="harga">Rp {{ number_format(array_sum(array_column($selectedKarakter, 'jumlah')), 0, ',', '.') }}</p>
                         </div>
                         <div class="button d-flex justify-content-between">
                             <a class="btn button-keranjang" href="#" role="button">Keranjang</a>
@@ -207,7 +211,11 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-simpan">Simpan</button>
+                    <form action="{{ route('store_jenis_cokelat_selection') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="jenis_cokelat_id" value="{{ $cokelat->id }}">
+                        <button type="submit" class="btn btn-simpan">Simpan</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -257,6 +265,7 @@
     </section>
 
     <script src="{{ asset('js/popup_karakter.js')}}"></script>
+    <script src="{{ asset('js/pilih_karakter.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

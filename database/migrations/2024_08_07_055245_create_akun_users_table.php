@@ -11,17 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Migration for akun_user
         Schema::create('akun_user', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('user_id')->primary(); // Pastikan ini adalah unsignedBigInteger
             $table->string('name');
-            $table->string('no_telp'); // Tambahkan kolom gender
-            $table->string('gender'); // Tambahkan kolom no_telp
+            $table->string('no_telp');
+            $table->string('gender');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
         });
+
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
@@ -47,6 +49,5 @@ return new class extends Migration
         Schema::dropIfExists('akun_user');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
-
     }
 };

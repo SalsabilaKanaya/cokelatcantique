@@ -25,4 +25,13 @@ class KustomisasiCokelatController extends Controller
         return view('kustomisasi_cokelat', compact('jenisCokelat', 'kategoris'));
     }
 
+    public function storeJenisCokelatSelection(Request $request)
+    {
+    $jenisCokelatId = $request->input('jenis_cokelat_id');
+
+    // Simpan data ke sesi
+    session()->put('selected_jenis', $jenisCokelatId);
+
+    return redirect()->route('kustomisasi_cokelat');
+    }
 }

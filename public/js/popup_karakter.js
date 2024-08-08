@@ -1,39 +1,39 @@
-document.addEventListener('DOMContentLoaded', function () {
-    var exampleModal = document.getElementById('exampleModal');
+document.addEventListener('DOMContentLoaded', function() {
+    const pilihButtons = document.querySelectorAll('.button-pilih');
+    const modalFoto = document.getElementById('modal-foto');
+    const modalNama = document.getElementById('modal-nama');
+    const quantitySpan = document.querySelector('.num');
+    const textarea = document.getElementById('deskripsi');
+    let currentKarakterId;
 
-    exampleModal.addEventListener('show.bs.modal', function (event) {
-        var button = event.relatedTarget;
-        var karakterId = button.getAttribute('data-id');
-        var modalFoto = exampleModal.querySelector('#modal-foto');
-        var modalNama = exampleModal.querySelector('#modal-nama');
+    pilihButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            currentKarakterId = this.getAttribute('data-id');
 
-        // Memanggil endpoint untuk mendapatkan detail karakter
-        fetch(`/karakter/${karakterId}`)
-            .then(response => response.json())
-            .then(data => {
-                modalNama.textContent = data.nama;
-                modalFoto.src = data.foto;
-            });
+            fetch(`/karakter_cokelat/${currentKarakterId}`)
+                .then(response => response.json())
+                .then(data => {
+                    modalFoto.src = `/storage/${data.foto}`;
+                    modalNama.textContent = data.nama;
+                });
+        });
     });
-});
 
-const plus = document.querySelector(".plus"),
-minus = document.querySelector(".minus"),
-num = document.querySelector(".num");
+    document.querySelector('.plus').addEventListener('click', function() {
+        let currentQuantity = parseInt(quantitySpan.textContent);
+        quantitySpan.textContent = currentQuantity + 1;
+    });
 
-let a = 1;
+    document.querySelector('.minus').addEventListener('click', function() {
+        let currentQuantity = parseInt(quantitySpan.textContent);
+        if (currentQuantity > 1) {
+            quantitySpan.textContent = currentQuantity - 1;
+        }
+    });
 
-plus.addEventListener("click", ()=>{
-    a++;
-    a = (a < 10) ? "0" + a : a;
-    num.innerText = a;
-    console.log(a);
-});
-
-minus.addEventListener("click", ()=>{
-    if(a > 1){
-        a--;
-        a = (a < 10) ? "0" + a : a;
-        num.innerText = a;
-    }
+    document.querySelector('.btn-simpan').addEventListener('click', function() {
+        // Implement saving to cart or order logic here
+        console.log('Catatan:', textarea.value);
+        console.log('Jumlah:', quantitySpan.textContent);
+    });
 });
