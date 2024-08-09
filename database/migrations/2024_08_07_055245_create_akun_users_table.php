@@ -13,7 +13,7 @@ return new class extends Migration
     {
         // Migration for akun_user
         Schema::create('akun_user', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id')->primary(); // Pastikan ini adalah unsignedBigInteger
+            $table->bigIncrements('user_id'); // Pastikan ini adalah unsignedBigInteger
             $table->string('name');
             $table->string('no_telp');
             $table->string('gender');
@@ -23,22 +23,6 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
-
-
-        Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->primary();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
-        });
-
-        Schema::create('sessions', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
-            $table->string('ip_address', 45)->nullable();
-            $table->text('user_agent')->nullable();
-            $table->longText('payload');
-            $table->integer('last_activity')->index();
-        });
     }
 
     /**
@@ -47,7 +31,5 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('akun_user');
-        Schema::dropIfExists('password_reset_tokens');
-        Schema::dropIfExists('sessions');
     }
 };

@@ -171,7 +171,7 @@
                         </div>
                         <div class="button d-flex justify-content-between">
                             <a class="btn button-keranjang" href="#" role="button">Keranjang</a>
-                            <a class="btn button-pesan" href="#" role="button">Pesan</a>
+                            <a class="btn button-pesan" href="{{ route('proses_pesanan') }}" role="button">Pesan</a>
                         </div>
                     </div>
                 </div>

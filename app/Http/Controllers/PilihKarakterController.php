@@ -43,6 +43,10 @@ class PilihKarakterController extends Controller
         ];
         session()->put('selected_karakter', $selectedKarakter);
 
+        // Simpan jenis cokelat yang dipilih
+        $selectedJenis = $request->input('jenis_cokelat_id');
+        session()->put('selected_jenis', $selectedJenis);
+
         return redirect()->route('pilih_karakter');
     }
 }

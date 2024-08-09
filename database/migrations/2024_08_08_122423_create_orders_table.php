@@ -15,7 +15,7 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('order', function (Blueprint $table) {
             $table->unsignedBigInteger('order_id')->primary();
-            $table->unsignedBigInteger('user_id'); // Menggunakan user_id yang sesuai dengan primary key di akun_user
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('user_id')->on('akun_user')->onDelete('cascade');
             $table->string('status')->default('pending');
             $table->date('delivery_date');
