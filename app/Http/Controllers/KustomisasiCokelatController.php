@@ -27,11 +27,40 @@ class KustomisasiCokelatController extends Controller
 
     public function storeJenisCokelatSelection(Request $request)
     {
-    $jenisCokelatId = $request->input('jenis_cokelat_id');
+        $jenisCokelatId = $request->input('jenis_cokelat_id');
+        $jenisCokelat = JenisCokelat::find($jenisCokelatId);
+        
+        if ($jenisCokelat) {
+            session()->put('total_karakter', $jenisCokelat->jumlah_karakter);
+        }
 
-    // Simpan data ke sesi
-    session()->put('selected_jenis', $jenisCokelatId);
+        session()->forget('selected_karakter');
+        session()->put('selected_jenis', $jenisCokelatId);
 
-    return redirect()->route('kustomisasi_cokelat');
+        return redirect()->route('pilih_karakter');
     }
+
+    // public function storeJenisCokelatSelection(Request $request)
+    // {
+    //     $jenisCokelatId = $request->input('jenis_cokelat_id');
+
+    //     // Hapus data karakter dari sesi
+    //     session()->forget('selected_karakter');
+
+    //     // Simpan data jenis cokelat ke sesi
+    //     session()->put('selected_jenis', $jenisCokelatId);
+
+    //     return redirect()->route('pilih_karakter');
+    // }
+
 }
+
+// public function storeJenisCokelatSelection(Request $request)
+    // {
+    //     $jenisCokelatId = $request->input('jenis_cokelat_id');
+
+    //     // Simpan data ke sesi
+    //     session()->put('selected_jenis', $jenisCokelatId);
+
+    //     return redirect()->route('pilih_karakter');
+    // }

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class KarakterCokelatController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $kategori = $request->input('kategori'); // Mendapatkan input kategori dari request
 

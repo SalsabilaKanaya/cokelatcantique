@@ -39,7 +39,18 @@
                         <div class="navbar-icons d-flex justify-content-between">
                             <a href="{{ route('keranjang')}}" class="nav-link"><i class="fa-solid fa-cart-shopping"></i></a>
                             <a href="{{ route('histori')}}" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i></a>
-                            <a href="{{ route('profil')}}" class="nav-link"><i class="fa-solid fa-user"></i></a>
+                            <div class="dropdown">
+                                <a class="nav-link dropdown" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-user"></i>
+                                </a>
+                                <ul class="dropdown-menu custom-dropdown-menu" aria-labelledby="userDropdown">
+                                    <li><a class="dropdown-item" href="{{ route('profil')}}">Profile</a></li>
+                                    <form action="{{ route('logout') }}" method="POST" id="logout-form">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item logout-link">Logout</button>
+                                    </form>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                     <div class="col-12">
@@ -56,9 +67,9 @@
                                     Produk Kami
                                     </a>
                                     <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{{ route('gift_idea')}}">Gift Idea</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('jenis_cokelat')}}">Jenis Cokelat</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('karakter_cokelat')}}">Karakter Cokelat</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('gift_idea')}}">Gift Idea</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('jenis_cokelat')}}">Jenis Cokelat</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('karakter_cokelat')}}">Karakter Cokelat</a></li>
                                     </ul>
                                 </li>
                                 <li class="nav-item">
@@ -154,7 +165,7 @@
                 <h1>Testimoni</h1>
             </div>
             <div class="testimonial-content owl-carousel owl-theme">
-                @foreach($testimonis as $testimoni)
+                @foreach($testimoniss as $testimoni)
                 <div class="single-testimonial">
                     <p>{{ $testimoni->isi_testimoni }}</p>
                     <div class="user-info">

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pilih Karakter Cokelat Cantique</title>
@@ -36,7 +37,18 @@
                     <div class="navbar-icons d-flex justify-content-between">
                         <a href="{{ route('keranjang')}}" class="nav-link"><i class="fa-solid fa-cart-shopping"></i></a>
                         <a href="{{ route('histori')}}" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i></a>
-                        <a href="{{ route('profil')}}" class="nav-link"><i class="fa-solid fa-user"></i></a>
+                        <div class="dropdown">
+                            <a class="nav-link dropdown" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user"></i>
+                            </a>
+                            <ul class="dropdown-menu custom-dropdown-menu" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="{{ route('profil')}}">Profile</a></li>
+                                <form action="{{ route('logout') }}" method="POST" id="logout-form">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item logout-link">Logout</button>
+                                </form>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="col-12">
@@ -76,18 +88,18 @@
         <div class="container">
             <div class="row mt-5">
                 <div class="col-12">
-                    <a href="javascript:history.back()" class="btn button-back"><i class="fa-solid fa-chevron-left"></i></i> Kembali</a>
+                    <a href="javascript:history.back()" class="btn button-back"><i class="fa-solid fa-chevron-left"></i> Kembali</a>
                 </div>
             </div>
             <div class="row mt-3">
                 <div class="col-12 header">
                     <h2>Pilih Karakter</h2>
-                    <p>Pilihlah Character sesuai dengan packages yang dipilih</p>
+                    <p>Pilihlah karakter sesuai dengan jenis cokelat yang dipilih dan sampai proggress bar 100%</p>
                 </div>
             </div>
             <div class="row mt-3 d-flex">
                 @php
-                   $kategoriLabels = [
+                    $kategoriLabels = [
                         'kategori1' => 'Huruf',
                         'kategori2' => 'Kartun',
                         'kategori3' => 'Makanan',
@@ -95,11 +107,12 @@
                         'kategori5' => 'Orang',
                     ];
 
-                    // Mendapatkan kategori yang dipilih dari request
                     $selectedKategori = request('kategori');
-
-                    // Mendapatkan label kategori yang dipilih, jika ada
                     $selectedLabel = $selectedKategori ? $kategoriLabels[$selectedKategori] ?? 'All' : 'All';
+                    $totalKarakter = session()->get('total_karakter', 0); // Total karakter dari sesi
+                    $selectedKarakter = session()->get('selected_karakter', []);
+                    $selectedJumlah = array_sum(array_column($selectedKarakter, 'jumlah')); // Jumlah karakter yang sudah dipilih
+                    $progress = $totalKarakter > 0 ? ($selectedJumlah / $totalKarakter) * 100 : 0; // Menghitung persentase progress
                 @endphp
                 <div class="col-md-8">
                     <div class="produk-filter">
@@ -115,59 +128,79 @@
                             </ul>
                         </div>
                     </div>
+                    <div class="progress-container mt-3">
+                        <div class="progress" role="progressbar" aria-label="Example with label 40px high" aria-valuenow="{{ $progress }}" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar" id="progress-bar" style="width: {{ $progress }}%">{{ number_format($progress, 0) }}%</div>
+                        </div>
+                    </div>
                     <div class="row mt-3 produk d-flex justify-content-between">
                         @foreach ($karakterCokelat as $cokelat)
-                        <div class="col-md-3 produk-card">
-                            <div class="card">
-                                <img src="{{ asset($cokelat->foto)}}" class="card-img-top" alt="{{ $cokelat->nama }}">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ $cokelat->nama }}</h5>
-                                    @php
-                                        $kategoriLabels = [
-                                            'kategori1' => 'Huruf',
-                                            'kategori2' => 'Kartun',
-                                            'kategori3' => 'Makanan',
-                                            'kategori4' => 'Hari Raya',
-                                            'kategori5' => 'Orang',
-                                        ];
-                                        $namaKategori = $kategoriLabels[$cokelat->kategori] ?? 'Kategori Tidak Dikenal';
-                                    @endphp
-                                    <p class="card-text">{{ $namaKategori }}</p>
-                                    <a class="btn button-pilih" href="#" role="button" data-id="{{ $cokelat->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Pilih Karakter</a>
+                            @php
+                                $isDisabled = $progress >= 100 ? 'disabled' : '';
+                            @endphp
+                            <div class="col-md-3 produk-card">
+                                <div class="card">
+                                    <img src="{{ asset($cokelat->foto)}}" class="card-img-top" alt="{{ $cokelat->nama }}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ $cokelat->nama }}</h5>
+                                        @php
+                                            $kategoriLabels = [
+                                                'kategori1' => 'Huruf',
+                                                'kategori2' => 'Kartun',
+                                                'kategori3' => 'Makanan',
+                                                'kategori4' => 'Hari Raya',
+                                                'kategori5' => 'Orang',
+                                            ];
+                                            $namaKategori = $kategoriLabels[$cokelat->kategori] ?? 'Kategori Tidak Dikenal';
+                                        @endphp
+                                        <p class="card-text">{{ $namaKategori }}</p>
+                                        <a class="btn button-pilih {{ $isDisabled }}" href="#" role="button" data-id="{{ $cokelat->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal" {{ $isDisabled ? 'disabled' : '' }}>Pilih Karakter</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         @endforeach
-                    </div>
+                    </div>                    
                 </div>
                 <div class="col-md-4">
                     <div class="rekap-pilihan">
                         <h5>Pilihan Anda</h5>
                         <div class="jenis-pilihan">
-                            @foreach($selectedCokelat as $cokelat)
-                                @php
-                                    $cokelatDetails = \Shared\Models\JenisCokelat::find($cokelat['id']);
-                                @endphp
-                                <p class="text">{{ $cokelatDetails ? $cokelatDetails->nama : 'Jenis Cokelat Tidak Dikenal' }}</p>
-                                <p class="harga">{{ $cokelatDetails ? 'Rp ' . number_format($cokelatDetails->harga, 0, ',', '.') : 'Rp 0' }}</p>
-                            @endforeach
+                            @if($selectedCokelat)
+                                <p class="text">{{ $selectedCokelat->nama }}</p>
+                                <p class="harga">{{ 'Rp ' . number_format($selectedCokelat->harga, 0, ',', '.') }}</p>
+                            @else
+                                <p class="text">Tidak ada jenis cokelat yang dipilih.</p>
+                            @endif
                         </div>
                         <div class="karakter-pilihan">
-                            @foreach($selectedKarakter as $karakterId => $detail)
+                            @if(session()->has('selected_karakter'))
                                 @php
-                                    $karakter = \Shared\Models\KarakterCokelat::find($karakterId);
-                                    $namaKarakter = $karakter ? $karakter->nama : 'Karakter Tidak Dikenal';
+                                    $selectedKarakter = session('selected_karakter');
                                 @endphp
-                                <div class="text-jumlah">
-                                    <p class="text">{{ $namaKarakter }}</p>
-                                    <p class="jumlah">{{ $detail['jumlah'] }}</p>
-                                </div>
-                                <p class="catatan">{{ $detail['catatan'] }}</p>
-                            @endforeach
+                                @foreach($selectedKarakter as $karakterId => $detail)
+                                    @php
+                                        $karakter = \Shared\Models\KarakterCokelat::find($karakterId);
+                                        $namaKarakter = $karakter ? $karakter->nama : 'Karakter Tidak Dikenal';
+                                    @endphp
+                                    <div class="text-jumlah">
+                                        <p class="text">{{ $namaKarakter }}</p>
+                                        <p class="jumlah">{{ $detail['jumlah'] }}</p>
+                                    </div>
+                                    <p class="catatan">{{ $detail['catatan'] }}</p>
+                                @endforeach
+                            @else
+                                <p class="text">Tidak ada karakter yang dipilih.</p>
+                            @endif
                         </div>
                         <div class="total-harga">
                             <p>Total</p>
-                            <p class="harga">Rp {{ number_format(array_sum(array_column($selectedKarakter, 'jumlah')), 0, ',', '.') }}</p>
+                            <p class="harga"> 
+                                @if($selectedCokelat)
+                                    {{ 'Rp ' . number_format($selectedCokelat->harga, 0, ',', '.') }}
+                                @else
+                                    Rp 0
+                                @endif
+                            </p>
                         </div>
                         <div class="button d-flex justify-content-between">
                             <a class="btn button-keranjang" href="#" role="button">Keranjang</a>
@@ -188,7 +221,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Container untuk foto dan informasi karakter -->
                     <div class="d-flex align-items-start mb-3">
                         <img src="{{ asset($cokelat->foto)}}" alt="{{ $cokelat->nama }}" id="modal-foto" class="img-fluid">
                         <div class="ms-3">
@@ -200,7 +232,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Form deskripsi -->
                     <form>
                         <div class="mb-3 catatan">
                             <label for="deskripsi" class="form-label catatan-title">Catatan Kustomisasi</label>
@@ -211,18 +242,11 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Batal</button>
-                    <form action="{{ route('store_jenis_cokelat_selection') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="jenis_cokelat_id" value="{{ $cokelat->id }}">
-                        <button type="submit" class="btn btn-simpan">Simpan</button>
-                    </form>
+                    <button type="button" class="btn btn-simpan">Simpan</button>
                 </div>
             </div>
         </div>
     </div>
-
-
-
 
     <!--Footer-->
     <section class="footer justify-content-between">

@@ -9,6 +9,7 @@
     background-color: #D2B48C;
     backdrop-filter: blur(10px);
 }
+
 .navbar-icons{
     margin-left: 15px;
     font-size: 1.4em;
@@ -34,6 +35,30 @@
 .nav-link:hover{
     color: #584C3B;
     font-weight: 600;
+}
+
+.dropdown-menu {
+    width: auto; /* Sesuaikan dengan isi */
+    padding: 0.5rem 1rem; /* Padding dapat disesuaikan */
+    min-width: unset; /* Menghapus min-width default Bootstrap */
+}
+
+.dropdown-menu .dropdown-item{
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+.dropdown-menu .dropdown-item:hover{
+    font-weight: 600;
+}
+
+.logout-link {
+    color: red;
+}
+
+.logout-link:hover {
+    color: red;
 }
 
 .search-bar {

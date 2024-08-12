@@ -48,6 +48,30 @@ body {
     font-weight: 600;
 }
 
+.dropdown-menu {
+    width: auto; /* Sesuaikan dengan isi */
+    padding: 0.5rem 1rem; /* Padding dapat disesuaikan */
+    min-width: unset; /* Menghapus min-width default Bootstrap */
+}
+
+.dropdown-menu .dropdown-item{
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+.dropdown-menu .dropdown-item:hover{
+    font-weight: 600;
+}
+
+.logout-link {
+    color: red;
+}
+
+.logout-link:hover {
+    color: red;
+}
+
 .search-bar {
     width: 300px;
     height: 35px;

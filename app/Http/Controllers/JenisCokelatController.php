@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Shared\Models\JenisCokelat; // Menggunakan model dari shared
+use Shared\Models\JenisCokelat;
 use Illuminate\Http\Request;
 
 class JenisCokelatController extends Controller

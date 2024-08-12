@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keranjang Cokelat Cantique</title>
+    <title>Profil Cokelat Cantique</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css"/>
 
-    <link rel="stylesheet" href="{{ asset('css/keranjang.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/edit_profil.css')}}">
 </head>
 <body>
 
@@ -35,10 +35,10 @@
                         <a href=""><i class="fa-solid fa-magnifying-glass"></i></a>
                     </div>
                     <div class="navbar-icons d-flex justify-content-between">
-                        <a href="{{ route('keranjang')}}" class="nav-link active"><i class="fa-solid fa-cart-shopping"></i></a>
+                        <a href="{{ route('keranjang')}}" class="nav-link"><i class="fa-solid fa-cart-shopping"></i></a>
                         <a href="{{ route('histori')}}" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i></a>
                         <div class="dropdown">
-                            <a class="nav-link dropdown" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link active dropdown" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa-solid fa-user"></i>
                             </a>
                             <ul class="dropdown-menu custom-dropdown-menu" aria-labelledby="userDropdown">
@@ -85,63 +85,51 @@
 
     <!--Main Content-->
     <section class="main-content">
-        <div class="container">
-            <h2>Keranjang Saya</h2>
-            <div class="cart-item d-flex align-items-center justify-content-between p-3 mb-3">
-                <div class="left d-flex align-items-center">
-                    <input type="checkbox" class="form-check-input me-3">
-                    <div class="cart-info d-flex align-items-start">
-                        <div class="cart-img me-3">
-                            <img src="img/jenis_cokelat/kiloan.PNG" alt="Cokelat Box" class="cart-img">
-                        </div>
-                        <div>
-                            <h5>Cokelat Box (28 sekat)</h5>
-                            <p>Robocar Poli</p>
-                            <p>Teks</p>
+        <div class="content">
+            <h1>Update Profil Saya</h1>
+            <div class="profile">
+                <form action="{{ route('profil.update') }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="name" class="form-label">Nama</label>
+                            <input type="text" class="form-control" name="name" id="name" value="{{ $user->name }}" placeholder="Masukkan Nama" required>
                         </div>
                     </div>
-                </div>
-                <div class="cart-quantity me-3 align-self-center">
-                    <p>1</p>
-                </div>
-                <div class="right d-flex align-items-center">
-                    <div class="cart-price me-3">
-                        <p>Rp 168.000</p>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="phone" class="form-label">No Hp</label>
+                            <input type="text" class="form-control" name="phone" id="phone" value="{{ $user->phone }}" placeholder="08xxxxxx">
+                        </div>
                     </div>
-                    <button class="btn btn-delete"><i class="fa fa-trash"></i></button>
-                </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" id="email" value="{{ $user->email }}" placeholder="Masukkan Email" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="gender" class="form-label">Gender</label>
+                            <select class="form-control" name="gender" id="gender" required>
+                                <option value="" disabled>Pilih Gender</option>
+                                <option value="male" {{ $user->gender == 'Male' ? 'selected' : '' }}>Male</option>
+                                <option value="female" {{ $user->gender == 'Female' ? 'selected' : '' }}>Female</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <a href="javascript:history.back()" type="button" class="btn btn-danger" id="cancelButton">Cancel</a>
+                        <button type="submit" class="btn btn-submit">Update</button>
+                    </div>
+                </form>
             </div>
-            <div class="cart-item d-flex align-items-center justify-content-between p-3 mb-3">
-                <div class="left d-flex align-items-center">
-                    <input type="checkbox" class="form-check-input me-3">
-                    <div class="cart-info d-flex align-items-start">
-                        <div class="cart-img me-3">
-                            <img src="img/jenis_cokelat/kiloan.PNG" alt="Cokelat Box" class="cart-img">
-                        </div>
-                        <div>
-                            <h5>Cokelat Box (28 sekat)</h5>
-                            <p>Robocar Poli</p>
-                            <p>Teks</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="cart-quantity me-3 align-self-center">
-                    <p>1</p>
-                </div>
-                <div class="right d-flex align-items-center">
-                    <div class="cart-price me-3">
-                        <p>Rp 168.000</p>
-                    </div>
-                    <button class="btn btn-delete"><i class="fa fa-trash"></i></button>
-                </div>
-            </div>
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-pesan">Pesan</button>
             </div>
         </div>
     </section>
 
-    
+
     <!--Footer-->
     <section class="footer justify-content-between">
         <div class="container">
@@ -181,7 +169,7 @@
             </div>
         </div>
     </section>
-
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -39,67 +39,16 @@
                     </div>
                 </div>
             </div>
-            <!-- Login -->
-            <div class="side-right col-lg-6 d-flex justify-content-center align-items-center" id="auth-form">
-                <div class="form-container">
-                    <!-- Login Form -->
-                    <div id="login-form">
+            <div class="col-lg-6" id="sideright">
+                <div class="d-flex vh-100 justify-content-center align-items-center">
+                    <div class="body">
                         <h1>Welcome!</h1>
-                        <p>Harap masukkan email dan password dengan benar</p>
-                        <form method="POST" action="{{ route('login') }}">
-                            @csrf
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
-                            </div>
-                            <div class="button d-flex justify-content-between">
-                                <button type="button" class="btn btn-text" onclick="showSignUp()">Sign up</button>
-                                <button type="submit" class="btn btn-submit">Masuk</button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <!-- Sign Up Form -->
-                    <div id="signup-form" style="display: none; margin: 20px 0;">
-                        <h1>Sign Up</h1>
-                        <p>Silakan isi data berikut untuk mendaftar</p>
-                        <form method="POST" action="{{ route('register') }}">
-                            @csrf
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Nama</label>
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="number" class="form-label">No Telp</label>
-                                <input type="text" class="form-control" id="no_telp" name="no_telp" placeholder="08xxxxxxxxx" required>
-                            </div>
-                            <label for="gender" class="form-label">Jenis Kelamin</label>
-                                <select class="form-control" name="gender" id="gender" required>
-                                    <option value="" disabled selected>Pilih jenis kelamin</option>
-                                    <option value="Laki-laki">Laki-laki</option>
-                                    <option value="Perempuan">Perempuan</option>
-                                </select>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" placeholder="xxxxxx@gmail.com" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
-                                <input type="password" name="password_confirmation" class="form-control" required>
-                            </div>
-                            <div class="button d-flex justify-content-between">
-                                <button type="button" class="btn btn-text" onclick="showLogin()">Back to Login</button>
-                                <button type="submit" class="btn btn-submit">Daftar</button>
-                            </div>
-                        </form>
+                        <p>Harap mempunyai akun Google Gmail terlebih dahulu</p>
+                        <a href="{{ route('google.redirect') }}" class="google-login">
+                            <img src="http://www.androidpolice.com/wp-content/themes/ap2/ap_resize/ap_resize.php?src=http%3A%2F%2Fwww.androidpolice.
+                            com%2Fwp-content%2Fuploads%2F2015%2F10%2Fnexus2cee_Search-Thumb-150x150.png&w=150&h=150&zc=3" alt="Google">
+                            <span>Masuk dengan Google</span>
+                        </a>
                     </div>
                 </div>
             </div>

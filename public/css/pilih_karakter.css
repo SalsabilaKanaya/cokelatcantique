@@ -36,6 +36,30 @@
     font-weight: 600;
 }
 
+.dropdown-menu {
+    width: auto; /* Sesuaikan dengan isi */
+    padding: 0.5rem 1rem; /* Padding dapat disesuaikan */
+    min-width: unset; /* Menghapus min-width default Bootstrap */
+}
+
+.dropdown-menu .dropdown-item{
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+.dropdown-menu .dropdown-item:hover{
+    font-weight: 600;
+}
+
+.logout-link {
+    color: red;
+}
+
+.logout-link:hover {
+    color: red;
+}
+
 .search-bar {
     width: 300px;
     height: 35px;
@@ -105,9 +129,29 @@
     font-weight: 500;
 }
 
-.produk-filter{
-    margin-bottom: 20px;
+.produk-filter {
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
 }
+
+.produk-filter .dropdown-menu {
+    position: absolute; /* Atur posisi menjadi absolute */
+    right: 0; /* Posisi ke ujung kanan kontainer */
+    top: 100%; /* Posisi di bawah tombol dropdown */
+    transform: translateX(0); /* Mengatur posisi horizontal */
+    z-index: 1000; /* Pastikan dropdown berada di atas konten lain */
+}
+
+.jumlah-karakter-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: black;
+}
+
 
 .dropdown .btn{
     background-color: white;
@@ -196,6 +240,17 @@
     background-color: #D2B48C;
 }
 
+.btn.disabled, .btn:disabled {
+    background-color: #DEDEDE;
+    color: #AAA;
+    cursor: not-allowed;
+    pointer-events: none;
+    border: 1px solid #dcdcdc;
+    opacity: 0.5;
+    filter: none;
+}
+
+
 .rekap-pilihan{
     background-color: #f8f9fa;
     padding: 20px;
@@ -250,7 +305,7 @@
 }
 
 .karakter-pilihan .jumlah{
-    font-size: 12px;
+    font-size: 14px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 500;
     color: #AAAAAA;
@@ -261,6 +316,7 @@
     font-family: 'Montserrat', sans-serif;
     font-weight: 500;
     color: #828282;
+    margin-top: -10px; 
 }
 
 .total-harga {

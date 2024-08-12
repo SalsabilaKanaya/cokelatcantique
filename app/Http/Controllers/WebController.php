@@ -8,28 +8,14 @@ use Illuminate\Support\Facades\Auth;
 
 class WebController extends Controller
 {
-   public function beranda()
+    public function beranda()
     {
-        \Log::info('Beranda method called');
-        
-        if (Auth::check()) {
-            \Log::info('User authenticated', [
-                'user' => Auth::user(),
-                'session_id' => session()->getId(),
-                'user_id' => Auth::id()
-            ]);
-        } else {
-            \Log::warning('User not authenticated');
-        }
-        
-        $testimonis = Testimoni::all();
-        \Log::info('Data Testimoni:', $testimonis->toArray());
-        
-        return view('beranda', compact('testimonis'));
+        // Mengambil data testimoni dari database
+        $testimoniss = Testimoni::all();
+        // Mengirim data testimoni ke view beranda
+        return view('beranda', compact('testimoniss'));
     }
-
-
-
+    
     public function tentang()
     {
         return view('tentang');
