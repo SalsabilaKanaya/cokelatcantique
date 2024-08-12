@@ -1,3 +1,42 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const cityInput = document.getElementById('city');
+    const provinceInput = document.getElementById('province');
+
+    const calculateShippingCost = () => {
+        const city = cityInput.value.trim();
+        const province = provinceInput.value.trim();
+
+        if (city && province) {
+            fetchShippingCost(city, province);
+        }
+    };
+
+    const fetchShippingCost = (city, province) => {
+        const formData = new FormData();
+        formData.append('city', city);
+        formData.append('province', province);
+
+        fetch('/calculate-shipping-cost', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById('shipping-cost').textContent = `Shipping Cost: Rp ${data.shippingCost}`;
+            }
+        })
+        .catch(error => console.error('Error fetching shipping cost:', error));
+    };
+
+    cityInput.addEventListener('input', calculateShippingCost);
+    provinceInput.addEventListener('input', calculateShippingCost);
+});
+
+
 document.getElementById('btn-transfer').addEventListener('click', function() {
     this.classList.add('btn-custom-active');
     this.classList.remove('btn-custom');

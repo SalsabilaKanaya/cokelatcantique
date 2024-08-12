@@ -10,6 +10,9 @@ use App\Http\Controllers\KarakterCokelatController;
 use App\Http\Controllers\KustomisasiCokelatController;
 use App\Http\Controllers\PilihKarakterController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PesanController;
+use App\Http\Controllers\ProsesOrderController;
+
 
 Route::get('/', function () {
     return view('login');
@@ -41,17 +44,26 @@ Route::post('/store-selection', [KarakterController::class, 'storeSelection'])->
 
 Route::get('/kustomisasi_cokelat', [KustomisasiCokelatController::class, 'index'])->name('kustomisasi_cokelat');
 Route::post('/store-jenis-cokelat-selection', [KustomisasiCokelatController::class, 'storeJenisCokelatSelection'])->name('store_jenis_cokelat_selection');
-Route::get('/pilih-karakter', [KustomisasiKarakterController::class, 'index'])->name('pilih_karakter');
+Route::get('/pilih-karakter', [KustomisasiCokelatController::class, 'index'])->name('pilih_karakter');
 
 Route::get('/pilih_karakter', [PilihKarakterController::class, 'index'])->name('pilih_karakter');
-Route::get('/karakter_cokelat/{id}', [PilihKarakterController::class, 'getKarakterDetails'])->name('karakter_cokelat.details');
+Route::get('/karakter_cokelat/details/{id}', [PilihKarakterController::class, 'getKarakterDetails'])->name('karakter_cokelat.details');
 Route::post('/store-selection', [PilihKarakterController::class, 'storeSelection'])->name('store_selection');
 Route::get('/get-progress', [PilihKarakterController::class, 'getProgress']);
+Route::post('/process-order', [PilihKarakterController::class, 'processOrder'])->name('process_order');
 
+Route::get('/pemesanan', [ProsesOrderController::class, 'index'])->name('pemesanan');
+Route::post('/pemesanan', [ProsesOrderController::class, 'store'])->name('pemesanan.store');
+Route::post('/pemesanan/calculateShippingCost', [ProsesOrderController::class, 'calculateShippingCost'])->name('pemesanan.calculateShippingCost');
+// Route::get('/pesanan-sukses', function () {
+//     return view('pesanan_sukses');
+// })->name('pesanan_sukses');
 
-Route::get('/proses-pemesanan', [ProsesOrderController::class, 'showForm'])->name('proses_pesanan');
-Route::post('/simpan-pesanan', [ProsesOrderController::class, 'store'])->name('simpan_pesanan');
-Route::post('/finalisasi-pesanan', [ProsesOrderController::class, 'store'])->name('finalize_pesanan');
+// Route::post('/pesanan-store', [PesanController::class, 'store'])->name('pesanan-store');
+
+// Route::get('/proses-pemesanan', [ProsesOrderController::class, 'showForm'])->name('proses_pesanan');
+// Route::post('/simpan-pesanan', [ProsesOrderController::class, 'store'])->name('simpan_pesanan');
+// Route::post('/finalisasi-pesanan', [ProsesOrderController::class, 'store'])->name('finalize_pesanan');
 
 Route::get('/kontak', [KontakController::class, 'create'])->name('kontak');
 Route::post('/kontak', [KontakController::class, 'store'])->name('kontak.store');

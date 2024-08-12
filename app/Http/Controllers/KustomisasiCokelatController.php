@@ -39,6 +39,18 @@ class KustomisasiCokelatController extends Controller
 
         return redirect()->route('pilih_karakter');
     }
+}
+
+// public function storeJenisCokelatSelection(Request $request)
+    // {
+    //     $jenisCokelatId = $request->input('jenis_cokelat_id');
+
+    //     // Simpan data ke sesi
+    //     session()->put('selected_jenis', $jenisCokelatId);
+
+    //     return redirect()->route('pilih_karakter');
+    // }
+
 
     // public function storeJenisCokelatSelection(Request $request)
     // {
@@ -48,18 +60,6 @@ class KustomisasiCokelatController extends Controller
     //     session()->forget('selected_karakter');
 
     //     // Simpan data jenis cokelat ke sesi
-    //     session()->put('selected_jenis', $jenisCokelatId);
-
-    //     return redirect()->route('pilih_karakter');
-    // }
-
-}
-
-// public function storeJenisCokelatSelection(Request $request)
-    // {
-    //     $jenisCokelatId = $request->input('jenis_cokelat_id');
-
-    //     // Simpan data ke sesi
     //     session()->put('selected_jenis', $jenisCokelatId);
 
     //     return redirect()->route('pilih_karakter');

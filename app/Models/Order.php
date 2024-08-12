@@ -10,13 +10,9 @@ class Order extends Model
     use HasFactory;
 
     protected $table = 'order';
-    protected $primaryKey = 'order_id'; // Menetapkan primary key khusus
-    public $incrementing = false; // Non-incrementing karena menggunakan custom primary key
-    protected $keyType = 'unsignedBigInteger'; // Tipe data primary key
 
     protected $fillable = [
         'user_id',
-        'status',
         'delivery_date',
         'notes',
         'total_price',
@@ -30,7 +26,7 @@ class Order extends Model
 
     public function items()
     {
-        return $this->hasMany(OrderItem::class, 'order_id', 'order_id');
+        return $this->hasMany(OrderItem::class, 'order_id', 'id');
     }
 
     public function address()

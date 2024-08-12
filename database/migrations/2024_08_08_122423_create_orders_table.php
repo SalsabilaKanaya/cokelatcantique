@@ -14,7 +14,7 @@ class CreateOrdersTable extends Migration
     public function up()
     {
         Schema::create('order', function (Blueprint $table) {
-            $table->unsignedBigInteger('order_id')->primary();
+            $table->id(); // Auto-incrementing primary key (order_id)
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->date('delivery_date');

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Karakter Cokelat (Cokelat Cantique)</title>
@@ -98,7 +99,7 @@
                 </div>
                 <div class="col-md-6 produk-filter  d-flex justify-content-end">
                     <div class="button-kustomisasi">
-                        <a class="btn" href="kustomisasi_cokelat.html" role="button">Kustomisasi Cokelat</a>
+                        <a class="btn" href="{{route('kustomisasi_cokelat')}}" role="button">Kustomisasi Cokelat</a>
                       </div>
                 </div>
             </div>

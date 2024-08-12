@@ -159,7 +159,7 @@
                                 </div>
                             </div>
                         @endforeach
-                    </div>                    
+                    </div>
                 </div>
                 <div class="col-md-4">
                     <div class="rekap-pilihan">
@@ -204,7 +204,10 @@
                         </div>
                         <div class="button d-flex justify-content-between">
                             <a class="btn button-keranjang" href="#" role="button">Keranjang</a>
-                            <a class="btn button-pesan" href="{{ route('proses_pesanan') }}" role="button">Pesan</a>
+                            <form action="{{ route('process_order') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn button-pesan">Pesan</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -227,7 +230,7 @@
                             <h5 class="modal-nama" id="modal-nama">{{ $cokelat->nama }}</h5>
                             <div class="wrapper quantity mb-3">
                                 <span class="minus">-</span>
-                                <span class="num">01</span>
+                                <span class="num">1</span>
                                 <span class="plus">+</span>
                             </div>
                         </div>

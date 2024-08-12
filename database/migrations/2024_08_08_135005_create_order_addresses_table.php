@@ -9,12 +9,13 @@ class CreateOrderAddressesTable extends Migration
     public function up()
     {
         Schema::create('order_addresse', function (Blueprint $table) {
-            $table->unsignedBigInteger('orderaddresse_id')->primary();
-            $table->unsignedBigInteger('order_id'); // Foreign key untuk 'order'
-            $table->foreign('order_id')->references('order_id')->on('order')->onDelete('cascade');
+            $table->id();
+            $table->unsignedBigInteger('order_id');
+            $table->foreign('order_id')->references('id')->on('order')->onDelete('cascade');
             $table->string('name');
             $table->string('email');
             $table->string('phone_number');
+            $table->string('delivery_date');
             $table->text('address');
             $table->string('subdistrict');
             $table->string('city');
