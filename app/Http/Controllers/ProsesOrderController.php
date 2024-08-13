@@ -111,32 +111,67 @@ class ProsesOrderController extends Controller
         return response()->json(['success' => false]);
     }
 
+    // ProsesOrderController.php
+
     public function calculateShippingCost(Request $request)
     {
-        // Validasi input
-        $request->validate([
-            'city' => 'required|string|max:255',
-            'province' => 'required|string|max:255',
-        ]);
-
-        $city = $request->input('city');
+        // Ambil data dari request
         $province = $request->input('province');
+        $city = $request->input('city');
+        $weight = $request->input('weight'); // Asumsikan berat diambil dari request
 
-        // Ambil ID province dan city
-        $provinceId = $this->getProvinceIdByName($province);
-        $cityId = $this->getCityIdByName($city);
-        $weight = 1000; // Sesuaikan dengan berat produk yang dibeli
-        $courier = 'jne'; // Sesuaikan dengan kurir yang dipilih
+        // Validasi input
+        if (!$province || !$city || !$weight) {
+            return response()->json(['error' => 'Invalid input'], 400);
+        }
 
-        $shippingCostResponse = $this->rajaongkirService->getShippingCost(171, $cityId, $weight, $courier); // 171 adalah ID origin, sesuaikan dengan ID asal
+        // Contoh API URL (ubah dengan URL sebenarnya)
+        $apiUrl = "https://api.rajaongkir.com/starter/cost";
+        
+        // Ganti dengan data API Anda
+        $apiKey = 'f587d9fb3201bbc06ed11b0116fe4b56';
 
-        $shippingCost = $shippingCostResponse['rajaongkir']['results'][0]['costs'][0]['cost'][0]['value'];
-
-        return response()->json([
-            'success' => true,
-            'shippingCost' => $shippingCost,
+        // Inisialisasi cURL
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $apiUrl);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query([
+            'origin' => 'YOUR_ORIGIN_ID', // ID asal
+            'destination' => $city,
+            'weight' => $weight,
+            'courier' => 'jne' // Contoh kurir, ganti sesuai kebutuhan
+        ]));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/x-www-form-urlencoded',
+            'key: ' . $apiKey
         ]);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        // Cek jika cURL gagal
+        if ($response === false) {
+            return response()->json(['error' => 'Failed to fetch shipping cost'], 500);
+        }
+
+        $responseArray = json_decode($response, true);
+
+        // Cek jika json_decode gagal
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return response()->json(['error' => 'Invalid JSON response from API'], 500);
+        }
+
+        // Pastikan 'results' ada dalam respons
+        if (isset($responseArray['rajaongkir']['results'])) {
+            $shippingCost = $responseArray['rajaongkir']['results'][0]['costs'][0]['cost'][0]['value']; // Ubah sesuai struktur JSON yang diterima
+            return response()->json(['shippingCost' => $shippingCost]);
+        } else {
+            return response()->json(['error' => 'Shipping cost data not found'], 404);
+        }
     }
+
+    
 
     protected function getProvinceIdByName($provinceName)
     {
@@ -162,99 +197,4 @@ class ProsesOrderController extends Controller
         }
         return null;
     }
-
-
-    // public function showForm()
-    // {
-    //     // Ambil data dari sesi
-    //     $selectedJenis = session()->get('selected_jenis');
-    //     $selectedKarakter = session()->get('selected_karakter', []);
-
-    //     // Validasi jika data tidak ada di sesi
-    //     if (!$selectedJenis) {
-    //         return redirect()->route('kustomisasi_cokelat')->withErrors('Jenis cokelat belum dipilih');
-    //     }
-
-    //     // Mengambil detail jenis cokelat
-    //     $jenisCokelat = JenisCokelat::find($selectedJenis);
-    //     $karakterCokelat = KarakterCokelat::whereIn('id', array_keys($selectedKarakter))->get();
-
-    //     return view('proses_pesanan', compact('jenisCokelat', 'karakterCokelat', 'selectedKarakter'));
-    // }
-
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'name' => 'required|string',
-    //         'email' => 'required|email',
-    //         'phone_number' => 'required|string',
-    //         'address' => 'required|string',
-    //         'subdistrict' => 'required|string',
-    //         'city' => 'required|string',
-    //         'province' => 'required|string',
-    //         'postal_code' => 'required|string',
-    //         'shipping_cost' => 'required|numeric',
-    //         'payment_method' => 'required|string',
-    //         'notes' => 'nullable|string',
-    //     ]);
-
-    //     // Ambil data dari sesi
-    //     $selectedJenis = session()->get('selected_jenis');
-    //     $selectedKarakter = session()->get('selected_karakter', []);
-
-    //     if (!$selectedJenis) {
-    //         return redirect()->route('kustomisasi_cokelat')->withErrors('Jenis cokelat belum dipilih');
-    //     }
-
-    //     // Simpan pesanan
-    //     $order = Order::create([
-    //         'user_id' => auth()->id(), // Sesuaikan dengan logika autentikasi Anda
-    //         'status' => 'pending',
-    //         'total_price' => $this->calculateTotalPrice($selectedJenis, $selectedKarakter) + $request->input('shipping_cost'),
-    //         'payment_method' => $request->input('payment_method'),
-    //         'notes' => $request->input('notes', ''),
-    //     ]);
-
-    //     foreach ($selectedKarakter as $karakterId => $details) {
-    //         OrderItem::create([
-    //             'order_id' => $order->id,
-    //             'karakter_cokelat_id' => $karakterId,
-    //             'jumlah' => $details['jumlah'],
-    //             'catatan' => $details['catatan'],
-    //         ]);
-    //     }
-
-    //     OrderAddress::create([
-    //         'order_id' => $order->id,
-    //         'name' => $request->input('name'),
-    //         'email' => $request->input('email'),
-    //         'phone_number' => $request->input('phone_number'),
-    //         'address' => $request->input('address'),
-    //         'subdistrict' => $request->input('subdistrict'),
-    //         'city' => $request->input('city'),
-    //         'province' => $request->input('province'),
-    //         'postal_code' => $request->input('postal_code'),
-    //         'shipping_cost' => $request->input('shipping_cost'),
-    //     ]);
-
-    //     // Hapus data dari sesi setelah pesanan disimpan
-    //     session()->forget(['selected_jenis', 'selected_karakter']);
-
-    //     // Redirect ke halaman konfirmasi atau terima kasih
-    //     return redirect()->route('thank_you');
-    // }
-
-    // private function calculateTotalPrice($jenisCokelatId, $selectedKarakter)
-    // {
-    //     $jenisCokelat = JenisCokelat::find($jenisCokelatId);
-    //     $totalPrice = $jenisCokelat->harga;
-
-    //     // Misalkan setiap karakter memiliki harga tambahan
-    //     foreach ($selectedKarakter as $karakterId => $details) {
-    //         $karakter = KarakterCokelat::find($karakterId);
-    //         $totalPrice += $karakter->harga * $details['jumlah'];
-    //     }
-
-    //     return $totalPrice;
-    // }
 }

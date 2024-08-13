@@ -12,6 +12,7 @@ use App\Http\Controllers\PilihKarakterController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PesanController;
 use App\Http\Controllers\ProsesOrderController;
+use App\Http\Controllers\RajaOngkirController;
 
 
 Route::get('/', function () {
@@ -55,9 +56,9 @@ Route::post('/process-order', [PilihKarakterController::class, 'processOrder'])-
 Route::get('/pemesanan', [ProsesOrderController::class, 'index'])->name('pemesanan');
 Route::post('/pemesanan', [ProsesOrderController::class, 'store'])->name('pemesanan.store');
 Route::post('/pemesanan/calculateShippingCost', [ProsesOrderController::class, 'calculateShippingCost'])->name('pemesanan.calculateShippingCost');
-// Route::get('/pesanan-sukses', function () {
-//     return view('pesanan_sukses');
-// })->name('pesanan_sukses');
+
+Route::get('/api/get-provinces', [RajaOngkirController::class, 'getProvinces']);
+Route::get('/api/get-cities/{provinceId}', [RajaOngkirController::class, 'getCities']);
 
 // Route::post('/pesanan-store', [PesanController::class, 'store'])->name('pesanan-store');
 

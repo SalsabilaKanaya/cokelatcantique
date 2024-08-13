@@ -8,6 +8,11 @@ class RajaongkirService
 {
     protected $apiKey = 'f587d9fb3201bbc06ed11b0116fe4b56';
 
+    public function __construct()
+    {
+        $this->apiKey = config('services.rajaongkir.api_key');
+    }
+
     public function getProvinces()
     {
         $response = Http::withHeaders([
@@ -42,3 +47,4 @@ class RajaongkirService
         return $response->json();
     }
 }
+

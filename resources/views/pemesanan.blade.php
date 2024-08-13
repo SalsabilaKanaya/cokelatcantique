@@ -123,23 +123,33 @@
                                 <h2>Data Pribadi</h2>
                                 <div class="input-data">
                                     <label for="name">Nama</label>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Nama">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Nama" required>
                                     <label for="email" class="mt-2">Email</label>
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="xxxxxx@gmail.com">
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="xxxxxx@gmail.com" required>
                                     <label for="phone_number" class="mt-2">No Hp</label>
-                                    <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="08xxxxxx">
+                                    <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="08xxxxxx" required>
                                     <label for="delivery_date" class="mt-2">Tanggal Pengiriman</label>
-                                    <input type="date" class="form-control" id="delivery_date" name="delivery_date">
+                                    <input type="date" class="form-control" id="delivery_date" name="delivery_date" required>
                                     <label for="address" class="mt-2">Alamat Lengkap</label>
-                                    <input type="text" class="form-control" id="address" name="address" placeholder="Jl xxxx">
-                                    <label for="subdistrict" class="mt-2">Kecamatan</label>
-                                    <input type="text" class="form-control" id="subdistrict" name="subdistrict" placeholder="Nama Kecamatan">
-                                    <label for="city" class="mt-2">Kota/Kabupaten</label>
-                                    <input type="text" class="form-control" id="city" name="city" placeholder="Nama Kota 'Bandung'">
-                                    <label for="province" class="mt-2">Provinsi</label>
-                                    <input type="text" class="form-control" id="province" name="province" placeholder="Nama Provinsi 'Jawa Barat">
-                                    <label for="postal_code" class="mt-2">Kode Pos</label>
-                                    <input type="text" class="form-control" id="postal_code" name="postal_code" placeholder="Kode Pos">
+                                    <input type="text" class="form-control" id="address" name="address" placeholder="Jl xxxx" required>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="province">Provinsi</label>
+                                            <select class="form-control" id="province" name="province" required>
+                                                <option value="">Pilih Provinsi</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="city" class="mt-2">Kota/Kabupaten</label>
+                                            <select class="form-control" id="city" name="city" required>
+                                                <option value="">Pilih Kota/Kabupaten</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="postal_code" class="mt-2">Kode Pos</label>
+                                            <input type="text" class="form-control" id="postal_code" name="postal_code" placeholder="Kode Pos" required>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group mt-3">
@@ -259,7 +269,6 @@
             </div>
         </div>
     </section>
-
     <script src="{{ asset('js/pemesanan.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
