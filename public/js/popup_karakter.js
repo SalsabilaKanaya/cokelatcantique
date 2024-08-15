@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const pilihButtons = document.querySelectorAll('.button-pilih');
+    const pesanButtons = document.querySelectorAll('.button-pesan');
     const modalFoto = document.getElementById('modal-foto');
     const modalNama = document.getElementById('modal-nama');
     const quantitySpan = document.querySelector('.num');
@@ -25,9 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
                 .catch(error => {
                     console.error('Error fetching character data:', error);
-                }
-            ); 
-
+                });
         });
     });
 
@@ -71,7 +70,6 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             if (data.success) {
                 updateProgressBar();
-                window.location.href = '/pilih-karakter';  // Redirect ke halaman "Pilih Karakter"
             } else {
                 console.error('Gagal menyimpan data:', data);
             }
@@ -98,15 +96,33 @@ document.addEventListener('DOMContentLoaded', function() {
         const progressBar = document.getElementById('progress-bar');
         const progress = parseFloat(progressBar.style.width);
 
-        // Nonaktifkan tombol jika progress sudah 100%
+        // Nonaktifkan tombol pilih jika progress sudah 100%
         if (progress >= 100) {
             pilihButtons.forEach(button => {
                 button.classList.add('disabled');
                 button.setAttribute('disabled', 'true');
             });
+        } else {
+            pilihButtons.forEach(button => {
+                button.classList.remove('disabled');
+                button.removeAttribute('disabled');
+            });
+        }
+
+        // Nonaktifkan tombol pesan jika progress belum 100%
+        if (progress < 100) {
+            pesanButtons.forEach(button => {
+                button.classList.add('disabled');
+                button.setAttribute('disabled', 'true');
+            });
+        } else {
+            pesanButtons.forEach(button => {
+                button.classList.remove('disabled');
+                button.removeAttribute('disabled');
+            });
         }
     }
 
     // Check progress on page load
-    checkProgress();
+    updateProgressBar();
 });

@@ -1,12 +1,13 @@
-.body {
+body {
     width: 100%;
     height: 100vh;
+    background-color: #F5F5F5;
 }
 
 /* ----- HEADER -----*/
 .navbar {
     font-family: 'Montserrat', sans-serif;
-    background-color: transparant;
+    background-color: white;
     backdrop-filter: blur(10px);
 }
 .navbar-icons{
@@ -114,15 +115,27 @@
     color: #D2B48C;
     margin-right: 20px;
 }
+.produk-order {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 15px;
+}
 
-h2{
-    color: black;
-    font-family: 'playfair display', sans-serif;
-    font-size: 26px;
-    font-weight: 600;
+.produk-order h5 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: #000;
+}
+
+.produk-list{
+    width: 100%;
 }
 
 .produk-item {
+    display: flex !important;
+    flex-direction: row;
+    justify-content: space-between;
     padding: 10px 0;
 }
 
@@ -135,12 +148,18 @@ h2{
     flex-shrink: 0; /* Prevent shrinking */
 }
 
+.produk-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .produk-info h5 {
     font-size: 16px;
     color: black;
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
-    margin-bottom: 5px;
+    margin: 0; /* Remove default margin */
 }
 
 .produk-info p {
@@ -151,6 +170,69 @@ h2{
     margin-bottom: 5px;
 }
 
+.alamat-pengiriman{
+    background-color: #fff;
+    padding: 20px;
+}
+
+.alamat-pengiriman .address-title{
+    font-size: 16px;
+    color: #D2B48C;
+    display: flex;
+    align-item: left;
+}
+
+.address-title h5{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: #D2B48C;
+}
+
+.icon-spacing{
+    margin-right: 15px;
+}
+
+.alamat-pengiriman .name-phone{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.alamat-pengiriman .address{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.jasa-pengiriman{
+    background-color: #fff;
+    padding: 20px;
+    margin-top: 15px;
+}
+
+.jasa-pengiriman .courier-title{
+    font-size: 18px;
+    font-weight: 500;
+    color: #D2B48C;
+    display: flex;
+    align-item: left;
+}
+
+.courier-title h5{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: #D2B48C;
+}
+
+h2{
+    color: black;
+    font-family: 'playfair display', sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+}
+
 .catatan {
     font-size: 12px;
     color: #828282;
@@ -158,31 +240,15 @@ h2{
     font-weight: 400;
 }
 
-.form-group label {
+.note-date label {
     font-family: 'Montserrat', sans-serif;
     font-size: 14px;
     color: #404852;
     font-weight: 600;
+    margin-bottom: 5px;
 }
 
-.form-group textarea{
-    margin-bottom: 30px;
-}
-
-.form-group input,
-.form-group textarea,
-.form-group select {
-    margin-top: 5px;
-}
-
-.input-data label{
-    font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
-    color: #404852;
-    font-weight: 600;
-}
-
-.input-data{
+.note-date textarea{
     margin-bottom: 30px;
 }
 
@@ -227,6 +293,8 @@ h2{
     display: flex;
     justify-content: space-between;
 }
+
+
 
 .rekap-pilihan {
     background-color: #f8f9fa;
@@ -298,26 +366,38 @@ h2{
     color: #958063;
 }
 
-.btn-custom {
+.payment{
+    background-color: #fff;
+    padding: 20px;
+}
+
+.payment-title h5{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: #D2B48C;
+}
+
+.payment-method .btn-custom {
     background-color: white;
     color: #D2B48C;
 }
-.btn-custom-active {
+.payment-method .btn-custom-active {
     background-color: #D2B48C;
     color: white;
 }
 
-.btn-custom:hover {
+.payment-method .btn-custom:hover {
     background-color: #D2B48C;
     color: white;
 }
 
-.btn-custom-active:hover {
+.payment-method .btn-custom-active:hover {
     background-color: #D2B48C;
     color: white;
 }
 
-.btn-text {
+.payment-method .btn-text {
     font-family: 'Montserrat', sans-serif;
     font-size: 14px;
     font-weight: 500;

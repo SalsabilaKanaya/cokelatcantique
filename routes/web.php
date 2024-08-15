@@ -47,7 +47,6 @@ Route::post('/store-selection', [KarakterController::class, 'storeSelection'])->
 
 Route::get('/kustomisasi_cokelat', [KustomisasiCokelatController::class, 'index'])->name('kustomisasi_cokelat');
 Route::post('/store-jenis-cokelat-selection', [KustomisasiCokelatController::class, 'storeJenisCokelatSelection'])->name('store_jenis_cokelat_selection');
-Route::get('/pilih-karakter', [KustomisasiCokelatController::class, 'index'])->name('pilih_karakter');
 
 Route::get('/pilih_karakter', [PilihKarakterController::class, 'index'])->name('pilih_karakter');
 Route::get('/karakter_cokelat/details/{id}', [PilihKarakterController::class, 'getKarakterDetails'])->name('karakter_cokelat.details');
@@ -58,6 +57,8 @@ Route::post('/process-order', [PilihKarakterController::class, 'processOrder'])-
 Route::get('/pemesanan', [ProsesOrderController::class, 'index'])->name('pemesanan');
 Route::post('/pemesanan', [ProsesOrderController::class, 'store'])->name('pemesanan.store');
 Route::post('/pemesanan/calculateShippingCost', [ProsesOrderController::class, 'calculateShippingCost'])->name('pemesanan.calculateShippingCost');
+Route::post('/available_services', [ProsesOrderController::class, 'shippingfee'])->name('shippingfee');
+
 
 // Route::get('/api/get-provinces', [RajaOngkirController::class, 'getProvinces']);
 // Route::get('/api/get-cities/{provinceId}', [RajaOngkirController::class, 'getCities']);

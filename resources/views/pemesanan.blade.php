@@ -9,6 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/fontawesome.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!--FONT-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -75,159 +76,140 @@
     <!-- MAIN -->
     <section class="main-content">
         <div class="container">
-            <div class="row mt-5">
+            <div class="row">
                 <div class="col-12">
                     <a href="{{ route('kustomisasi_cokelat') }}" class="btn button-back"><i class="fa-solid fa-chevron-left"></i> Kembali</a>
                 </div>
             </div>
-            <div class="row mt-3">
-                <div class="col-12 header">
-                    <h2>Produk</h2>
-                </div>
-            </div>
-            <div class="row mt-3 d-flex">
+            <div class="row content mt-3 d-flex">
                 <div class="col-md-8">
-                    @if($order)
-                        <div class="produk-list">
-                            @if($orderItems->isEmpty())
-                                <p>Belum ada produk yang dipesan.</p>
-                            @else
-                                @foreach($orderItems as $orderItem)
-                                    <div class="produk-item d-flex">
-                                        <img src="{{ asset($orderItem->jenisCokelat->foto) }}" alt="{{ $orderItem->jenisCokelat->nama }}" class="produk-img">
-                                        <div class="produk-info">
-                                            <h5>{{ $orderItem->jenisCokelat->nama }}</h5>
-                                            <p>Rp {{ number_format($orderItem->price, 0, ',', '.') }}</p>
-                                        </div>
-                                    </div>
-                                    @foreach($orderItem->karakterItems as $karakterItem)
-                                        <div class="produk-item d-flex ml-4">
-                                            <img src="{{ asset($karakterItem->karakterCokelat->foto) }}" alt="{{ $karakterItem->karakterCokelat->nama }}" class="produk-img">
+                    <div class="produk-order">
+                        <div class="produk-title">
+                            <h5>Produk Dipesan</h5>
+                        </div>
+                        @if($order)
+                            <div class="produk-list">
+                                @if($orderItems->isEmpty())
+                                    <p>Belum ada produk yang dipesan.</p>
+                                @else
+                                    @foreach($orderItems as $orderItem)
+                                        <div class="produk-item d-flex">
                                             <div class="produk-info">
-                                                <h5>{{ $karakterItem->karakterCokelat->nama }}</h5>
-                                                <p>{{ $karakterItem->quantity }}</p>
-                                                <p class="catatan">{{ $karakterItem->notes }}</p>
+                                                <img src="{{ asset($orderItem->jenisCokelat->foto) }}" alt="{{ $orderItem->jenisCokelat->nama }}" class="produk-img">
+                                                <div class="produk-isi">
+                                                    <h5>{{ $orderItem->jenisCokelat->nama }}</h5>
+                                                    @foreach($orderItem->karakterItems as $karakterItem)
+                                                        <p>{{ $karakterItem->karakterCokelat->nama }}</p>
+                                                    @endforeach
+                                                </div>
                                             </div>
+                                            <p class="price"style="font-size: 18px; color: #000; font-weight: 700; font-family: 'Montserrat', sans-serif;">Rp {{ number_format($orderItem->price, 0, ',', '.') }}</p>
                                         </div>
                                     @endforeach
-                                @endforeach
-                            @endif
+                                @endif
+                            </div>
+                            <div class="row note-date mt-3">
+                                <div class="col-md-6">
+                                    <label for="note">Catatan Lainnya</label>
+                                    <textarea class="form-control" id="note" name="note" rows="3"></textarea> 
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="delivery_date" >Tanggal Pengiriman</label>
+                                    <input type="date" class="form-control" id="delivery_date" name="delivery_date" required>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="alamat-pengiriman">
+                        <div class="address-title">
+                            <i class="fa-solid fa-location-dot icon-spacing"></i>
+                            <h5>Alamat Pengiriman</h5>
                         </div>
-                        <form action="{{ route('pemesanan.store') }}" method="POST">
-                            @csrf
-                            <div class="form-group mt-3">
-                                <label for="note">Catatan Lainnya</label>
-                                <textarea class="form-control" id="note" name="note" rows="3"></textarea>
-                            </div>
-                            <div class="form-group mt-3">
-                                <h2>Data Pribadi</h2>
-                                <div class="input-data">
-                                    <div class="row">
-                                        <div class="col">
-                                            <label for="name">Nama</label>
-                                            <input type="text" class="form-control" id="name" name="name" placeholder="Nama" required>
-                                        </div>
-                                        <div class="col">
-                                            <label for="email">Email</label>
-                                            <input type="email" class="form-control" id="email" name="email" placeholder="xxxxxx@gmail.com" required>
-                                        </div>
-                                    </div>
-                                    <div class="row mt-2">
-                                        <div class="col">
-                                            <label for="phone_number" >No Hp</label>
-                                            <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="08xxxxxx" required>
-                                        </div>
-                                        <div class="col">
-                                            <label for="delivery_date" >Tanggal Pengiriman</label>
-                                            <input type="date" class="form-control" id="delivery_date" name="delivery_date" required>
-                                        </div>
-                                    </div> 
+                        @if(isset($userAddress))
+                            <div class="row mt-3 address-detail">
+                                <div class="col-md-4 name-phone">
+                                    <p>{{ $userAddress->name }}</p>
+                                    <p>{{ $userAddress->phone }}</p>
+                                </div>
+                                <div class="col-md-8 address">
+                                    <p>{{ $userAddress->address }}, {{ $userAddress->city_name }}, {{ $userAddress->province_name }}</p>
                                 </div>
                             </div>
-                            <div class="form-group mt-3">
-                                <h2>Pilih Metode Pembayaran</h2>
-                                <div class="d-flex justify-content-start align-items-center mt-3">
-                                    <button type="button" id="btn-transfer" class="btn btn-custom me-2 d-flex flex-column align-items-center">
-                                        <i class="fa-solid fa-right-left"></i>
-                                        <span class="btn-text">Transfer Bank</span>
-                                    </button>
-                                    <button type="button" id="btn-ewallet" class="btn btn-custom d-flex flex-column align-items-center">
-                                        <i class="fa-solid fa-wallet"></i>
-                                        <span class="btn-text">E-Wallet</span>
-                                    </button>
+                        @endif  
+                    </div>
+                    <form id="courier-form" action="{{ route('shippingfee') }}" method="POST">
+                        @csrf
+                        <div class="jasa-pengiriman">
+                            <div class="courier-title">
+                                <i class="fa-solid fa-truck icon-spacing"></i>
+                                <h5>Pilih Kurir</h5>
+                            </div>
+                            <div id="courier-options">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input courier_code" type="radio" name="courier_code" id="jne" value="jne">
+                                    <label class="form-check-label" for="jne">JNE</label>
                                 </div>
-                                <label for="pilihanBank" class="payment-group mt-2" id="labelBank" style="display: none;">Pilihan Bank</label>
-                                <div class="position-relative" id="divBank" style="display: none;">
-                                    <select class="form-control" id="pilihanBank" name="pilihanBank" onchange="toggleIcon('iconBank')">
-                                        <option disabled selected>Pilih Bank</option>
-                                        <option>Bank BCA</option>
-                                        <option>Bank Mandiri</option>
-                                        <option>Bank BNI</option>
-                                    </select>
-                                    <i id="iconBank" class="fa fa-chevron-down position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%);"></i>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input courier_code" type="radio" name="courier_code" id="tiki" value="tiki">
+                                    <label class="form-check-label" for="tiki">Tiki</label>
                                 </div>
-                                <label for="pilihanEwallet" class="payment-group mt-2" id="labelEwallet" style="display: none;">Pilihan E-Wallet</label>
-                                <div class="position-relative" id="divEwallet" style="display: none;">
-                                    <select class="form-control" id="pilihanEwallet" name="pilihanEwallet" onchange="toggleIcon('iconEwallet')">
-                                        <option disabled selected>Pilih E-Wallet</option>
-                                        <option>GoPay</option>
-                                        <option>OVO</option>
-                                        <option>DANA</option>
-                                    </select>
-                                    <i id="iconEwallet" class="fa fa-chevron-down position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%);"></i>
-                                </div>
-                                <div class="form-check mt-2">
-                                    <input class="form-check-input" type="checkbox" id="privacyPolicy" name="privacyPolicy">
-                                    <label class="form-check-label privacy-text" for="privacyPolicy">
-                                        Menyetujui Privacy Policy
-                                    </label>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input courier_code" type="radio" name="courier_code" id="pos" value="pos">
+                                    <label class="form-check-label" for="pos">POS</label>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-pesan mt-3">Bayar</button>
-                        </form>
-                    @else
-                        <p>Anda belum melakukan pemesanan.</p>
-                    @endif
+                            <div class="courier-cost">
+                                <p>Available Service</p> 
+                                <ul class="list-group-item list-group-flush availabe-services" style="display: none">
+
+                                </ul>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="payment form-group mt-3">
+                        <div class="payment-title">
+                            <h5>Pilih Metode Pembayaran</h5>
+                        </div>
+                        <div class="payment-method d-flex justify-content-start align-items-center mt-3">
+                            <button type="button" id="btn-transfer" class="btn btn-custom me-2 d-flex flex-column align-items-center">
+                                <i class="fa-solid fa-right-left"></i>
+                                <span class="btn-text">Transfer Bank</span>
+                            </button>
+                            <button type="button" id="btn-ewallet" class="btn btn-custom d-flex flex-column align-items-center">
+                                <i class="fa-solid fa-wallet"></i>
+                                <span class="btn-text">E-Wallet</span>
+                            </button>
+                        </div>
+                        <label for="pilihanBank" class="payment-group mt-2" id="labelBank" style="display: none;">Pilihan Bank</label>
+                        <div class="position-relative" id="divBank" style="display: none;">
+                            <select class="form-control" id="pilihanBank" name="pilihanBank" onchange="toggleIcon('iconBank')">
+                                <option disabled selected>Pilih Bank</option>
+                                <option>Bank BCA</option>
+                                <option>Bank Mandiri</option>
+                                <option>Bank BNI</option>
+                            </select>
+                            <i id="iconBank" class="fa fa-chevron-down position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%);"></i>
+                        </div>
+                        <label for="pilihanEwallet" class="payment-group mt-2" id="labelEwallet" style="display: none;">Pilihan E-Wallet</label>
+                        <div class="position-relative" id="divEwallet" style="display: none;">
+                            <select class="form-control" id="pilihanEwallet" name="pilihanEwallet" onchange="toggleIcon('iconEwallet')">
+                                <option disabled selected>Pilih E-Wallet</option>
+                                <option>GoPay</option>
+                                <option>OVO</option>
+                                <option>DANA</option>
+                            </select>
+                            <i id="iconEwallet" class="fa fa-chevron-down position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%);"></i>
+                        </div>
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" type="checkbox" id="privacyPolicy" name="privacyPolicy">
+                            <label class="form-check-label privacy-text" for="privacyPolicy">
+                                Menyetujui Privacy Policy
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-pesan mt-3">Bayar</button>
                 </div>
                 <div class="col-md-4">
-                    <div class="pengiriman">
-                        <form action="{{ route('pemesanan.store') }}" method="POST">
-                            @csrf
-                            <div class="alamat-pengiriman">
-                                <h5>Alamat Pengiriman</h5>
-                                <label for="province">Provinsi</label>
-                                <select class="form-control" id="province" name="province" required>
-                                    <option value="">Pilih Provinsi</option>
-                                </select>
-                                <label for="city" class="mt-2">Kota/Kabupaten</label>
-                                <select class="form-control" id="city" name="city" required>
-                                    <option value="">Pilih Kota/Kabupaten</option>
-                                </select>
-                                <label for="postal_code" class="mt-2">Kode Pos</label>
-                                <input type="text" class="form-control" id="postal_code" name="postal_code" placeholder="Kode Pos" required>
-                                <label for="address" class="mt-2">Alamat Lengkap</label>
-                                <input type="text" class="form-control" id="address" name="address" placeholder="Jl xxxx" required>
-                            </div>
-                            <div class="pilihan-kurir">
-                                <h5>Pilih Kurir</h5>
-                                <div id="courier-options">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="kuriroption" id="jne" value="option1">
-                                        <label class="form-check-label" for="jne">JNE</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="kuriroption" id="tiki" value="option2">
-                                        <label class="form-check-label" for="tiki">Tiki</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="kuriroption" id="pos" value="option3">
-                                        <label class="form-check-label" for="pos">POS</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary mt-3">Cek Ongkir</button>
-                        </form>
-                    </div>
                     <div class="rekap-pilihan">
                         <h5>Jumlah Pembayaran</h5>
                         <div class="jenis-pilihan">
@@ -352,7 +334,12 @@
                 .catch(error => console.error('Error:', error));
             });
         });
-    </script>    
+    </script>
+
+    <script>
+        window.addressID = "{{ $userAddress ? $userAddress->id : 'null' }}";
+    </script>
+    <script src="{{ asset('js/main.js')}}"></script>
     <script src="{{ asset('js/pemesanan.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

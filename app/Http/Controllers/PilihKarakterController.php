@@ -79,48 +79,25 @@ class PilihKarakterController extends Controller
         ]);
     }
 
-    // public function processOrder()
-    // {
-    //     $selectedJenis = session()->get('selected_jenis');
-    //     $selectedKarakter = session()->get('selected_karakter', []);
-    //     $orderId = Order::create(['user_id' => auth()->id()])->id; // Buat entri order baru dan ambil ID-nya
-
-    //     if ($selectedJenis) {
-    //         $jenisCokelat = JenisCokelat::find($selectedJenis);
-    //         if ($jenisCokelat) {
-    //             $orderItem = new OrderItem();
-    //             $orderItem->order_id = $orderId;
-    //             $orderItem->jenis_cokelat_id = $jenisCokelat->id;
-    //             $orderItem->quantity = 1; // Default atau sesuai dengan kebutuhan
-    //             $orderItem->price = $jenisCokelat->harga;
-    //             $orderItem->save();
-    //         }
-    //     }
-
-    //     foreach ($selectedKarakter as $karakterId => $detail) {
-    //         $karakterCokelat = KarakterCokelat::find($karakterId);
-    //         if ($karakterCokelat) {
-    //             $orderItem = new OrderItem();
-    //             $orderItem->order_id = $orderId;
-    //             $orderItem->jenis_cokelat_id = $selectedJenis; // Jika setiap karakter terkait dengan jenis cokelat
-    //             $orderItem->karakter_cokelat_id = $karakterCokelat->id;
-    //             $orderItem->quantity = $detail['jumlah'];
-    //             $orderItem->notes = $detail['catatan'];
-    //             $orderItem->price = $karakterCokelat->harga; // Sesuaikan harga jika diperlukan
-    //             $orderItem->save();
-    //         }
-    //     }
-
-    //     // Kosongkan sesi setelah order diproses
-    //     session()->forget('selected_jenis');
-    //     session()->forget('selected_karakter');
-    //     session()->forget('total_karakter');
-
-    //     return redirect()->route('pemesanan'); // Arahkan ke halaman pemesanan
-    // }
-
     public function processOrder()
     {
+        $user = auth()->user();
+
+        // Cek apakah user memiliki alamat
+        $userAddress = $user->userAddress;
+    
+        // Debugging: Tampilkan data alamat
+        if ($userAddress) {
+            // Periksa jika alamat tidak lengkap
+            if (!$userAddress->address) {
+                // Redirect ke halaman profil jika alamat tidak lengkap
+                return redirect()->route('profil', ['#alamat'])->with('message', 'Silakan lengkapi alamat Anda.');
+            }
+        } else {
+            // Jika alamat tidak ada
+            return redirect()->route('profil', ['#alamat'])->with('message', 'Silakan lengkapi alamat Anda.');
+        }
+
         $selectedJenis = session()->get('selected_jenis');
         $selectedKarakter = session()->get('selected_karakter', []);
 

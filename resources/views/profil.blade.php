@@ -84,6 +84,12 @@
     </nav>
 
     <!--Main Content-->
+    @if(session('message'))
+    <div class="alert alert-warning">
+        {{ session('message') }}
+    </div>
+    @endif
+    
     <section class="main-content">
         <div class="container">
             <h2>Profil Saya</h2>

@@ -5,10 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\OrderAddress;
+use App\Models\UserAddress;
 use Shared\Models\JenisCokelat;
 use Shared\Models\KarakterCokelat;
 use App\Services\RajaongkirService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Http;
+
+ // Tambahkan ini
+
 
 class ProsesOrderController extends Controller
 {
@@ -26,26 +32,96 @@ class ProsesOrderController extends Controller
         $orderItems = [];
         $shippingCost = 0;
 
+        // Ambil alamat pengguna dari tabel user_address
+        $userAddress = UserAddress::where('user_id', auth()->id())->first();
+
         if ($order) {
             $orderItems = OrderItem::with('karakterItems.karakterCokelat')
                 ->where('order_id', $order->id)
                 ->get();
+        }
 
-            $orderAddress = $order->orderAddress;
-            if ($orderAddress) {
-                $provinceId = $this->getProvinceIdByName($orderAddress->province);
-                $cityId = $this->getCityIdByName($orderAddress->city);
-                $weight = 1000; // Sesuaikan dengan berat produk
-                $courier = 'jne'; // Sesuaikan dengan kurir yang dipilih
+        return view('pemesanan', compact('order', 'orderItems', 'userAddress'));
+    }
 
-                $shippingCostResponse = $this->rajaongkirService->getShippingCost(171, $cityId, $weight, $courier);
+    public function shippingfee(Request $request)
+    {
+        $addressID = $request->input('address_id');
+        $courier = $request->input('courier');
+        $token = $request->input('_token'); // Log token jika perlu
 
-                $shippingCost = $shippingCostResponse['rajaongkir']['results'][0]['costs'][0]['cost'][0]['value'];
+        // Log data yang diterima
+        Log::info('Request data:', [
+            'address_id' => $addressID,
+            'courier' => $courier,
+            'token' => $token
+        ]);
+
+        // Ambil alamat menggunakan model UserAddress
+        $address = UserAddress::findOrFail($addressID);
+
+        $order = Order::where('user_id', auth()->id())->latest()->first();
+        $orderItems = OrderItem::where('order_id', $order->id)->get();
+
+        // Hitung biaya pengiriman
+        $availableServices = $this->calculateShippingfee($orderItems, $address, $courier);
+
+        // Kirim ke view dengan data alamat dan kurir
+        return view('available_services', [
+            'addressID' => $addressID,
+            'courier' => $courier,
+            'address' => $address,
+            'services' => $availableServices // Pastikan variabel ini dikirim
+        ]);
+    }
+
+
+    private function calculateShippingfee($orderItems, $address, $courier)
+    {
+        $weight = 1000; // Berat barang dalam gram
+        $url = 'https://api.rajaongkir.com/starter/cost';
+        $apiKey = 'f587d9fb3201bbc06ed11b0116fe4b56';
+        $origin = '171';
+
+        try {
+            // Mengirim permintaan ke API RajaOngkir
+            $response = Http::withHeaders([
+                'key' => $apiKey, // Menggunakan API Key langsung dari variabel lokal
+            ])->post($url, [
+                'origin' => $origin,
+                'destination' => $address->city_id,
+                'weight' => $weight,
+                'courier' => $courier,
+            ]);
+            $shippingFees = json_decode($response->getBody(), true);
+        } catch (\Throwable $th) {
+            // Menghentikan eksekusi dan menampilkan pesan kesalahan untuk debug
+            Log::error('Error calculating shipping fee: ' . $th->getMessage());
+            return [];
+        }
+
+        $availableServices = []; // Perbaiki penamaan variabel
+        if (!empty($shippingFees['rajaongkir']['results'])) {
+            foreach ($shippingFees['rajaongkir']['results'] as $cost){
+                if (!empty($cost['costs'])) {
+                    foreach ($cost['costs'] as $costDetail) {
+                        $availableServices[] = [
+                            'service' => $costDetail['service'],
+                            'description' => $costDetail['description'],
+                            'etd' => $costDetail['cost'][0]['etd'],
+                            'cost' => $costDetail['cost'][0]['value'],
+                            'courier' => $courier,
+                            'address_id' => $address->id,
+                        ];
+                    }
+                }
             }
         }
 
-        return view('pemesanan', compact('order', 'orderItems', 'shippingCost'));
+        Log::info('Available services:', $availableServices);
+        return $availableServices;
     }
+
 
     public function store(Request $request)
     {
@@ -99,36 +175,6 @@ class ProsesOrderController extends Controller
         return response()->json(['success' => false]);
     }
 
-    public function calculateShippingCost(Request $request)
-{
-    $request->validate([
-        'province' => 'required|string',
-        'city' => 'required|string',
-        'courier' => 'required|string'
-    ]);
-
-    $cityId = $this->getCityIdByName($request->input('city'));
-
-    if (!$cityId) {
-        return response()->json(['error' => 'Kota tidak ditemukan'], 404);
-    }
-
-    $origin = 171; // ID kota asal yang telah ditentukan
-    $weight = 1000; // Berat barang dalam gram
-    $courier = $request->input('courier');
-
-    $shippingCostResponse = $this->rajaongkirService->getShippingCost($origin, $cityId, $weight, $courier);
-
-    // Tambahkan log untuk memeriksa respons
-    \Log::info('Shipping cost response: ', ['response' => $shippingCostResponse]);
-
-    if (isset($shippingCostResponse['rajaongkir']['results'][0]['costs'][0]['cost'][0])) {
-        $costs = $shippingCostResponse['rajaongkir']['results'][0]['costs'];
-        return response()->json($costs);
-    } else {
-        return response()->json(['error' => 'Data tidak tersedia atau format tidak sesuai'], 500);
-    }
-}
     protected function getCityIdByName($cityName)
     {
         // Mendapatkan ID provinsi dari nama provinsi yang dikirimkan

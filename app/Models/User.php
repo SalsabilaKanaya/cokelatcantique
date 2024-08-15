@@ -48,7 +48,7 @@ class User extends Authenticatable
         ];
     }
 
-    public function user_address()
+    public function userAddress()
     {   
         return $this->hasOne(UserAddress::class, 'user_id');
     }

@@ -206,7 +206,7 @@
                             <a class="btn button-keranjang" href="#" role="button">Keranjang</a>
                             <form action="{{ route('process_order') }}" method="POST">
                                 @csrf
-                                <button type="submit" class="btn button-pesan">Pesan</button>
+                                <button type="submit" class="btn button-pesan {{ $isDisabled }}" data-id="{{ $cokelat->id }}" {{ $isDisabled ? 'disabled' : '' }}>Pesan</button>
                             </form>
                         </div>
                     </div>
