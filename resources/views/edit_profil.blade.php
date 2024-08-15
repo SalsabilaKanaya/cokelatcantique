@@ -94,7 +94,7 @@
                     <div class="row mb-3">
                         <div class="col">
                             <label for="name" class="form-label">Nama</label>
-                            <input type="text" class="form-control" name="name" id="name" value="{{ $user->name }}" placeholder="Masukkan Nama" required>
+                            <input type="text" class="form-control" name="name" id="name" value="{{ $user->name }}" placeholder="Masukkan Nama">
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -112,11 +112,17 @@
                     <div class="row mb-3">
                         <div class="col">
                             <label for="gender" class="form-label">Gender</label>
-                            <select class="form-control" name="gender" id="gender" required>
-                                <option value="" disabled>Pilih Gender</option>
-                                <option value="male" {{ $user->gender == 'Male' ? 'selected' : '' }}>Male</option>
-                                <option value="female" {{ $user->gender == 'Female' ? 'selected' : '' }}>Female</option>
+                            <select class="form-control" name="gender" id="gender">
+                                <option value="">Pilih Gender</option>
+                                <option value="male" {{ $user->gender == 'male' ? 'selected' : '' }}>Male</option>
+                                <option value="female" {{ $user->gender == 'female' ? 'selected' : '' }}>Female</option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="datebirth" class="form-label">Tanggal Lahir</label>
+                            <input type="date" class="form-control" name="datebirth" id="datebirth" value="{{ $user->datebirth }}" placeholder="Masukkan Tanggal Lahir" required>
                         </div>
                     </div>
                     <div class="d-flex justify-content-end">
@@ -125,9 +131,8 @@
                     </div>
                 </form>
             </div>
-            </div>
         </div>
-    </section>
+    </section>    
 
 
     <!--Footer-->

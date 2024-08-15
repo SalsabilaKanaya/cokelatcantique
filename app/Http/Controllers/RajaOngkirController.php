@@ -17,7 +17,8 @@ class RajaOngkirController extends Controller
 
     public function getProvinces()
     {
-        $response = Http::withHeaders(['key' => 'f587d9fb3201bbc06ed11b0116fe4b56'])
+        $response = Http::withHeaders([
+            'key' => 'f587d9fb3201bbc06ed11b0116fe4b56'])
             ->get('https://api.rajaongkir.com/starter/province');
 
         // Mengambil data JSON dari respons
@@ -36,11 +37,12 @@ class RajaOngkirController extends Controller
 
     public function getCities($provinceId)
     {
-        $response = Http::withHeaders(['key' => 'f587d9fb3201bbc06ed11b0116fe4b56'])
+        $response = Http::withHeaders([
+            'key' => 'f587d9fb3201bbc06ed11b0116fe4b56'])
             ->get("https://api.rajaongkir.com/starter/city?province=$provinceId");
-    
+
         $data = $response->json();
-    
+
         // Periksa apakah kunci 'rajaongkir' dan 'results' ada di data
         if (isset($data['rajaongkir']) && isset($data['rajaongkir']['results'])) {
             $cities = $data['rajaongkir']['results'];
@@ -49,5 +51,12 @@ class RajaOngkirController extends Controller
             return response()->json(['error' => 'Data tidak tersedia atau format tidak sesuai'], 500);
         }
     }
-    
+
+    public function ongkir(){
+        $responCost = Http::withHeaders(['
+        key' => 'f587d9fb3201bbc06ed11b0116fe4b56'])
+        ->post('https://api.rajaongkir.com/starter/cost', [
+            'courier' => $request->courier,
+        ]);
+    }
 }

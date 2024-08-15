@@ -122,34 +122,26 @@
                             <div class="form-group mt-3">
                                 <h2>Data Pribadi</h2>
                                 <div class="input-data">
-                                    <label for="name">Nama</label>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Nama" required>
-                                    <label for="email" class="mt-2">Email</label>
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="xxxxxx@gmail.com" required>
-                                    <label for="phone_number" class="mt-2">No Hp</label>
-                                    <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="08xxxxxx" required>
-                                    <label for="delivery_date" class="mt-2">Tanggal Pengiriman</label>
-                                    <input type="date" class="form-control" id="delivery_date" name="delivery_date" required>
-                                    <label for="address" class="mt-2">Alamat Lengkap</label>
-                                    <input type="text" class="form-control" id="address" name="address" placeholder="Jl xxxx" required>
                                     <div class="row">
-                                        <div class="col-md-4">
-                                            <label for="province">Provinsi</label>
-                                            <select class="form-control" id="province" name="province" required>
-                                                <option value="">Pilih Provinsi</option>
-                                            </select>
+                                        <div class="col">
+                                            <label for="name">Nama</label>
+                                            <input type="text" class="form-control" id="name" name="name" placeholder="Nama" required>
                                         </div>
-                                        <div class="col-md-4">
-                                            <label for="city" class="mt-2">Kota/Kabupaten</label>
-                                            <select class="form-control" id="city" name="city" required>
-                                                <option value="">Pilih Kota/Kabupaten</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label for="postal_code" class="mt-2">Kode Pos</label>
-                                            <input type="text" class="form-control" id="postal_code" name="postal_code" placeholder="Kode Pos" required>
+                                        <div class="col">
+                                            <label for="email">Email</label>
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="xxxxxx@gmail.com" required>
                                         </div>
                                     </div>
+                                    <div class="row mt-2">
+                                        <div class="col">
+                                            <label for="phone_number" >No Hp</label>
+                                            <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="08xxxxxx" required>
+                                        </div>
+                                        <div class="col">
+                                            <label for="delivery_date" >Tanggal Pengiriman</label>
+                                            <input type="date" class="form-control" id="delivery_date" name="delivery_date" required>
+                                        </div>
+                                    </div> 
                                 </div>
                             </div>
                             <div class="form-group mt-3">
@@ -198,6 +190,44 @@
                     @endif
                 </div>
                 <div class="col-md-4">
+                    <div class="pengiriman">
+                        <form action="{{ route('pemesanan.store') }}" method="POST">
+                            @csrf
+                            <div class="alamat-pengiriman">
+                                <h5>Alamat Pengiriman</h5>
+                                <label for="province">Provinsi</label>
+                                <select class="form-control" id="province" name="province" required>
+                                    <option value="">Pilih Provinsi</option>
+                                </select>
+                                <label for="city" class="mt-2">Kota/Kabupaten</label>
+                                <select class="form-control" id="city" name="city" required>
+                                    <option value="">Pilih Kota/Kabupaten</option>
+                                </select>
+                                <label for="postal_code" class="mt-2">Kode Pos</label>
+                                <input type="text" class="form-control" id="postal_code" name="postal_code" placeholder="Kode Pos" required>
+                                <label for="address" class="mt-2">Alamat Lengkap</label>
+                                <input type="text" class="form-control" id="address" name="address" placeholder="Jl xxxx" required>
+                            </div>
+                            <div class="pilihan-kurir">
+                                <h5>Pilih Kurir</h5>
+                                <div id="courier-options">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="kuriroption" id="jne" value="option1">
+                                        <label class="form-check-label" for="jne">JNE</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="kuriroption" id="tiki" value="option2">
+                                        <label class="form-check-label" for="tiki">Tiki</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="kuriroption" id="pos" value="option3">
+                                        <label class="form-check-label" for="pos">POS</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3">Cek Ongkir</button>
+                        </form>
+                    </div>
                     <div class="rekap-pilihan">
                         <h5>Jumlah Pembayaran</h5>
                         <div class="jenis-pilihan">
@@ -269,6 +299,60 @@
             </div>
         </div>
     </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('button[type="submit"]').addEventListener('click', function(event) {
+                event.preventDefault();
+                
+                // Mengambil data dari form
+                const province = document.getElementById('province').value;
+                const city = document.getElementById('city').value;
+                const courier = document.querySelector('input[name="kuriroption"]:checked')?.id;
+                
+                if (!province || !city || !courier) {
+                    alert('Harap lengkapi semua informasi sebelum mengecek ongkir.');
+                    return;
+                }
+    
+                fetch('{{ route('pemesanan.calculateShippingCost') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        province: province,
+                        city: city,
+                        courier: courier
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        // Menampilkan hasil ongkir
+                        const courierOptions = document.getElementById('courier-options');
+                        courierOptions.innerHTML = '';
+    
+                        data.forEach(service => {
+                            service.costs.forEach(cost => {
+                                const option = document.createElement('div');
+                                option.innerHTML = `
+                                    <h6>${service.service}</h6>
+                                    <p>${cost.description}</p>
+                                    <p>Rp ${cost.cost[0].value} (${cost.cost[0].etd} hari)</p>
+                                `;
+                                courierOptions.appendChild(option);
+                            });
+                        });
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        });
+    </script>    
     <script src="{{ asset('js/pemesanan.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

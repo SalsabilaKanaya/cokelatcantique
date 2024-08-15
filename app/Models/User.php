@@ -18,10 +18,11 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'phone',
         'email',
         'password',
-        'phone',
-        'gender', 
+        'gender',
+        'datebirth',
     ];
 
     /**
@@ -46,4 +47,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function user_address()
+    {   
+        return $this->hasOne(UserAddress::class, 'user_id');
+    }
+
 }

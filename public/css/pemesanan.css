@@ -186,6 +186,48 @@ h2{
     margin-bottom: 30px;
 }
 
+.pengiriman {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 360px;
+    height: auto;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.pengiriman h5{
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    text-align: center;
+}
+
+.alamat-pengiriman label{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    color: #404852;
+    font-weight: 600;
+}
+
+.alamat-pengiriman input,
+.alamat-pengiriman select{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.pilihan-kurir{
+    margin-top: 10px;
+}
+
+.pilihan-kurir label{
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+}
+
 .rekap-pilihan {
     background-color: #f8f9fa;
     padding: 20px;

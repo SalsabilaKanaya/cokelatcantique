@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css"/>
 
-    <link rel="stylesheet" href="{{ asset('css/profil.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/edit_alamat.css')}}">
 </head>
 <body>
 
@@ -85,88 +85,55 @@
 
     <!--Main Content-->
     <section class="main-content">
-        <div class="container">
-            <h2>Profil Saya</h2>
-            <!-- Tabs Navigation -->
-            <ul class="nav nav-underline justify-content-center" id="profileTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="profil-tab" data-bs-toggle="tab" data-bs-target="#profil" type="button" role="tab" aria-controls="profil" aria-selected="true">Profil</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="alamat-tab" data-bs-toggle="tab" data-bs-target="#alamat" type="button" role="tab" aria-controls="alamat" aria-selected="false">Alamat</button>
-                </li>
-            </ul>
-    
-            <!-- Tabs Content -->
-            <div class="tab-content" id="profileTabContent">
-                <!-- Profil Tab -->
-                <div class="tab-pane fade show active" id="profil" role="tabpanel" aria-labelledby="profil-tab">
-                    <div class="profile">
-                        <div class="profile-details">
-                            <div class="detail-item">
-                                <p class="title">Nama</p>
-                                <p>{{ $user->name ?? '-' }}</p>
-                            </div>
-                            <div class="detail-item">
-                                <p class="title">No Hp</p>
-                                <p>{{ $user->phone ?? '-' }}</p>
-                            </div>
-                            <div class="detail-item">
-                                <p class="title">Email</p>
-                                <p>{{ $user->email }}</p>
-                            </div>
-                            <div class="detail-item">
-                                <p class="title">Jenis Kelamin</p>
-                                <p>{{ $user->gender ?? '-' }}</p>
-                            </div>
-                            <div class="detail-item">
-                                <p class="title">Tanggal Lahir</p>
-                                <p>{{ $user->datebirth ?? '-' }}</p>
-                            </div>
+        <div class="content">
+            <h1>Update Alamat Saya</h1>
+            <div class="profile">
+                <form action="{{ route('address.updateAddress') }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="name" class="form-label">Nama</label>
+                            <input type="text" class="form-control" name="name" id="name" value="{{ $user->user_address->name ?? '' }}" placeholder="Masukkan Nama" required>
                         </div>
-                        <a href="{{ route('profil.edit') }}" class="btn btn-edit">Edit Profile</a>
+                        <div class="col">
+                            <label for="phone" class="form-label">No Hp</label>
+                            <input type="text" class="form-control" name="phone" id="phone" value="{{ $user->user_address->phone ?? '' }}" placeholder="08xxxxxx">
+                        </div>
                     </div>
-                </div>
-
-                <!-- Alamat Tab -->
-                <div class="tab-pane fade" id="alamat" role="tabpanel" aria-labelledby="alamat-tab">
-                    <div class="alamat">
-                        @if ($user->user_address)
-                            <div class="alamat-details">
-                                <div class="detail-item">
-                                    <p class="title">Nama</p>
-                                    <p>{{ $user->user_address->name }}</p>
-                                </div>
-                                <div class="detail-item">
-                                    <p class="title">No Hp</p>
-                                    <p>{{ $user->user_address->phone }}</p>
-                                </div>
-                                <div class="detail-item">
-                                    <p class="title">Province</p>
-                                    <p>{{ $user->user_address->province_name }}</p>
-                                </div>
-                                <div class="detail-item">
-                                    <p class="title">City</p>
-                                    <p>{{ $user->user_address->city_name }}</p>
-                                </div>                                                             
-                                <div class="detail-item">
-                                    <p class="title">Alamat Lengkap</p>
-                                    <p>{{ $user->user_address->address }}</p>
-                                </div>
-                            </div>
-                        @else
-                            <div class="no-address">
-                                <img src="{{ asset('img/address.jpg') }}" alt="No address" class="no-address-img">
-                                <p class="no-address-text">Alamat belum ada</p>
-                            </div>
-                        @endif
-                        <a href="{{ route('address.editAddress') }}" class="btn btn-edit">Edit Alamat</a>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="province" class="form-label">Province</label>
+                            <select class="form-control" name="province_id" id="province" required>
+                                <option value="">Pilih Province</option>
+                                <!-- Provinsi akan dimuat dengan JavaScript -->
+                            </select>
+                        </div>
                     </div>
-                </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="city" class="form-label">City</label>
+                            <select class="form-control" name="city_id" id="city" required>
+                                <option value="">Pilih City</option>
+                                <!-- Kota akan dimuat dengan JavaScript -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="address" class="form-label">Alamat Lengkap</label>
+                            <p class="address-note">Masukkan nama jalan, gedung, no rumah dengan lengkap</p>
+                            <textarea class="form-control" name="address" id="address" placeholder="Masukkan alamat lengkap" required>{{ $user->user_address->address ?? '' }}</textarea>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <a href="javascript:history.back()" type="button" class="btn btn-danger" id="cancelButton">Cancel</a>
+                        <button type="submit" class="btn btn-submit">Update</button>
+                    </div>
+                </form>
             </div>
         </div>
     </section>
-    
 
     <!--Footer-->
     <section class="footer justify-content-between">
@@ -175,14 +142,14 @@
                 <div class="col-md-3">
                     <div class="logo-footer">
                         <a href="">
-                            <img src="img/logo.png" alt="" width="150px">
+                            <img src="{{ asset('img/logo.png')}}" alt="" width="150px">
                         </a>
                     </div>
                 </div>
                 <div class="col-md-3 footer-content">
                     <h1>Customer Support</h1>
-                    <a href="faq.html">FAQ</a>
-                    <a href="cara_pemesanan.html">Cara Pemesanan</a>
+                    <a href="{{ route('faq')}}">FAQ</a>
+                    <a href="{{ route('cara_pemesanan')}}">Cara Pemesanan</a>
                 </div>
                 <div class="col-md-4 footer-content">
                     <h1>Kontak Kami</h1>
@@ -194,19 +161,22 @@
                     <h1>Media Social</h1>
                     <div class="sosial-media justify-content-between align-items-center">
                         <a href="https://www.instagram.com/cokelat_cantique/">
-                            <img src="img/instagram.png" alt="">
+                            <img src="{{ asset('img/instagram.png')}}" alt="">
                         </a>
                         <a href="">
-                            <img src="img/facebook.png" alt="">
+                            <img src="{{ asset('img/facebook.png')}}" alt="">
                         </a>
                         <a href="https://www.tiktok.com/@cokelat_cantique?_t=8neVX6XFl6v&_r=1">
-                            <img src="img/tiktok.png" alt="">
+                            <img src="{{ asset('img/tiktok.png')}}" alt="">
                         </a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    </script>
+    <script src="{{ asset('js/profil.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

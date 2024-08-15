@@ -13,7 +13,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PesanController;
 use App\Http\Controllers\ProsesOrderController;
 use App\Http\Controllers\RajaOngkirController;
-
+use App\Http\Controllers\KurirController;
+use App\Http\Controllers\OngkirController;
+use App\Http\Controllers\AddressController;
 
 Route::get('/', function () {
     return view('login');
@@ -57,8 +59,10 @@ Route::get('/pemesanan', [ProsesOrderController::class, 'index'])->name('pemesan
 Route::post('/pemesanan', [ProsesOrderController::class, 'store'])->name('pemesanan.store');
 Route::post('/pemesanan/calculateShippingCost', [ProsesOrderController::class, 'calculateShippingCost'])->name('pemesanan.calculateShippingCost');
 
-Route::get('/api/get-provinces', [RajaOngkirController::class, 'getProvinces']);
-Route::get('/api/get-cities/{provinceId}', [RajaOngkirController::class, 'getCities']);
+// Route::get('/api/get-provinces', [RajaOngkirController::class, 'getProvinces']);
+// Route::get('/api/get-cities/{provinceId}', [RajaOngkirController::class, 'getCities']);
+
+// Route::get('/api/get-couriers', [KurirController::class, 'getCouriers']);
 
 // Route::post('/pesanan-store', [PesanController::class, 'store'])->name('pesanan-store');
 
@@ -71,10 +75,19 @@ Route::post('/kontak', [KontakController::class, 'store'])->name('kontak.store')
 Route::get('/keranjang', [WebController::class, 'keranjang'])->name('keranjang');
 Route::get('/histori', [WebController::class, 'histori'])->name('histori');
 
-
+// Profile Routes
 Route::get('/profil', [ProfileController::class, 'profil'])->name('profil');
 Route::put('/profil/update', [ProfileController::class, 'updateProfil'])->name('profil.update');
 Route::get('/profil/edit', [ProfileController::class, 'editProfil'])->name('profil.edit');
+
+// Address Routes
+Route::get('/address/edit', [AddressController::class, 'edit'])->name('address.editAddress');
+Route::put('/address/update', [AddressController::class, 'update'])->name('address.updateAddress');
+
+// API Routes for Provinces and Cities
+Route::get('/api/get-provinces', [AddressController::class, 'getProvinces']);
+Route::get('/api/get-cities/{provinceId}', [AddressController::class, 'getCities']);
+
 
 Route::get('/faq', [WebController::class, 'faq'])->name('faq');
 Route::get('/cara_pemesanan', [WebController::class, 'caraPemesanan'])->name('cara_pemesanan');

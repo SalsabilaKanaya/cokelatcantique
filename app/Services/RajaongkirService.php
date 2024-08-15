@@ -13,38 +13,46 @@ class RajaongkirService
         $this->apiKey = config('services.rajaongkir.api_key');
     }
 
-    public function getProvinces()
-    {
-        $response = Http::withHeaders([
-            'key' => $this->apiKey,
-        ])->get('https://api.rajaongkir.com/starter/province');
+    // public function getProvinces()
+    // {
+    //     $response = Http::withHeaders([
+    //         'key' => $this->apiKey,
+    //     ])->get('https://api.rajaongkir.com/starter/province');
 
-        return $response->json();
-    }
+    //     return $response->json();
+    // }
 
-    public function getCities($provinceId)
-    {
-        $response = Http::withHeaders([
-            'key' => $this->apiKey,
-        ])->get('https://api.rajaongkir.com/starter/city', [
-            'province' => $provinceId
-        ]);
+    // public function getCities($provinceId)
+    // {
+    //     $response = Http::withHeaders([
+    //         'key' => $this->apiKey,
+    //     ])->get('https://api.rajaongkir.com/starter/city', [
+    //         'province' => $provinceId
+    //     ]);
 
-        return $response->json();
-    }
+    //     return $response->json();
+    // }
 
     public function getShippingCost($origin, $destination, $weight, $courier)
-    {
-        $response = Http::withHeaders([
-            'key' => $this->apiKey,
-        ])->post('https://api.rajaongkir.com/starter/cost', [
-            'origin' => $origin,
-            'destination' => $destination,
-            'weight' => $weight,
-            'courier' => $courier,
-        ]);
+{
+    $url = 'https://api.rajaongkir.com/starter/cost';
+    $apiKey = env('RAJAONGKIR_API_KEY');
 
-        return $response->json();
+    $response = Http::withHeaders([
+        'key' => $apiKey
+    ])->post($url, [
+        'origin' => $origin,
+        'destination' => $destination,
+        'weight' => $weight,
+        'courier' => $courier
+    ]);
+    
+    if ($response->failed()) {
+        \Log::error('API request failed with status: ' . $response->status());
     }
+    
+    return $response->json();
+}
+
 }
 

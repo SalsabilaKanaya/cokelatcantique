@@ -1,38 +1,38 @@
 
 // untuk menghitung ongkir
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('form'); // Ganti dengan selector form yang sesuai
+// document.addEventListener('DOMContentLoaded', function() {
+//     const form = document.querySelector('form'); // Ganti dengan selector form yang sesuai
 
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
+//     form.addEventListener('submit', function(event) {
+//         event.preventDefault();
 
-        const formData = new FormData(form);
+//         const formData = new FormData(form);
 
-        fetch('/pemesanan/calculateShippingCost', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            }
-        })
-        .then(response => response.text()) // Menggunakan text() untuk memeriksa isi respons
-        .then(text => {
-            try {
-                const data = JSON.parse(text);
-                if (data.error) {
-                    console.error('Error:', data.error);
-                    document.getElementById('shipping-cost').textContent = 'Rp 0';
-                } else {
-                    document.getElementById('shipping-cost').textContent = `Rp ${data.shippingCost.toLocaleString('id-ID')}`;
-                }
-            } catch (e) {
-                console.error('Error parsing JSON:', e);
-                console.error('Received text:', text);
-            }
-        })
-        .catch(error => console.error('Error fetching shipping cost:', error));
-    });
-});
+//         fetch('/pemesanan/calculateShippingCost', {
+//             method: 'POST',
+//             body: formData,
+//             headers: {
+//                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+//             }
+//         })
+//         .then(response => response.text()) // Menggunakan text() untuk memeriksa isi respons
+//         .then(text => {
+//             try {
+//                 const data = JSON.parse(text);
+//                 if (data.error) {
+//                     console.error('Error:', data.error);
+//                     document.getElementById('shipping-cost').textContent = 'Rp 0';
+//                 } else {
+//                     document.getElementById('shipping-cost').textContent = `Rp ${data.shippingCost.toLocaleString('id-ID')}`;
+//                 }
+//             } catch (e) {
+//                 console.error('Error parsing JSON:', e);
+//                 console.error('Received text:', text);
+//             }
+//         })
+//         .catch(error => console.error('Error fetching shipping cost:', error));
+//     });
+// });
 
 document.getElementById('btn-transfer').addEventListener('click', function() {
     this.classList.add('btn-custom-active');
@@ -81,72 +81,70 @@ document.getElementById('pilihanEwallet').addEventListener('click', function() {
     toggleIcon('iconEwallet');
 });
 
-// Untuk data provinsi dan kota di dropdown
-document.addEventListener('DOMContentLoaded', function() {
-    const provinceSelect = document.getElementById('province');
-    const citySelect = document.getElementById('city');
+// document.getElementById('calculate-shipping').addEventListener('click', function () {
+//     const origin = document.getElementById('origin').value;
+//     const destination = document.getElementById('destination').value;
+//     const weight = document.getElementById('weight').value;
+//     const courier = document.getElementById('courier').value;
 
-    // Fungsi untuk mengisi dropdown provinsi
-    function populateProvinces() {
-        fetch('/api/get-provinces')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Pastikan data adalah array provinsi
-                if (data && Array.isArray(data)) {
-                    data.forEach(province => {
-                        const option = document.createElement('option');
-                        option.value = province.province_id;
-                        option.textContent = province.province;
-                        provinceSelect.appendChild(option);
-                    });
-                } else {
-                    console.error('Data provinsi tidak dalam format yang diharapkan:', data);
-                }
-            })
-            .catch(error => console.error('Error fetching provinces:', error));
-    }
+//     fetch('/pemesanan/calculateShippingCost', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+//         },
+//         body: JSON.stringify({
+//             origin: origin,
+//             destination: destination,
+//             weight: weight,
+//             courier: courier
+//         })
+//     })
+//     .then(response => {
+//         console.log('Response Status:', response.status);
+//         return response.json();
+//     })
+//     .then(data => {
+//         console.log('Response Data:', data);
+//         // Update the page with shipping cost
+//     })
+//     .catch(error => {
+//         console.error('Error:', error);
+//     });
+// });
 
-    // Fungsi untuk mengisi dropdown kota berdasarkan provinsi yang dipilih
-    function populateCities(provinceId) {
-        fetch(`/api/get-cities/${provinceId}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                citySelect.innerHTML = '<option value="">Pilih Kota/Kabupaten</option>'; // Clear existing options
-                if (data && Array.isArray(data)) {
-                    data.forEach(city => {
-                        const option = document.createElement('option');
-                        option.value = city.city_id;
-                        option.textContent = city.city_name;
-                        citySelect.appendChild(option);
-                    });
-                } else {
-                    console.error('Data kota tidak dalam format yang diharapkan:', data);
-                }
-            })
-            .catch(error => console.error('Error fetching cities:', error));
-    }
+// document.addEventListener('DOMContentLoaded', function() {
+//     const courierOptionsContainer = document.getElementById('courier-options');
 
-    // Event listener untuk perubahan pada dropdown provinsi
-    provinceSelect.addEventListener('change', function() {
-        const selectedProvinceId = this.value;
-        if (selectedProvinceId) {
-            populateCities(selectedProvinceId);
-        } else {
-            citySelect.innerHTML = '<option value="">Pilih Kota/Kabupaten</option>'; // Clear cities if no province selected
-        }
-    });
+//     // Fungsi untuk mengisi radio button kurir
+//     function populateCouriers() {
+//         fetch('/api/post-cost')
+//             .then(response => response.json())
+//             .then(data => {
+//                 console.log('Received courier data:', data); // Tambahkan ini untuk melihat data yang diterima
+//                 if (data && data.rajaongkir && Array.isArray(data.rajaongkir.results)) {
+//                     data.rajaongkir.results.forEach(courier => {
+//                         const radioButton = document.createElement('div');
+//                         radioButton.className = 'form-check';
+    
+//                         radioButton.innerHTML = `
+//                             <input class="form-check-input" type="radio" name="courier" id="courier-${courier.code}" value="${courier.code}">
+//                             <label class="form-check-label" for="courier-${courier.code}">
+//                                 ${courier.name}
+//                             </label>
+//                         `;
+    
+//                         courierOptionsContainer.appendChild(radioButton);
+//                     });
+//                 } else {
+//                     console.error('Data kurir tidak dalam format yang diharapkan:', data);
+//                 }
+//             })
+//             .catch(error => console.error('Error fetching couriers:', error));
+//     }
 
-    // Mengisi dropdown provinsi saat halaman dimuat
-    populateProvinces();
-});
+//     populateCouriers();
+// });
+
+
 

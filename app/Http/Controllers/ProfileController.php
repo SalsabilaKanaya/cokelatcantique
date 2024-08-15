@@ -12,7 +12,7 @@ class ProfileController extends Controller
     {
         // Mengambil data pengguna yang sedang login
         $user = Auth::user();
-
+        $user->load('user_address'); // Load relasi untuk user_address, province, dan city
         // Mengirim data pengguna ke view profil
         return view('profil', compact('user'));
     }
@@ -34,6 +34,7 @@ class ProfileController extends Controller
             'phone' => 'nullable|string|max:15',
             'email' => 'required|email|max:255',
             'gender' => 'required|in:male,female',
+            'datebirth' => 'required|date',
         ]);
 
         // Mengambil data pengguna yang sedang login
@@ -44,6 +45,7 @@ class ProfileController extends Controller
         $user->phone = $request->input('phone');
         $user->email = $request->input('email');
         $user->gender = $request->input('gender');
+        $user->datebirth = $request->input('datebirth');
         $user->save();
 
         // Redirect kembali ke halaman profil dengan pesan sukses
