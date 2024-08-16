@@ -13,30 +13,35 @@ class AddressController extends Controller
     public function edit()
     {
         $user = Auth::user();
+        \Log::info('User data for edit', [
+            'user_id' => $user->id,
+            'user_address' => $user->user_address,
+        ]);
         return view('edit_alamat', compact('user'));
     }
+    
 
     public function update(Request $request)
     {
         $user = Auth::user();
         $address = $user->user_address ?? new \App\Models\UserAddress();
-
+    
         // Fetch province and city names from RajaOngkir API
         $provinceResponse = Http::withHeaders([
             'key' => 'f587d9fb3201bbc06ed11b0116fe4b56',
         ])->get('https://api.rajaongkir.com/starter/province', [
             'id' => $request->input('province_id')
         ]);
-
+    
         $cityResponse = Http::withHeaders([
             'key' => 'f587d9fb3201bbc06ed11b0116fe4b56',
         ])->get('https://api.rajaongkir.com/starter/city', [
             'id' => $request->input('city_id')
         ]);
-
+    
         $provinceName = $provinceResponse->json()['rajaongkir']['results']['province'];
         $cityName = $cityResponse->json()['rajaongkir']['results']['city_name'];
-
+    
         // Fill the address model with request data and fetched names
         $address->fill([
             'name' => $request->input('name'),
@@ -47,12 +52,18 @@ class AddressController extends Controller
             'city_name' => $cityName,
             'address' => $request->input('address'),
         ]);
-
+    
         $address->user_id = $user->id;
         $address->save();
-
+    
+        \Log::info('Address updated', [
+            'user_id' => $user->id,
+            'address' => $address->toArray(),
+        ]);
+    
         return redirect()->route('profil', ['#alamat'])->with('success', 'Address updated successfully.');
     }
+    
 
     public function getProvinces()
     {

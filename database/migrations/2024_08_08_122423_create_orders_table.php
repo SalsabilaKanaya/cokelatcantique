@@ -14,13 +14,15 @@ class CreateOrdersTable extends Migration
     public function up()
     {
         Schema::create('order', function (Blueprint $table) {
-            $table->id(); // Auto-incrementing primary key (order_id)
+            $table->uuid('id')->primary(); // Auto-incrementing primary key (order_id)
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->date('delivery_date');
             $table->text('notes')->nullable();
+            $table->string('payment_proof')->nullable();
+            $table->string('courier')->nullable();
+            $table->string('delivery_package')->nullable();
             $table->decimal('total_price', 10, 2);
-            $table->string('payment_method');
             $table->timestamps();
         });
     }

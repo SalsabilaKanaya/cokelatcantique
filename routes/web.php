@@ -55,9 +55,9 @@ Route::get('/get-progress', [PilihKarakterController::class, 'getProgress']);
 Route::post('/process-order', [PilihKarakterController::class, 'processOrder'])->name('process_order');
 
 Route::get('/pemesanan', [ProsesOrderController::class, 'index'])->name('pemesanan');
-Route::post('/pemesanan', [ProsesOrderController::class, 'store'])->name('pemesanan.store');
-Route::post('/pemesanan/calculateShippingCost', [ProsesOrderController::class, 'calculateShippingCost'])->name('pemesanan.calculateShippingCost');
 Route::post('/available_services', [ProsesOrderController::class, 'shippingfee'])->name('shippingfee');
+Route::post('/choose-package', [ProsesOrderController::class, 'choosePackage'])->name('choosepackage');
+Route::post('/order', [ProsesOrderController::class, 'store'])->name('order.store');
 
 
 // Route::get('/api/get-provinces', [RajaOngkirController::class, 'getProvinces']);

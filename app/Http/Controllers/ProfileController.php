@@ -12,7 +12,7 @@ class ProfileController extends Controller
     {
         // Mengambil data pengguna yang sedang login
         $user = Auth::user();
-        $user->load('user_address'); // Load relasi untuk user_address, province, dan city
+        $user->load('userAddress'); // Load relasi untuk user_address, province, dan city
         // Mengirim data pengguna ke view profil
         return view('profil', compact('user'));
     }

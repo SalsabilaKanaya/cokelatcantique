@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+
 
 class Order extends Model
 {
@@ -11,13 +13,31 @@ class Order extends Model
 
     protected $table = 'order';
 
+    protected $primaryKey = 'id'; // UUID sebagai primary key
+
+    public $incrementing = false; // Tidak menggunakan auto-increment
+    protected $keyType = 'string'; // Tipe key adalah string
+
     protected $fillable = [
         'user_id',
         'delivery_date',
         'notes',
+        'payment_proof',
+        'courier',
+        'service name',
+        'delivery_cost',
         'total_price',
-        'payment_method',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            if (!$model->id) {
+                $model->id = (string) Str::uuid(); // Generate UUID
+            }
+        });
+    }
 
     public function user()
     {
@@ -29,8 +49,8 @@ class Order extends Model
         return $this->hasMany(OrderItem::class, 'order_id', 'id');
     }
 
-    public function address()
+    public function userAddress()
     {
-        return $this->hasOne(OrderAddress::class, 'orderaddress_id',);
+        return $this->belongsTo(UserAddress::class, 'user_id', 'user_id');
     }
 }

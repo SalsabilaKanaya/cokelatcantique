@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
@@ -16,6 +17,8 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+     
     protected $fillable = [
         'name',
         'phone',
@@ -48,9 +51,11 @@ class User extends Authenticatable
         ];
     }
 
+
     public function userAddress()
-    {   
-        return $this->hasOne(UserAddress::class, 'user_id');
+    {
+        return $this->hasOne(UserAddress::class, 'user_id', 'id');
     }
+
 
 }

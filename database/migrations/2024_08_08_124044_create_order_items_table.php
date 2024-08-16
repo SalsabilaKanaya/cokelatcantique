@@ -14,8 +14,8 @@ class CreateOrderItemsTable extends Migration
     public function up()
     {
         Schema::create('order_item', function (Blueprint $table) {
-            $table->id(); // Auto-incrementing primary key (orderitem_id)
-            $table->unsignedBigInteger('order_id');
+            $table->uuid('id')->primary();// Auto-incrementing primary key (orderitem_id)
+            $table->uuid('order_id');
             $table->foreign('order_id')->references('id')->on('order')->onDelete('cascade');
             $table->string('jenis_cokelat_id', 14);
             $table->foreign('jenis_cokelat_id')->references('id')->on('jenis_cokelat')->onDelete('cascade');

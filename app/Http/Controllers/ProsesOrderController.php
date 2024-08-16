@@ -28,21 +28,28 @@ class ProsesOrderController extends Controller
     public function index()
     {
         $order = Order::where('user_id', auth()->id())->latest()->first();
-
+    
         $orderItems = [];
         $shippingCost = 0;
-
+        $subtotal = 0;
+        $totalPrice = 0;
+    
         // Ambil alamat pengguna dari tabel user_address
         $userAddress = UserAddress::where('user_id', auth()->id())->first();
-
+    
         if ($order) {
             $orderItems = OrderItem::with('karakterItems.karakterCokelat')
                 ->where('order_id', $order->id)
                 ->get();
+    
+            $subtotal = $orderItems->sum('price');
         }
-
-        return view('pemesanan', compact('order', 'orderItems', 'userAddress'));
-    }
+    
+        // Hitung total harga dengan biaya pengiriman jika ada
+        $totalPrice = $subtotal + $shippingCost;
+    
+        return view('pemesanan', compact('order', 'orderItems', 'userAddress', 'subtotal', 'shippingCost', 'totalPrice'));
+    }    
 
     public function shippingfee(Request $request)
     {
@@ -122,82 +129,92 @@ class ProsesOrderController extends Controller
         return $availableServices;
     }
 
-
-    public function store(Request $request)
+    public function choosePackage(Request $request)
     {
-        $request->validate([
-            'note' => 'nullable|string|max:255',
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone_number' => 'required|string|max:20',
-            'delivery_date' => 'required|date',
-            'address' => 'required|string|max:255',
-            'subdistrict' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'province' => 'required|string|max:255',
-            'postal_code' => 'required|string|max:10',
-        ]);
-
+        $addressID = $request->input('address_id');
+        $courier = $request->input('courier');
+        $deliveryPackage = $request->input('delivery_package');
+        $address = UserAddress::findOrFail($addressID);
         $order = Order::where('user_id', auth()->id())->latest()->first();
+        $orderItems = OrderItem::where('order_id', $order->id)->get();
 
-        if ($order) {
-            $order->notes = $request->input('note');
-            $order->save();
+        // Hitung biaya pengiriman
+        $availableServices = $this->calculateShippingfee($orderItems, $address, $courier);
 
-            $provinceId = $this->getProvinceIdByName($request->input('province'));
-            $cityId = $this->getCityIdByName($request->input('city'));
-            $weight = 1000;
-            $courier = 'jne';
-
-            $shippingCostResponse = $this->rajaongkirService->getShippingCost(171, $cityId, $weight, $courier);
-            $shippingCost = $shippingCostResponse['rajaongkir']['results'][0]['costs'][0]['cost'][0]['value'];
-
-            $orderAddress = $order->orderAddress ?: new OrderAddress();
-            $orderAddress->fill([
-                'order_id' => $order->id,
-                'name' => $request->input('name'),
-                'email' => $request->input('email'),
-                'phone_number' => $request->input('phone_number'),
-                'delivery_date' => $request->input('delivery_date'),
-                'address' => $request->input('address'),
-                'subdistrict' => $request->input('subdistrict'),
-                'city' => $request->input('city'),
-                'province' => $request->input('province'),
-                'postal_code' => $request->input('postal_code'),
-            ])->save();
-
-            return response()->json([
-                'success' => true,
-                'shippingCost' => $shippingCost,
-            ]);
-        }
-
-        return response()->json(['success' => false]);
-    }
-
-    protected function getCityIdByName($cityName)
-    {
-        // Mendapatkan ID provinsi dari nama provinsi yang dikirimkan
-        $provinceId = $this->getProvinceIdByName(request()->input('province'));
-        if ($provinceId) {
-            $cities = $this->rajaongkirService->getCities($provinceId);
-            foreach ($cities['rajaongkir']['results'] as $city) {
-                if (strtolower($city['city_name']) === strtolower($cityName)) {
-                    return $city['city_id'];
+        $selectedPackage = null;
+        if (!empty($availableServices)) {
+            foreach ($availableServices as $service) {
+                if ($service['service'] === $deliveryPackage) {
+                    $selectedPackage = $service;
+                    break; // Menghentikan loop jika paket ditemukan
                 }
             }
         }
-        return null;
+        
+        if ($selectedPackage === null) {
+            return response()->json([
+                'shipping_fee' => 0,
+                'total_price' => 0,
+            ]);
+        }
+        
+        // Hitung total harga
+        $subtotal = $orderItems->sum('price');
+        $shippingCost = $selectedPackage['cost'];
+        $totalPrice = $subtotal + $shippingCost;
+
+        // Simpan total harga ke dalam tabel order
+        $order->courier = $courier;
+        $order->delivery_package = $deliveryPackage;
+        $order->shipping_cost = $shippingCost;
+        $order->total_price = $totalPrice;
+        $order->save();
+
+        return response()->json([
+            'shipping_fee' => number_format($shippingCost, 0, ',', '.'),
+            'total_price' => number_format($totalPrice, 0, ',', '.'),
+        ]);
     }
 
-    protected function getProvinceIdByName($provinceName)
-    {
-        $provinces = $this->rajaongkirService->getProvinces();
-        foreach ($provinces['rajaongkir']['results'] as $province) {
-            if (strtolower($province['province']) === strtolower($provinceName)) {
-                return $province['province_id'];
-            }
+    public function store(Request $request) {
+        Log::info('Store method called', [
+            'request_data' => $request->all()
+        ]);
+
+        // Validasi input
+        $request->validate([
+            'delivery_date' => 'required|date',
+            'notes' => 'nullable|string',
+            'payment_proof' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048', // Validasi file
+        ]);
+
+        Log::info('Validation passed.');
+
+        // Simpan order ke database
+        $order = Order::where('user_id', auth()->id())->latest()->first();
+        if (!$order) {
+            Log::error('Order not found for user', ['user_id' => auth()->id()]);
+            return redirect()->route('pemesanan')->with('error', 'Order tidak ditemukan.');
         }
-        return null;
+
+        Log::info('Order found', ['order_id' => $order->id]);
+
+        // Simpan catatan dan tanggal pengiriman
+        $order->notes = $request->input('notes');
+        $order->delivery_date = $request->input('delivery_date');
+
+        // Jika ada bukti pembayaran, simpan file
+        if ($request->hasFile('payment_proof')) {
+            $filePath = $request->file('payment_proof')->store('payment_proofs', 'public');
+            Log::info('Payment proof uploaded', ['file_path' => $filePath]);
+            $order->payment_proof = $filePath;
+        }
+
+        $order->save();
+
+        Log::info('Order saved successfully', ['order_id' => $order->id]);
+
+        return response()->json(['success' => 'Order berhasil disimpan!']);
     }
+    
 }

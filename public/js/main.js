@@ -23,7 +23,7 @@ $(function() {
                 console.log("Hasil respons:", result); // Tambahkan log untuk hasil respons
                 $('.available-services').show();
                 $('.available-services').html(result);
-            },            
+            },
             error: function(jqXHR, textStatus, errorThrown) {
                 // Log kesalahan dari AJAX
                 console.error('Kesalahan AJAX:', {

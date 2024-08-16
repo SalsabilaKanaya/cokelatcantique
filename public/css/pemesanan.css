@@ -296,15 +296,15 @@ h2{
 
 
 
-.rekap-pilihan {
-    background-color: #f8f9fa;
+.jumlah-pembayaran {
+    background-color: #fff;
     padding: 20px;
     border-radius: 10px;
     width: 360px;
     height: auto;
 }
 
-.rekap-pilihan h5 {
+.jumlah-pembayaran h5 {
     font-size: 20px;
     font-family: 'playfair display', sans-serif;
     font-weight: 700;
@@ -313,27 +313,12 @@ h2{
     margin-bottom: 25px;
 }
 
-.jenis-pilihan,
 .total-harga, .jumlah-harga{
     display: flex;
     justify-content: space-between;
     margin-top: 15px;
 }
 
-.jenis-pilihan .text{
-    font-size: 14px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-}
-
-.jenis-pilihan .harga{
-    font-size: 14px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 400;
-    color: #828282;
-}
-
-.jenis-pilihan p,
 .total-harga p{
     margin: 0;
 }
@@ -378,57 +363,37 @@ h2{
     color: #D2B48C;
 }
 
-.payment-method .btn-custom {
-    background-color: white;
-    color: #D2B48C;
-}
-.payment-method .btn-custom-active {
-    background-color: #D2B48C;
-    color: white;
+.jenis-pembayaran {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.payment-method .btn-custom:hover {
-    background-color: #D2B48C;
-    color: white;
+.jenis-pembayaran th, .jenis-pembayaran td {
+    padding: 8px;
+    text-align: left;
 }
 
-.payment-method .btn-custom-active:hover {
-    background-color: #D2B48C;
-    color: white;
-}
-
-.payment-method .btn-text {
+.jenis-pembayaran th{
     font-family: 'Montserrat', sans-serif;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
+    color: #000;
 }
 
-.payment-group label {
+.jenis-pembayaran td {
+    border: none; /* Menghilangkan garis antar sel */
     font-family: 'Montserrat', sans-serif;
     font-size: 14px;
-    color: #404852;
+    font-weight: 400;
+    color: #000;
+}
+
+.upload-bukti h6{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
     font-weight: 600;
 }
 
-.position-relative {
-    position: relative;
-}
-.position-absolute {
-    position: absolute;
-}
-.icon-select {
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-}
-
-.privacy-text{
-    font-family: 'Montserrat', sans-serif !important;
-    font-size: 12px !important;
-    color: #949494 !important;
-    font-weight: 400 !important;
-}
 
 .btn-pesan{
     font-family: 'Montserrat', sans-serif;
@@ -444,16 +409,25 @@ h2{
 }
 
 .btn-pesan:hover{
+    background-color: #D2B48C;
+}
+
+.btn-bukti{
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
     font-weight: 600;
     color: black;
     background-color: #D2B48C;
-    width: 100%;
+    width: 30%;
     height: 46px;
     border-radius: 100px;
     margin-top: auto;
     box-shadow: 0 2px 5px #D2B48C;
+    align-items: end;
+}
+
+.btn-bukti:hover{
+    background-color: #D2B48C;
 }
 /* ----- Main Content -----*/
 

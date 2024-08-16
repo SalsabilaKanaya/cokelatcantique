@@ -12,13 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('user_address', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('name');
             $table->string('phone')->nullable();
             $table->string('province_id');
+            $table->string('province_name')->nullable();
             $table->string('city_id');
+            $table->string('city_name')->nullable();
             $table->text('address')->nullable();
             $table->timestamps();
         });

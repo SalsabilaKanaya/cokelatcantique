@@ -16,7 +16,12 @@
     <li class="list-group-item py-3">
         <div class="row align-items-center">
             <div class="col-2 col-md-2 col-lg-2">
-                <input class="form-check-input" type="radio" name="delivery_package" id="inlineRadio{{ $loop->index }}" value="{{ $service['service'] }}">
+                @php
+                    $serviceName = $service['service'];
+                    $courier = $service['courier'];
+                    $addressID = $service['address_id'];
+                @endphp
+                <input class="form-check-input delivery-package" type="radio" name="delivery_package" id="inlineRadio2" value="{{ $service['service'] }}" onclick="setShippingFee('{{ $serviceName}}', '{{ $courier}}', '{{ $addressID }}')">
             </div>
             <div class="col-4 col-md-4 col-lg-5">
                 {{ $service['service'] }} - {{ $service['description'] }}
@@ -34,3 +39,33 @@
         <span class="text-danger">No delivery service found, try another courier</span>
     </li>
 @endforelse
+
+<script type="text/javascript">
+    function setShippingFee(deliveryPackage, courier, addressID) {
+        $.ajax({
+            url: "/choose-package",
+            method: "POST",
+            data: {
+                delivery_package: deliveryPackage,
+                courier: courier,
+                address_id: addressID,
+                _token: $('meta[name="csrf-token"]').attr('content'),
+            },
+            success: function (result) {
+                // Memperbarui elemen HTML dengan hasil dari server
+                $('#shipping-cost').html("Rp " + result.shipping_fee);
+                $('#jumlah-harga').html("Rp " + result.total_price);
+
+                // Mengatur nilai input tersembunyi untuk pengiriman data ke server
+                $('#delivery_package').val(deliveryPackage);
+                $('#shipping_cost').val(result.shipping_fee.replace(/\D/g, '')); // Menghapus karakter non-digit
+                $('#total_price').val(result.total_price.replace(/\D/g, '')); // Menghapus karakter non-digit
+            },
+            error: function (e) {
+                console.error("Terjadi kesalahan: ", e);
+            }
+        });
+    }
+</script>
+
+
