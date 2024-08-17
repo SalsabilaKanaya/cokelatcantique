@@ -149,23 +149,20 @@
                             <p class="text">Subtotal</p>
                             <p class="harga">Rp {{ number_format($subtotal, 0, ',', '.') }}</p>
                         </div>
-                        <form action="#" method="POST" id="order-form">
-                            @csrf
-                            <div class="total-harga">
-                                <p class="text">Delivery</p>
-                                <p class="harga" id="shipping-cost">
-                                    @if(isset($shippingCost))
-                                        Rp {{ number_format($shippingCost, 0, ',', '.') }}
-                                    @else
-                                        Rp 0
-                                    @endif
-                                </p>
-                            </div>
-                            <hr>
-                            <div class="jumlah-harga">
-                                <p class="text">Total</p>
-                                <p class="harga" id="jumlah-harga">Rp {{ number_format($totalPrice, 0, ',', '.') }}</p>
-                            </div>
+                        <div class="total-harga">
+                            <p class="text">Delivery</p>
+                            <p class="harga" id="shipping-cost">
+                                @if(isset($shippingCost))
+                                    Rp {{ number_format($shippingCost, 0, ',', '.') }}
+                                @else
+                                    Rp 0
+                                @endif
+                            </p>
+                        </div>
+                        <div class="jumlah-harga">
+                            <p class="text">Total</p>
+                            <p class="harga" id="jumlah-harga">Rp {{ number_format($totalPrice, 0, ',', '.') }}</p>
+                        </div>
 
                             <button type="submit" id="submit-btn" class="btn btn-pesan mt-3" data-url="{{ route('order.store') }}">Bayar</button>
                         </form>

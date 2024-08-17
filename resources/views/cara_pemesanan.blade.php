@@ -85,8 +85,8 @@
 
 @endsection
 
-@section('scripts')
+@push('scripts')
     <script>
         <script src="{{ asset('js/cara_pemesanan.js')}}"></script>
     </script>
-@endsection
+@endpush

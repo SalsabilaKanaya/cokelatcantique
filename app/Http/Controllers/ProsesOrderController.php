@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
-use App\Models\OrderItem;
-use App\Models\OrderAddress;
-use App\Models\UserAddress;
+use Shared\Models\Order;
+use Shared\Models\OrderItem;
+use Shared\Models\UserAddress;
 use Shared\Models\JenisCokelat;
 use Shared\Models\KarakterCokelat;
 use App\Services\RajaongkirService;

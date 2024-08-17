@@ -16,6 +16,8 @@ use App\Http\Controllers\RajaOngkirController;
 use App\Http\Controllers\KurirController;
 use App\Http\Controllers\OngkirController;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\HistoriController;
+
 
 Route::get('/', function () {
     return view('login');
@@ -74,7 +76,9 @@ Route::post('/order', [ProsesOrderController::class, 'store'])->name('order.stor
 Route::get('/kontak', [KontakController::class, 'create'])->name('kontak');
 Route::post('/kontak', [KontakController::class, 'store'])->name('kontak.store');
 Route::get('/keranjang', [WebController::class, 'keranjang'])->name('keranjang');
-Route::get('/histori', [WebController::class, 'histori'])->name('histori');
+Route::get('/histori', [HistoriController::class, 'showHistori'])->name('histori');
+// Route untuk menampilkan detail pesanan
+Route::get('/pesanan/{order}', [HistoriController::class, 'showDetail'])->name('pesanan.detail');
 
 // Profile Routes
 Route::get('/profil', [ProfileController::class, 'profil'])->name('profil');

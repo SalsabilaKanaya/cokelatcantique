@@ -7,8 +7,7 @@ body {
 /* ----- HEADER -----*/
 .navbar {
     font-family: 'Montserrat', sans-serif;
-    background-color: transparant;
-    backdrop-filter: blur(10px);
+    background-color: white;
 }
 .navbar-icons{
     margin-left: 15px;

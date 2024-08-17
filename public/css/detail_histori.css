@@ -1,0 +1,231 @@
+.main-content {
+    margin-top: 150px;
+}
+
+.main-content .container h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.btn-text{
+    font-size: 14px;
+    color: #D2B48C;
+    padding: 0px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.btn-text:hover{
+    color: #BFA47F;
+}
+
+.btn-text .text{
+    margin-left: 8px;
+}
+
+.box h1{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.order-detail{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-right: 10px;
+}
+
+.order-detail:last-child {
+    margin-right: 0;
+}
+
+.order-detail strong {
+    margin-bottom: 5px; /* Adjust the spacing as needed */
+}
+
+.order-info{
+    display: flex;
+    flex-direction: column;
+}
+
+.order-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px; /* Adjust the spacing as needed */
+}
+
+.order-info p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    margin: 0;
+}
+
+.produk-list {
+    background-color: #F1E8DB;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.produk-item {
+    display: flex;
+    align-items: start;
+    margin-bottom: 10px;
+    padding: 10px 0;
+}
+
+
+.produk-img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    margin-right: 15px;
+    border-radius: 5px;
+}
+
+.produk-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.produk-info h5 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    margin: 0;
+    font-weight: 700;
+}
+
+.produk-info p {
+    display: inline-block;
+    margin-right: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    margin: 0;
+}
+
+.produk-info h5,
+.produk-info p {
+    margin: 0 10px 0 0;
+    padding: 0;
+    display: inline-block;
+}
+
+.karakter-img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    margin-right: 15px;
+    border-radius: 5px;
+}
+
+.produk-info > *:not(.catatan) {
+    margin-bottom: 12px
+}
+
+.produk-info-karakter {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.produk-info-karakter h5 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.produk-info-karakter p {
+    display: inline-block;
+    margin-right: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    margin: 0;
+}
+
+.price{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    margin: 0;
+    font-weight: 600;
+}
+
+.produk-info .catatan {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    margin: 0;
+    font-weight: 400;
+    flex-basis: 100%;
+    margin-top: 5px;
+}
+
+.total-harga {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.total-harga .text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.total-harga .total {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.harga-ongkos {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.harga-ongkos .text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+    color: #aaa;
+}
+
+.harga-ongkos .price {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+    color: #aaa;
+}
+
+.catatan h5 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.catatan p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 5px;
+}

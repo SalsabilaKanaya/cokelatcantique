@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Shared\Models\KarakterCokelat;
 use Shared\Models\JenisCokelat;
-use App\Models\Order; // Pastikan ini mengarah ke model yang benar
-use App\Models\OrderItem;
-use App\Models\OrderItemKarakter;
+use Shared\Models\Order; // Pastikan ini mengarah ke model yang benar
+use Shared\Models\OrderItem;
+use Shared\Models\OrderItemKarakter;
 use Illuminate\Http\Request;
 
 class PilihKarakterController extends Controller

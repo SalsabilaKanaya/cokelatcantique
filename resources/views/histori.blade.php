@@ -7,35 +7,46 @@
 @endpush
 
 @section('content')
-   <!--Main Content-->
+    <!--Main Content-->
     <section class="main-content">
         <div class="container">
-            <h2>Keranjang Saya</h2>
-            <div class="cart-item d-flex align-items-center justify-content-between p-3 mb-3">
-                <div class="left d-flex align-items-center">
-                    <div class="cart-info d-flex align-items-start">
-                        <div class="cart-img me-3">
-                            <img src="img/jenis_cokelat/kiloan.PNG" alt="Cokelat Box" class="cart-img">
+            <h2>Histori Pesanan Saya</h2>
+
+            @foreach ($orders as $order)
+                <div class="produk-container" data-url="{{ route('pesanan.detail', $order) }}">
+                    @foreach ($order->items as $item)
+                        <div class="row produk-histori">
+                            <div class="col-md-6 nama-gambar">
+                                <img src="{{ asset($item->jenisCokelat->foto) }}" alt="{{ $item->jenisCokelat->foto }}" class="produk-img">
+                                <div class="produk-nama">
+                                    <h5>{{ $item->jenisCokelat->nama }}</h5>
+                                    <div class="produk-karakter">
+                                        @foreach ($item->karakterItems as $karakterItem)
+                                            <p>{{ $karakterItem->karakterCokelat->nama }}</p>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 produk-harga">
+                                <p>Rp {{ number_format($item->price, 0, ',', '.') }}</p>
+                            </div>
                         </div>
-                        <div>
-                            <h5>Cokelat Box (28 sekat)</h5>
-                            <p>Robocar Poli</p>
-                            <p>Teks</p>
+                    @endforeach
+
+                    <div class="row produk-total">
+                        <div class="col total">
+                            <p class="total-label">Total</p>
+                            <p class="total-amount">Rp {{ number_format($order->total_price, 0, ',', '.') }}</p>
                         </div>
                     </div>
                 </div>
-                <div class="cart-quantity me-3 align-self-center">
-                    <p>1</p>
-                </div>
-                <div class="cart-price me-3">
-                    <p>Rp 168.000</p>
-                </div>
-                <div class="cart-total">
-                    <p>Total</p>
-                    <p>Rp 135.000</p>
-                </div>
-            </div>
+            @endforeach
         </div>
     </section>
+
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('js/histori.js')}}"></script>
+@endpush
 

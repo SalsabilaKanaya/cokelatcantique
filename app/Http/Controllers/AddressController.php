@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\UsersAddress;
+use Shared\Models\UsersAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;

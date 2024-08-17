@@ -22,104 +22,87 @@ body {
     margin-bottom: 30px;
 }
 
-.cart-item {
+.produk-container {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 3px 3px 5px rgba(234, 221, 202, 0.5);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding: 15px;
     margin-bottom: 15px;
     position: relative;
+    cursor: pointer;
 }
 
-.cart-info {
+.produk-histori{
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    width: 100%;
 }
 
-.cart-img {
+
+.nama-gambar{
+    display: flex;
+    justify-content: flex-start;
+    align-items: start;
+}
+
+.nama-gambar .produk-nama h5{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.nama-gambar .produk-nama .produk-karakter p{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #aaa;
+    padding: 0;
+    margin: 0;
+}
+
+.produk-img {
     width: 100px;
     height: 100px;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 5px;
+    margin-right: 20px;
 }
 
-.cart-info div {
+.produk-harga {
     display: flex;
-    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
 }
 
-/* .cart-info{
-    padding: 0;
-    width: auto;
-} */
-
-
-.cart-quantity, .cart-price {
-    font-size: 16px;
+.produk-harga p{
     font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    color: #404852;
-    text-align: center;
-}
-
-.cart-quantity, .cart-price {
-    flex: 1; /* Allow to grow equally */
-}
-
-.cart-info h5 {
-    margin: 0;
     font-size: 16px;
-    font-family: 'Montserrat', sans-serif;
     font-weight: 600;
 }
 
-.cart-info p {
-    margin: 0;
-    font-size: 14px;
+.total {
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+    text-align: right;
+    align-items: center; /* Agar vertikalnya rata */
+    justify-content: flex-end;
+}
+
+.produk-total p {
+    margin: 0 10px; /* Memberikan jarak antar teks */
     font-family: 'Montserrat', sans-serif;
+}
+
+.total-label {
+    font-size: 16px;
     font-weight: 500;
-    color: #404852;
+    color: #aaa;
 }
 
-.cart-quantity p{
-    margin: 0;
-    font-size: 16px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    color: #404852;
-}
-
-.cart-price p{
-    margin: 0;
-    font-size: 16px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    color: black;
-}
-
-.cart-total {
-    position: absolute; /* Absolute positioning for placement */
-    right: 15px; /* Align to the right of the container */
-    bottom: 15px; /* Align to the bottom of the container */
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    color: black;
-    text-align: right; /* Ensure text aligns to the right */
-}
-
-.btn-delete{
-    background-color: transparant;
-    color: #FD6969;
-}
-
-.btn-delete:hover{
-    color: #F24848;
-}
-
-.cart-quantity, .cart-price {
-    text-align: center;
+.total-amount {
+    font-size: 20px;
+    font-weight: 700;
+    color: #D2B48C;
 }
