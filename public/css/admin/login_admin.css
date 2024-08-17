@@ -1,0 +1,87 @@
+*, body{
+    font-family: 'Montserrat', sans-serif;
+}
+
+.container-fluid{
+    height: 100vh;
+}
+
+#sideleft{
+    background-color: #D2B48C;
+    background-size: cover;
+    backgroud-repeat: no-repeat;
+}
+
+#sideleft .logo{
+    margin-top: 20px;
+    margin-left: 50px;
+}
+
+#sideleft .body{
+    margin-top: 20px;
+    margin-left: 50px;
+    color: black;
+    text-align: center;
+}
+
+#sideleft .body h1{
+    font-size: 28px;
+    font-weight: 700;
+    align-items: center;
+}
+
+#sideleft .body h2{
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 52px;
+}
+
+#sideleft .body p{
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.user-images img{
+    margin-right: -20px;
+}
+
+
+#sideright .body{
+    margin-left: 50px;
+    margin-right: 50px;
+    text-align: center;
+}
+
+#sideright .body h1{
+    font-size: 32px;
+    font-weight: 700;
+}
+
+#sideright .body p{
+    font-size: 16px;
+    font-weight: 400;
+    color: #AAAAAA;
+}
+
+.form-label {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+
+.btn{
+    background-color: #D2B48C;
+    font-size: 18px;
+    font-weight: 600;
+    color: black;
+    width: 100%;
+    border-radius: 100px;
+    margin-top: 20px;
+}
+
+.btn:hover{
+    background-color: #D2B48C;
+    color: black;
+}

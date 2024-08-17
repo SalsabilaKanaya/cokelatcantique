@@ -1,0 +1,305 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+body{
+    min-height: 100vh;
+    width: 100%;
+}
+
+.sidebar{
+    position: fixed;
+    height: 100%;
+    width: 240px;
+    background: #D2B48C;
+    transition: all 0.5s ease:
+}
+
+.sidebar.active{
+    width: 60px;
+}
+
+.sidebar .logo-details{
+    height: 80px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar .logo-details i{
+    font-size: 28px;
+    font-weight: 500;
+    color: #111;
+    min-width: 60px;
+    text-align: center;
+}
+
+.sidebar .logo-details .logo_name{
+    font-size: 18px;
+    font-weight: 500;
+    color: #111;
+}
+
+.sidebar .nav-link{
+    margin-top: 16px;
+}
+
+.sidebar .nav-link li{
+    height: 50px;
+    width: 100%;
+    list-style: none;
+}
+
+.sidebar .nav-link li a{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.sidebar .nav-link li a:hover{
+    background: #BFA47F;
+}
+
+.sidebar .nav-link li a i{
+    min-width: 60px;
+    text-align: center;
+    color: #111;
+    font-size: 16px;
+}
+
+.sidebar .nav-link li a .link_name{
+    color: #111;
+    font-size: 16px;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+/* Main Content */
+
+.home-section{
+    background: #f5f5f5;
+    position: relative;
+    min-height: 100vh;
+    width: calc(100% - 240px);
+    left: 240px;
+    transition: all 0.3s ease;
+}
+
+.sidebar.active ~ .home-section{
+    width: calc(100% - 60px);
+    left: 60px;
+}
+
+.home-section nav{
+    height: 80px;
+    background: #fff;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.home-section nav .sidebar-button{
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.home-section nav .sidebar-button i{
+    font-size: 30px;
+    margin-right: 10px;
+}
+
+/* Content */
+.content {
+    padding: 20px;
+}
+
+/* Box styling */
+.box {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.btn-text{
+    font-size: 14px;
+    color: #D2B48C;
+    padding: 0px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.btn-text:hover{
+    color: #BFA47F;
+}
+
+.btn-text .text{
+    margin-left: 8px;
+}
+
+.box h1{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.order-detail{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-right: 10px;
+}
+
+.order-detail:last-child {
+    margin-right: 0;
+}
+
+.order-detail strong {
+    margin-bottom: 5px; /* Adjust the spacing as needed */
+}
+
+.order-info{
+    display: flex;
+    flex-direction: column;
+}
+
+.order-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px; /* Adjust the spacing as needed */
+}
+
+.order-info p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    margin: 0;
+}
+
+.produk-list {
+    background-color: #F1E8DB;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.produk-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px 0;
+}
+
+
+.produk-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 15px;
+    border-radius: 10px;
+}
+
+.produk-info {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.produk-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.produk-info > *:not(.catatan) {
+    margin-bottom: 0.5rem;
+}
+
+.produk-info h5 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    margin: 0;
+    font-weight: 700;
+}
+
+.produk-info p {
+    display: inline-block;
+    margin-right: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    margin: 0;
+}
+
+.produk-info h5,
+.produk-info p {
+    margin: 0 10px 0 0;
+    padding: 0;
+    display: inline-block;
+}
+
+.harga{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    margin: 0;
+    font-weight: 600;
+}
+
+.produk-info .catatan {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    margin: 0;
+    font-weight: 400;
+    flex-basis: 100%;
+    margin-top: 5px;
+}
+
+.total-harga {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.total-harga .text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.total-harga .harga {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.catatan h5 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.catatan p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 5px;
+}
