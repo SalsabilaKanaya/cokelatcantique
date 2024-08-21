@@ -31,9 +31,9 @@ $(document).ready(function() {
             },            
             success: function(response) {
                 console.log('Response received:', response);
-                console.log('Redirecting to:', "{{ route('histori') }}"); // Log URL tujuan
+                console.log('Redirecting to:', "{{ route('user.histori') }}"); // Log URL tujuan
                 alert('Order berhasil disimpan!');
-                window.location.href = "{{ route('histori') }}";
+                window.location.href = "{{ route('user.histori') }}";
             },
 
             error: function(xhr, status, error) {

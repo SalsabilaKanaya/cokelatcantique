@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('user.layouts.app')
 
 @section('title', 'Jenis Cokelat')
 
@@ -43,9 +43,9 @@
                             {{ $selectedLabel }}
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('jenis_cokelat') }}">All</a></li>
+                            <li><a class="dropdown-item" href="{{ route('user.jenis_cokelat') }}">All</a></li>
                             @foreach($kategoriLabels as $key => $label)
-                                <li><a class="dropdown-item" href="{{ route('jenis_cokelat', ['kategori' => $key]) }}">{{ $label }}</a></li>
+                                <li><a class="dropdown-item" href="{{ route('user.jenis_cokelat', ['kategori' => $key]) }}">{{ $label }}</a></li>
                             @endforeach
                         </ul>
                     </div>
@@ -59,7 +59,7 @@
                         <div class="card-body">
                         <h5 class="card-title">{{ $cokelat->nama }}</h5>
                         <p class="card-text">Rp {{ number_format($cokelat->harga, 0, ',', '.') }}</p>
-                        <a class="btn button-detail" href="{{ route('detail_jenis_cokelat.show', $cokelat->id) }}" role="button">Lihat Detail</a>
+                        <a class="btn button-detail" href="{{ route('user.detail_jenis_cokelat.show', $cokelat->id) }}" role="button">Lihat Detail</a>
                         </div>
                     </div>
                 </div>

@@ -195,7 +195,7 @@ class ProsesOrderController extends Controller
         $order = Order::where('user_id', auth()->id())->latest()->first();
         if (!$order) {
             Log::error('Order not found for user', ['user_id' => auth()->id()]);
-            return redirect()->route('pemesanan')->with('error', 'Order tidak ditemukan.');
+            return redirect()->route('user.pemesanan')->with('error', 'Order tidak ditemukan.');
         }
 
         Log::info('Order found', ['order_id' => $order->id]);

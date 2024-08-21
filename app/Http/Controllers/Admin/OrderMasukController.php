@@ -53,7 +53,7 @@ class OrderMasukController extends Controller
         // Hitung subtotal (total semua item sebelum biaya pengiriman)
         $subtotal = $order->items->sum('price');
 
-        dd($order);
+        // dd($order);
 
         return view('admin.detail_order', compact('order', 'subtotal'));
     }

@@ -62,7 +62,7 @@ class AddressController extends Controller
             'address' => $address->toArray(),
         ]);
     
-        return redirect()->route('profil', ['#alamat'])->with('success', 'Address updated successfully.');
+        return redirect()->route('user.profil', ['#alamat'])->with('success', 'Address updated successfully.');
     }
     
 

@@ -198,15 +198,15 @@ body{
 
 .produk-item {
     display: flex;
-    align-items: center;
+    align-items: start;
     margin-bottom: 10px;
     padding: 10px 0;
 }
 
 
 .produk-img {
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
     object-fit: cover;
     margin-right: 15px;
     border-radius: 10px;
@@ -214,19 +214,9 @@ body{
 
 .produk-info {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
-.produk-info{
-    display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
-}
-
-.produk-info > *:not(.catatan) {
-    margin-bottom: 0.5rem;
 }
 
 .produk-info h5 {
@@ -236,11 +226,16 @@ body{
     font-weight: 700;
 }
 
+
+.produk-info > *:not(.catatan) {
+    margin-bottom: 0.5rem;
+}
+
 .produk-info p {
     display: inline-block;
     margin-right: 10px;
     font-family: 'Montserrat', sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     margin: 0;
 }
 
@@ -251,7 +246,36 @@ body{
     display: inline-block;
 }
 
-.harga{
+.karakter-img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    margin-right: 15px;
+    border-radius: 5px;
+}
+
+.produk-info-karakter {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.produk-info-karakter h5 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.produk-info-karakter p {
+    display: inline-block;
+    margin-right: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    margin: 0;
+}
+
+.price{
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
     margin: 0;
@@ -279,15 +303,40 @@ body{
 .total-harga .text {
     font-family: 'Montserrat', sans-serif;
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 500;
     margin: 0;
 }
 
-.total-harga .harga {
+.total-harga .total {
     font-family: 'Montserrat', sans-serif;
     font-size: 20px;
     font-weight: 700;
     margin: 0;
+}
+
+.harga-ongkos {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.harga-ongkos .text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+    color: #aaa;
+}
+
+.harga-ongkos .price {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+    color: #aaa;
 }
 
 .catatan h5 {

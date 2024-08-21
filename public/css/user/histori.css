@@ -78,7 +78,31 @@ body {
 .produk-harga p{
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
+    font-weight: 500;
+}
+
+.status {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.status p{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
     font-weight: 600;
+}
+
+.status-pending {
+    color: #FFCC00; /* Warna kuning untuk status pending */
+}
+
+.status-accepted {
+    color: #219653; /* Warna biru untuk status accept */
+}
+
+.status-rejected {
+    color: #F24848; /* Warna merah untuk status rejected */
 }
 
 .total {

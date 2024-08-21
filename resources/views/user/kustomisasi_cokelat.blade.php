@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('user.layouts.app')
 
 @section('title', 'Jenis Cokelat')
 
@@ -40,9 +40,9 @@
                             {{ $selectedLabel }}
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('kustomisasi_cokelat') }}">All</a></li>
+                            <li><a class="dropdown-item" href="{{ route('user.kustomisasi_cokelat') }}">All</a></li>
                             @foreach($kategoriLabels as $key => $label)
-                                <li><a class="dropdown-item" href="{{ route('kustomisasi_cokelat', ['kategori' => $key]) }}">{{ $label }}</a></li>
+                                <li><a class="dropdown-item" href="{{ route('user.kustomisasi_cokelat', ['kategori' => $key]) }}">{{ $label }}</a></li>
                             @endforeach
                         </ul>
                     </div>
@@ -56,7 +56,7 @@
                             <div class="card-body">
                             <h5 class="card-title">{{ $cokelat->nama }}</h5>
                             <p class="card-text">Rp {{ number_format($cokelat->harga, 0, ',', '.') }}</p>
-                            <form action="{{ route('store_jenis_cokelat_selection') }}" method="POST">
+                            <form action="{{ route('user.store_jenis_cokelat_selection') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="jenis_cokelat_id" value="{{ $cokelat->id }}">
                                 <button type="submit" class="btn button-detail">Pilih Jenis Cokelat</button>

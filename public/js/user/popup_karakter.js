@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
             quantitySpan.textContent = '1';
             textarea.value = '';
 
-            fetch(`/karakter_cokelat/details/${currentKarakterId}`)
+            fetch(`/user/karakter_cokelat/details/${currentKarakterId}`)
                 .then(response => response.json())
                 .then(data => {
                     if (modalFoto && modalNama) {
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
             catatan: textarea.value
         };
 
-        fetch('/store-selection', {
+        fetch('/user/store-selection', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function updateProgressBar() {
-        fetch('/get-progress')
+        fetch('/user/get-progress')
             .then(response => response.json())
             .then(data => {
                 if (data.success) {

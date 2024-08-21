@@ -20,18 +20,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css"/>
 
-    <link rel="stylesheet" href="{{ asset('css/main.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/user/main.css')}}">
     @stack('styles')
 </head>
 <body>
 
-    @include('partials.navbar')
+    @include('user.partials.navbar')
 
     <main class="container">
         @yield('content')
     </main>
 
-    @include('partials.footer')
+    @include('user.partials.footer')
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     @stack('scripts')

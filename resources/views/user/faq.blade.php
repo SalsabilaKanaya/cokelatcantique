@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('user.layouts.app')
 
 @section('title', 'Jenis Cokelat')
 
@@ -130,5 +130,5 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/user/faq.js')}}"></script>
+    <script src="{{ asset('js/user/faq.js') }}"></script>
 @endpush

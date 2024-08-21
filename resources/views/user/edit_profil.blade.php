@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('user.layouts.app')
 
 @section('title', 'Jenis Cokelat')
 
@@ -14,7 +14,7 @@
         <div class="content">
             <h1>Update Profil Saya</h1>
             <div class="profile">
-                <form action="{{ route('profil.update') }}" method="POST">
+                <form action="{{ route('user.profil.update') }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="row mb-3">

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('user.layouts.app')
 
 @section('title', 'Jenis Cokelat')
 
@@ -51,7 +51,7 @@
                             <div class="card-body">
                             <h5 class="card-title">{{ $relatedCokelat->nama }}</h5>
                             <p class="card-text">Rp {{ number_format($relatedCokelat->harga, 0, ',', '.') }}</p>
-                            <a class="btn button-detail" href="{{ route('detail_jenis_cokelat.show', $cokelat->id) }}" role="button">Lihat Detail</a>
+                            <a class="btn button-detail" href="{{ route('user.detail_jenis_cokelat.show', $cokelat->id) }}" role="button">Lihat Detail</a>
                             </div>
                         </div>
                     </div>

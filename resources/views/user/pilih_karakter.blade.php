@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('user.layouts.app')
 
 @section('title', 'Jenis Cokelat')
 
@@ -45,9 +45,9 @@
                                 {{ $selectedLabel }}
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ route('pilih_karakter') }}">All</a></li>
+                                <li><a class="dropdown-item" href="{{ route('user.pilih_karakter') }}">All</a></li>
                                 @foreach($kategoriLabels as $key => $label)
-                                    <li><a class="dropdown-item" href="{{ route('pilih_karakter', ['kategori' => $key]) }}">{{ $label }}</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('user.pilih_karakter', ['kategori' => $key]) }}">{{ $label }}</a></li>
                                 @endforeach
                             </ul>
                         </div>
@@ -103,7 +103,7 @@
                                 @endphp
                                 @foreach($selectedKarakter as $karakterId => $detail)
                                     @php
-                                        $karakter = \Shared\Models\KarakterCokelat::find($karakterId);
+                                        $karakter = \App\Models\KarakterCokelat::find($karakterId);
                                         $namaKarakter = $karakter ? $karakter->nama : 'Karakter Tidak Dikenal';
                                     @endphp
                                     <div class="text-jumlah">
@@ -128,7 +128,7 @@
                         </div>
                         <div class="button d-flex justify-content-between">
                             <a class="btn button-keranjang" href="#" role="button">Keranjang</a>
-                            <form action="{{ route('process_order') }}" method="POST">
+                            <form action="{{ route('user.process_order') }}" method="POST">
                                 @csrf
                                 <button type="submit" class="btn button-pesan {{ $isDisabled }}" data-id="{{ $cokelat->id }}" {{ $isDisabled ? 'disabled' : '' }}>Pesan</button>
                             </form>

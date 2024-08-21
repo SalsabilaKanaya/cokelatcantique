@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('user.layouts.app')
 
 @section('title', 'Jenis Cokelat')
 
@@ -48,7 +48,7 @@
                                 <p>{{ $user->datebirth ?? '-' }}</p>
                             </div>
                         </div>
-                        <a href="{{ route('profil.edit') }}" class="btn btn-edit">Edit Profile</a>
+                        <a href="{{ route('user.profil.edit') }}" class="btn btn-edit">Edit Profile</a>
                     </div>
                 </div>
 
@@ -84,7 +84,7 @@
                                 <p class="no-address-text">Alamat belum ada</p>
                             </div>
                         @endif
-                        <a href="{{ route('address.editAddress') }}" class="btn btn-edit">Edit Alamat</a>
+                        <a href="{{ route('user.address.editAddress') }}" class="btn btn-edit">Edit Alamat</a>
                     </div>
                 </div>
             </div>

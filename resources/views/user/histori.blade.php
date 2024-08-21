@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('user.layouts.app')
 
 @section('title', 'Jenis Cokelat')
 
@@ -13,10 +13,10 @@
             <h2>Histori Pesanan Saya</h2>
 
             @foreach ($orders as $order)
-                <div class="produk-container" data-url="{{ route('pesanan.detail', $order) }}">
+                <div class="produk-container" data-url="{{ route('user.pesanan.detail', $order) }}">
                     @foreach ($order->items as $item)
                         <div class="row produk-histori">
-                            <div class="col-md-6 nama-gambar">
+                            <div class="col-md-4 nama-gambar">
                                 <img src="{{ asset($item->jenisCokelat->foto) }}" alt="{{ $item->jenisCokelat->foto }}" class="produk-img">
                                 <div class="produk-nama">
                                     <h5>{{ $item->jenisCokelat->nama }}</h5>
@@ -27,8 +27,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6 produk-harga">
+                            <div class="col-md-4 produk-harga">
                                 <p>Rp {{ number_format($item->price, 0, ',', '.') }}</p>
+                            </div>
+                            <div class="col-md-4 status">
+                                @php
+                                    $statusClass = 'status-' . strtolower($order->status);
+                                @endphp
+                                <p class="{{ $statusClass }}">{{ ucfirst(strtolower($order->status)) }}</p>
                             </div>
                         </div>
                     @endforeach

@@ -92,11 +92,11 @@ class PilihKarakterController extends Controller
             // Periksa jika alamat tidak lengkap
             if (!$userAddress->address) {
                 // Redirect ke halaman profil jika alamat tidak lengkap
-                return redirect()->route('profil', ['#alamat'])->with('message', 'Silakan lengkapi alamat Anda.');
+                return redirect()->route('user.profil', ['#alamat'])->with('message', 'Silakan lengkapi alamat Anda.');
             }
         } else {
             // Jika alamat tidak ada
-            return redirect()->route('profil', ['#alamat'])->with('message', 'Silakan lengkapi alamat Anda.');
+            return redirect()->route('user.profil', ['#alamat'])->with('message', 'Silakan lengkapi alamat Anda.');
         }
 
         $selectedJenis = session()->get('selected_jenis');
@@ -107,8 +107,12 @@ class PilihKarakterController extends Controller
             'user_id' => auth()->id(),
             'delivery_date' => now()->addDays(7),
             'notes' => '',
+            'payment_proof' => '',
+            'courier' => '',
+            'delivery_package' => '',
             'total_price' => 0,
-            'payment_method' => 'transfer_bca'
+            'shipping_cost' => '',
+            'status' => 'pending'
         ]);
 
         $jenisCokelat = JenisCokelat::find($selectedJenis);
@@ -142,7 +146,7 @@ class PilihKarakterController extends Controller
         session()->forget('selected_karakter');
         session()->forget('total_karakter');
 
-        return redirect()->route('pemesanan');
+        return redirect()->route('user.pemesanan');
     }
 
 }

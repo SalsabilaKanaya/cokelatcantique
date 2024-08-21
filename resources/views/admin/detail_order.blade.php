@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beranda Cokelat Cantique</title>
+    <title>Detail Order Cokelat Cantique</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
 
@@ -82,7 +82,7 @@
 
         <div class="content">
             <div class="box">
-                <a href="{{ route('admin.order_list')}}" class="btn btn-text"><i class='bx bx-arrow-back'></i><span class="text">Kembali</span></a>
+                <a href="javascript:history.back()" class="btn btn-text"><i class='bx bx-arrow-back'></i><span class="text">Kembali</span></a>
                 <h1>Detail Orderan</h1>
                 <div class="content-active">
                     <div class="row mt-3">
@@ -125,7 +125,7 @@
                                                     <img src="{{ asset($karakterItem->karakterCokelat->foto) }}" alt="{{ $karakterItem->karakterCokelat->nama }}" class="karakter-img">
                                                     <div class="produk-info-karakter">
                                                         <h5>{{ $karakterItem->karakterCokelat->nama }}</h5>
-                                                        <p>Quantity: {{ $karakterItem->quantity }}</p>
+                                                        <p>{{ $karakterItem->quantity }}</p>
                                                         <p class="catatan">{{ $karakterItem->notes }}</p>
                                                     </div>
                                                 </div>

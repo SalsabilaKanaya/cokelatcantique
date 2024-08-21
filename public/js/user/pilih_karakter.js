@@ -9,15 +9,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     btnSimpan.addEventListener('click', function() {
-        if (!currentKarakterId) {
-            console.error('currentKarakterId tidak didefinisikan.');
-            return;
-        }
-
+    
         const jumlah = document.querySelector('.num').textContent;
         const catatan = document.getElementById('deskripsi').value;
-
-        fetch('/store-selection', {
+    
+        fetch('/user/store-selection', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -32,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                location.reload();
+                location.reload(); // Tambahkan baris ini untuk reload halaman
             } else {
                 console.error('Gagal menyimpan data:', data);
             }

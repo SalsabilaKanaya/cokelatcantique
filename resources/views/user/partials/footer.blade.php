@@ -10,8 +10,8 @@
             </div>
             <div class="col-md-3 footer-content">
                 <h1>Customer Support</h1>
-                <a href="{{ route('faq')}}">FAQ</a>
-                <a href="{{ route('cara_pemesanan')}}">Cara Pemesanan</a>
+                <a href="{{ route('user.faq')}}">FAQ</a>
+                <a href="{{ route('user.cara_pemesanan')}}">Cara Pemesanan</a>
             </div>
             <div class="col-md-4 footer-content">
                 <h1>Kontak Kami</h1>

@@ -43,7 +43,7 @@
 <script type="text/javascript">
     function setShippingFee(deliveryPackage, courier, addressID) {
         $.ajax({
-            url: "/choose-package",
+            url: "/user/choose-package",
             method: "POST",
             data: {
                 delivery_package: deliveryPackage,

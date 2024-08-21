@@ -37,6 +37,6 @@ class KontakController extends Controller
 
         $kontak->save();
 
-        return redirect()->route('kontak')->with('success', 'Data berhasil disimpan.');
+        return redirect()->route('user.kontak')->with('success', 'Data berhasil disimpan.');
     }
 }

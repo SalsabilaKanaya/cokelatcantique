@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('user.layouts.app')
 
 @section('title', 'Jenis Cokelat')
 
@@ -23,7 +23,7 @@
                 </div>
                 <div class="col-md-6 produk-filter  d-flex justify-content-end">
                     <div class="button-kustomisasi">
-                        <a class="btn" href="{{route('kustomisasi_cokelat')}}" role="button">Kustomisasi Cokelat</a>
+                        <a class="btn" href="{{route('user.kustomisasi_cokelat')}}" role="button">Kustomisasi Cokelat</a>
                       </div>
                 </div>
             </div>
@@ -45,7 +45,7 @@
                                 $namaKategori = $kategoriLabels[$cokelat->kategori] ?? 'Kategori Tidak Dikenal';
                             @endphp
                             <p class="card-text">{{ $namaKategori }}</p>
-                            <a class="btn button-detail" href="{{ route('detail_karakter_cokelat.show', $cokelat->id) }}" role="button">Lihat Detail</a>
+                            <a class="btn button-detail" href="{{ route('user.detail_karakter_cokelat.show', $cokelat->id) }}" role="button">Lihat Detail</a>
                         </div>
                     </div>
                 </div>

@@ -12,7 +12,7 @@ $(function() {
         });
 
         $.ajax({
-            url: "/available_services",
+            url: "/user/available_services",
             method: "POST",
             data: {
                 address_id: addressID,

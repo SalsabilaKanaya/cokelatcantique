@@ -160,6 +160,14 @@ h2{
     margin-bottom: 30px;
 }
 
+.note-date p{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    color: #aaa;
+    font-weight: 500;
+    margin-top: 5px;
+}
+
 .pengiriman {
     background-color: #fff;
     padding: 20px;
@@ -317,24 +325,6 @@ h2{
 }
 
 .btn-pesan:hover{
-    background-color: #D2B48C;
-}
-
-.btn-bukti{
-    font-family: 'Montserrat', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    color: black;
-    background-color: #D2B48C;
-    width: 30%;
-    height: 46px;
-    border-radius: 100px;
-    margin-top: auto;
-    box-shadow: 0 2px 5px #D2B48C;
-    align-items: end;
-}
-
-.btn-bukti:hover{
     background-color: #D2B48C;
 }
 /* ----- Main Content -----*/

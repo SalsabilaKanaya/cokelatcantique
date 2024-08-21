@@ -104,6 +104,10 @@
     font-weight: 700;
 }
 
+.produk-info > *:not(.catatan) {
+    margin-bottom: 12px
+}
+
 .produk-info p {
     display: inline-block;
     margin-right: 10px;
@@ -125,10 +129,6 @@
     object-fit: cover;
     margin-right: 15px;
     border-radius: 5px;
-}
-
-.produk-info > *:not(.catatan) {
-    margin-bottom: 12px
 }
 
 .produk-info-karakter {

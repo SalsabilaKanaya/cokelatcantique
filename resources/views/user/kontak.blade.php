@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('user.layouts.app')
 
 @section('title', 'Jenis Cokelat')
 
@@ -42,7 +42,7 @@
                 <div class="right-side">
                     <div class="title-text">Kirim kami pesan</div>
                     <p>Jika anda memiliki pertanyaan dan saran untuk kami, anda dapat mengirimi kami pesan dari sini. Dengan senang hati kami membantu anda.</p>
-                    <form action="{{ route('kontak.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('user.kontak.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="input-box">
                             <label for="nama" class="form-label">Nama</label>

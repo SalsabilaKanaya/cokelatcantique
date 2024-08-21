@@ -38,6 +38,6 @@ class KustomisasiCokelatController extends Controller
         session()->forget('selected_karakter');
         session()->put('selected_jenis', $jenisCokelatId);
 
-        return redirect()->route('pilih_karakter');
+        return redirect()->route('user.pilih_karakter');
     }
 }

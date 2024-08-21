@@ -1,4 +1,5 @@
-@extends('layouts.app')
+@extends('user.layouts.app')
+@extends('user.partials.navbar_pemesanan')
 
 @section('title', 'Jenis Cokelat')
 
@@ -12,7 +13,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <a href="{{ route('kustomisasi_cokelat') }}" class="btn button-back"><i class="fa-solid fa-chevron-left"></i> Kembali</a>
+                    <a href="javascript:history.back()" class="btn button-back"><i class="fa-solid fa-chevron-left"></i> Kembali</a>
                 </div>
             </div>
             <div class="row content mt-3 d-flex">
@@ -52,6 +53,7 @@
                                     <div class="col-md-6">
                                         <label for="delivery_date" >Tanggal Pengiriman</label>
                                         <input type="date" class="form-control" id="delivery_date" name="delivery_date" required>
+                                        <p>Masukkan tanggal pengiriman 7 hari sebelum digunakan</p>
                                     </div>
                                 </div>
                             </form>
@@ -79,7 +81,7 @@
                             <i class="fa-solid fa-truck icon-spacing"></i>
                             <h5>Pilih Kurir</h5>
                         </div>
-                        <form id="courier-form" action="{{ route('shippingfee') }}" method="POST">
+                        <form id="courier-form" action="{{ route('user.shippingfee') }}" method="POST">
                             @csrf
                             <div id="courier-options">
                                 <div class="form-check form-check-inline">
@@ -136,7 +138,6 @@
                                     <label for="payment-proof" class="form-label">Pilih File</label>
                                     <input type="file" class="form-control" name="payment_proof" id="payment-proof" accept="image/*,application/pdf"required>
                                 </div>
-                                <button type="submit" class="btn btn-bukti mt-3">Unggah Bukti</button>
                             </form>
                         </div>
                     </div>
@@ -163,8 +164,7 @@
                             <p class="text">Total</p>
                             <p class="harga" id="jumlah-harga">Rp {{ number_format($totalPrice, 0, ',', '.') }}</p>
                         </div>
-
-                            <button type="submit" id="submit-btn" class="btn btn-pesan mt-3" data-url="{{ route('order.store') }}">Bayar</button>
+                        <button type="submit" id="submit-btn" class="btn btn-pesan mt-3" data-url="{{ route('user.order.store') }}">Bayar</button>
                         </form>
                     </div>
                 </div>
@@ -176,7 +176,62 @@
 @push('scripts')
     <script>
         window.addressID = @json($userAddress ? $userAddress->id : null);
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#submit-btn').on('click', function(e) {
+                e.preventDefault();
+    
+                // Ambil URL dari data attribute atau meta tag
+                var url = $(this).data('url') || $('meta[name="order-store-url"]').attr('content');
+                console.log('Submitting form to URL:', url); // Log URL
+    
+                // Buat objek FormData untuk mengumpulkan data dari form
+                var formData = new FormData();
+                
+                // Tambahkan note dan delivery_date ke FormData
+                formData.append('notes', $('#notes').val());
+                formData.append('delivery_date', $('#delivery_date').val());
+    
+                // Tambahkan payment_proof ke FormData jika ada
+                var paymentProof = $('#payment-proof')[0].files[0];
+                if (paymentProof) {
+                    formData.append('payment_proof', paymentProof);
+                }
+    
+                // Mengirimkan data menggunakan AJAX
+                $.ajax({
+                    url: url, // Menggunakan URL yang diambil
+                    type: "POST",
+                    data: formData,
+                    processData: false,  // Jangan memproses data
+                    contentType: false,  // Jangan menetapkan tipe konten
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },            
+                    success: function(response) {
+                        console.log('Response received:', response);
+                        if (response.success) {
+                            alert('Order berhasil disimpan!');
+                            var redirectUrl = "{{ route('user.histori') }}";
+                            window.location.href = redirectUrl;
+                        } else {
+                            alert('Terjadi kesalahan: ' + response.message);
+                        }
+                    },
+    
+                    error: function(xhr, status, error) {
+                        console.error('AJAX Error:', {
+                            status: status,
+                            error: error,
+                            response: xhr.responseText // Log response text from server
+                        });
+                        alert('Terjadi kesalahan. Coba lagi.');
+                    }
+                });
+            });
+        });
     </script>    
     <script src="{{ asset('js/user/main.js')}}"></script>
-    <script src="{{ asset('js/user/pemesanan.js')}}"></script>
+    {{-- <script src="{{ asset('js/user/pemesanan.js')}}"></script> --}}
 @endpush
