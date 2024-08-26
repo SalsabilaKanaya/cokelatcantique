@@ -8,15 +8,15 @@ use App\Http\Controllers\Controller;
 
 class CreateKarakterCokelatController extends Controller
 {
-    // Menampilkan daftar Karakter cokelat
+    // Menampilkan daftar karakter cokelat
     public function index() {
-        $karakterCokelat = KarakterCokelat::all();
-        return view('admin.karakter_cokelat', compact('karakterCokelat')); // Pastikan view ini ada
+        $karakterCokelat = KarakterCokelat::all(); // Mengambil semua data karakter cokelat
+        return view('admin.karakter_cokelat', compact('karakterCokelat')); // Mengarahkan ke view karakter_cokelat.blade.php
     }
 
     // Menampilkan form untuk menambah karakter cokelat
     public function create() {
-        return view('admin.create_karakter'); // Pastikan view ini ada
+        return view('admin.create_karakter'); // Mengarahkan ke view create_karakter.blade.php
     }
 
     // Menyimpan data karakter cokelat
@@ -28,28 +28,29 @@ class CreateKarakterCokelatController extends Controller
             'deskripsi' => 'nullable|string',
         ]);
 
-        $karakterCokelat = new KarakterCokelat(); // Inisialisasi model
+        $karakterCokelat = new KarakterCokelat(); // Inisialisasi model KarakterCokelat
 
+        // Jika ada file foto yang diunggah
         if ($request->hasFile('foto')) {
             $fotoFile = $request->file('foto');
-            $fotoFilename = $fotoFile->getClientOriginalName();
-            $fotoFile->move(public_path('uploads'), $fotoFilename);
-            $karakterCokelat->foto = 'uploads/' . $fotoFilename; // Simpan ke database
+            $fotoFilename = $fotoFile->getClientOriginalName(); // Mendapatkan nama file asli
+            $fotoFile->move(public_path('uploads'), $fotoFilename); // Memindahkan file ke direktori uploads
+            $karakterCokelat->foto = 'uploads/' . $fotoFilename; // Menyimpan path foto ke model
         }
 
-        $karakterCokelat->nama = $request->nama; // Menyimpan nama
+        $karakterCokelat->nama = $request->nama; // Menyimpan nama karakter cokelat
         $karakterCokelat->kategori = $request->kategori; // Menyimpan kategori
         $karakterCokelat->deskripsi = $request->deskripsi; // Menyimpan deskripsi
 
-        $karakterCokelat->save(); // Simpan model ke database
+        $karakterCokelat->save(); // Menyimpan data ke database
 
-        return redirect()->route('admin.karakter_cokelat')->with('success', 'Data berhasil disimpan.');
+        return redirect()->route('admin.karakter_cokelat')->with('success', 'Data berhasil disimpan.'); // Mengarahkan kembali dengan pesan sukses
     }
 
     // Menampilkan form untuk mengedit karakter cokelat
     public function edit($id) {
-        $karakter = KarakterCokelat::findOrFail($id);
-        return view('admin.edit_karakter', compact('karakter')); // Pastikan view ini ada
+        $karakter = KarakterCokelat::findOrFail($id); // Mencari karakter cokelat berdasarkan ID
+        return view('admin.edit_karakter', compact('karakter')); // Mengarahkan ke view edit_karakter.blade.php
     }
 
     // Memperbarui data karakter cokelat
@@ -61,29 +62,30 @@ class CreateKarakterCokelatController extends Controller
             'deskripsi' => 'nullable|string',
         ]);
 
-        $karakterCokelat = KarakterCokelat::findOrFail($id); // Temukan model berdasarkan ID
+        $karakterCokelat = KarakterCokelat::findOrFail($id); // Mencari karakter cokelat berdasarkan ID
 
+        // Jika ada file foto yang diunggah
         if ($request->hasFile('foto')) {
             $fotoFile = $request->file('foto');
-            $fotoFilename = $fotoFile->getClientOriginalName();
-            $fotoFile->move(public_path('uploads'), $fotoFilename);
-            $karakterCokelat->foto = 'uploads/' . $fotoFilename; // Simpan ke database
+            $fotoFilename = $fotoFile->getClientOriginalName(); // Mendapatkan nama file asli
+            $fotoFile->move(public_path('uploads'), $fotoFilename); // Memindahkan file ke direktori uploads
+            $karakterCokelat->foto = 'uploads/' . $fotoFilename; // Menyimpan path foto ke model
         }
 
-        $karakterCokelat->nama = $request->nama; // Menyimpan nama
-        $karakterCokelat->kategori = $request->kategori; // Menyimpan kategori
-        $karakterCokelat->deskripsi = $request->deskripsi; // Menyimpan deskripsi
+        $karakterCokelat->nama = $request->nama; // Memperbarui nama karakter cokelat
+        $karakterCokelat->kategori = $request->kategori; // Memperbarui kategori
+        $karakterCokelat->deskripsi = $request->deskripsi; // Memperbarui deskripsi
 
-        $karakterCokelat->save(); // Simpan model ke database
+        $karakterCokelat->save(); // Menyimpan perubahan ke database
 
-        return redirect()->route('admin.karakter_cokelat')->with('success', 'Data berhasil diperbarui.');
+        return redirect()->route('admin.karakter_cokelat')->with('success', 'Data berhasil diperbarui.'); // Mengarahkan kembali dengan pesan sukses
     }
 
     // Menghapus data karakter cokelat
     public function destroy($id){
-        $cokelat = KarakterCokelat::findOrFail($id);
-        $cokelat->delete();
+        $cokelat = KarakterCokelat::findOrFail($id); // Mencari karakter cokelat berdasarkan ID
+        $cokelat->delete(); // Menghapus data dari database
 
-        return redirect()->route('admin.karakter_cokelat')->with('success', 'Karakter Cokelat berhasil dihapus');
+        return redirect()->route('admin.karakter_cokelat')->with('success', 'Karakter Cokelat berhasil dihapus'); // Mengarahkan kembali dengan pesan sukses
     }
 }

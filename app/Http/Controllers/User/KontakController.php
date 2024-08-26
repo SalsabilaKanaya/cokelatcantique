@@ -21,6 +21,7 @@ class KontakController extends Controller
 
     // Menyimpan data jenis cokelat
     public function store(Request $request) {
+        // Validasi input yang diterima dari form
         $request->validate([
             'nama' => 'required',
             'no_telp' => 'required',

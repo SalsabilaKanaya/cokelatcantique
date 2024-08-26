@@ -10,7 +10,7 @@ class KontakMasukController extends Controller
 {
     public function index()
     {
-        $kontak = Kontak::all(); // Anda juga bisa menambahkan pagination atau kondisi lainnya
+        $kontak = Kontak::all(); // mengambail semua data kontak
         return view('admin.kontak', compact('kontak'));
     }
 }

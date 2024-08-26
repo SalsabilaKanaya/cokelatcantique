@@ -14,11 +14,10 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\Controller;
 
- // Tambahkan ini
-
 
 class ProsesOrderController extends Controller
 {
+    // Menginisialisasi RajaongkirService yang digunakan untuk menghitung biaya pengiriman
     protected $rajaongkirService;
 
     public function __construct(RajaongkirService $rajaongkirService)
@@ -26,6 +25,7 @@ class ProsesOrderController extends Controller
         $this->rajaongkirService = $rajaongkirService;
     }
 
+    // Menampilkan halaman pemesanan dengan detail pesanan terbaru dari pengguna
     public function index()
     {
         $order = Order::where('user_id', auth()->id())->latest()->first();
@@ -52,6 +52,7 @@ class ProsesOrderController extends Controller
         return view('user.pemesanan', compact('order', 'orderItems', 'userAddress', 'subtotal', 'shippingCost', 'totalPrice'));
     }    
 
+    // Menghitung biaya pengiriman berdasarkan alamat dan kurir yang dipilih
     public function shippingfee(Request $request)
     {
         $addressID = $request->input('address_id');
@@ -68,7 +69,9 @@ class ProsesOrderController extends Controller
         // Ambil alamat menggunakan model UserAddress
         $address = UserAddress::findOrFail($addressID);
 
+        // mendapatkan pesanan terbaru dari pengguna yang sedang login
         $order = Order::where('user_id', auth()->id())->latest()->first();
+        // mendapatkan semua item yang terkait dengan pesanan terbaru dari pengguna yang sedang login.
         $orderItems = OrderItem::where('order_id', $order->id)->get();
 
         // Hitung biaya pengiriman
@@ -83,7 +86,7 @@ class ProsesOrderController extends Controller
         ]);
     }
 
-
+    // Menghitung biaya pengiriman menggunakan API RajaOngkir
     private function calculateShippingfee($orderItems, $address, $courier)
     {
         $weight = 1000; // Berat barang dalam gram
@@ -130,6 +133,7 @@ class ProsesOrderController extends Controller
         return $availableServices;
     }
 
+    // Memilih paket pengiriman dan menyimpan informasi biaya pengiriman
     public function choosePackage(Request $request)
     {
         $addressID = $request->input('address_id');
@@ -177,6 +181,7 @@ class ProsesOrderController extends Controller
         ]);
     }
 
+    // Menyimpan data pemesanan ke database
     public function store(Request $request) {
         Log::info('Store method called', [
             'request_data' => $request->all()

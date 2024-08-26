@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
@@ -15,28 +14,29 @@ class HistoriController extends Controller
         $userId = Auth::id();
 
         // Ambil semua order user yang statusnya 'completed' atau sesuai kebutuhan
+        // Dengan memuat relasi 'items', 'jenisCokelat', 'karakterItems', dan 'karakterCokelat'
         $orders = Order::with(['items.jenisCokelat', 'items.karakterItems.karakterCokelat'])
-            ->where('user_id', $userId)
+            ->where('user_id', $userId) // Filter order berdasarkan ID user yang sedang login
             ->get();
 
-        // Kembalikan ke view dengan data orders
+        // Kembalikan ke view 'user.histori' dengan data orders
         return view('user.histori', compact('orders'));
     }
 
     public function showDetail(Order $order)
     {
-        // Load semua relasi yang dibutuhkan
+        // Load semua relasi yang dibutuhkan untuk detail order
         $order->load([
-            'items.jenisCokelat',
-            'items.karakterItems.karakterCokelat',
-            'userAddress',
-            'user'
+            'items.jenisCokelat', // Relasi ke jenis cokelat dari setiap item
+            'items.karakterItems.karakterCokelat', // Relasi ke karakter cokelat dari setiap item karakter
+            'userAddress', // Relasi ke alamat pengguna
+            'user' // Relasi ke data pengguna
         ]);
 
-        // Menghitung subtotal
+        // Menghitung subtotal dari semua item dalam order
         $subtotal = $order->items->sum('price');
 
+        // Kembalikan ke view 'user.detail_histori' dengan data order dan subtotal
         return view('user.detail_histori', compact('order', 'subtotal'));
     }
-
 }

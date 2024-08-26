@@ -10,13 +10,13 @@ class CreateJenisCokelatController extends Controller
 {
     // Menampilkan daftar jenis cokelat
     public function index() {
-        $jenisCokelat = JenisCokelat::all();
-        return view('admin.jenis_cokelat', compact('jenisCokelat')); // Pastikan view ini ada
+        $jenisCokelat = JenisCokelat::all(); // Mengambil semua data jenis cokelat
+        return view('admin.jenis_cokelat', compact('jenisCokelat')); // Mengarahkan ke view jenis_cokelat.blade.php
     }
 
     // Menampilkan form untuk menambah jenis cokelat
     public function create() {
-        return view('admin.create_jenis'); // Pastikan view ini ada
+        return view('admin.create_jenis'); // Mengarahkan ke view create_jenis.blade.php
     }
 
     // Menyimpan data jenis cokelat
@@ -27,34 +27,34 @@ class CreateJenisCokelatController extends Controller
             'kategori' => 'required',
             'harga' => 'required|numeric',
             'deskripsi' => 'nullable|string',
-            'harga' => 'required|numeric',
             'jumlah_karakter' => 'nullable|integer|min:0',
         ]);
 
-        $jenisCokelat = new JenisCokelat();
+        $jenisCokelat = new JenisCokelat(); // Inisialisasi model JenisCokelat
 
+        // Jika ada file foto yang diunggah
         if ($request->hasFile('foto')) {
             $fotoFile = $request->file('foto');
-            $fotoFilename = $fotoFile->getClientOriginalName();
-            $fotoFile->move(public_path('uploads'), $fotoFilename);
-            $jenisCokelat->foto = 'uploads/' . $fotoFilename;
+            $fotoFilename = $fotoFile->getClientOriginalName(); // Mendapatkan nama file asli
+            $fotoFile->move(public_path('uploads'), $fotoFilename); // Memindahkan file ke direktori uploads
+            $jenisCokelat->foto = 'uploads/' . $fotoFilename; // Menyimpan path foto ke model
         }
 
-        $jenisCokelat->nama = $request->nama;
-        $jenisCokelat->kategori = $request->kategori;
-        $jenisCokelat->harga = $request->harga;
-        $jenisCokelat->deskripsi = $request->deskripsi;
-        $jenisCokelat->jumlah_karakter = $request->jumlah_karakter;
+        $jenisCokelat->nama = $request->nama; // Menyimpan nama jenis cokelat
+        $jenisCokelat->kategori = $request->kategori; // Menyimpan kategori
+        $jenisCokelat->harga = $request->harga; // Menyimpan harga
+        $jenisCokelat->deskripsi = $request->deskripsi; // Menyimpan deskripsi
+        $jenisCokelat->jumlah_karakter = $request->jumlah_karakter; // Menyimpan jumlah karakter
 
-        $jenisCokelat->save();
+        $jenisCokelat->save(); // Menyimpan data ke database
 
-        return redirect()->route('admin.jenis_cokelat')->with('success', 'Data berhasil disimpan.');
+        return redirect()->route('admin.jenis_cokelat')->with('success', 'Data berhasil disimpan.'); // Mengarahkan kembali dengan pesan sukses
     }
 
     // Menampilkan form untuk mengedit jenis cokelat
     public function edit($id) {
-        $jenis = JenisCokelat::findOrFail($id);
-        return view('admin.edit_jenis', compact('jenis')); // Pastikan view ini ada
+        $jenis = JenisCokelat::findOrFail($id); // Mencari jenis cokelat berdasarkan ID
+        return view('admin.edit_jenis', compact('jenis')); // Mengarahkan ke view edit_jenis.blade.php
     }
 
     // Memperbarui data jenis cokelat
@@ -68,31 +68,32 @@ class CreateJenisCokelatController extends Controller
             'jumlah_karakter' => 'nullable|integer|min:0',
         ]);
 
-        $jenisCokelat = JenisCokelat::findOrFail($id);
+        $jenisCokelat = JenisCokelat::findOrFail($id); // Mencari jenis cokelat berdasarkan ID
 
+        // Jika ada file foto yang diunggah
         if ($request->hasFile('foto')) {
             $fotoFile = $request->file('foto');
-            $fotoFilename = $fotoFile->getClientOriginalName();
-            $fotoFile->move(public_path('uploads'), $fotoFilename);
-            $jenisCokelat->foto = 'uploads/' . $fotoFilename;
+            $fotoFilename = $fotoFile->getClientOriginalName(); // Mendapatkan nama file asli
+            $fotoFile->move(public_path('uploads'), $fotoFilename); // Memindahkan file ke direktori uploads
+            $jenisCokelat->foto = 'uploads/' . $fotoFilename; // Menyimpan path foto ke model
         }
 
-        $jenisCokelat->nama = $request->nama;
-        $jenisCokelat->kategori = $request->kategori;
-        $jenisCokelat->harga = $request->harga;
-        $jenisCokelat->deskripsi = $request->deskripsi;
-        $jenisCokelat->jumlah_karakter = $request->jumlah_karakter;
+        $jenisCokelat->nama = $request->nama; // Memperbarui nama jenis cokelat
+        $jenisCokelat->kategori = $request->kategori; // Memperbarui kategori
+        $jenisCokelat->harga = $request->harga; // Memperbarui harga
+        $jenisCokelat->deskripsi = $request->deskripsi; // Memperbarui deskripsi
+        $jenisCokelat->jumlah_karakter = $request->jumlah_karakter; // Memperbarui jumlah karakter
 
-        $jenisCokelat->save();
+        $jenisCokelat->save(); // Menyimpan perubahan ke database
 
-        return redirect()->route('admin.jenis_cokelat')->with('success', 'Data berhasil diperbarui.');
+        return redirect()->route('admin.jenis_cokelat')->with('success', 'Data berhasil diperbarui.'); // Mengarahkan kembali dengan pesan sukses
     }
 
     // Menghapus data jenis cokelat
     public function destroy($id){
-        $cokelat = JenisCokelat::findOrFail($id);
-        $cokelat->delete();
+        $cokelat = JenisCokelat::findOrFail($id); // Mencari jenis cokelat berdasarkan ID
+        $cokelat->delete(); // Menghapus data dari database
 
-        return redirect()->route('admin.jenis_cokelat')->with('success', 'Jenis Cokelat berhasil dihapus');
+        return redirect()->route('admin.jenis_cokelat')->with('success', 'Jenis Cokelat berhasil dihapus'); // Mengarahkan kembali dengan pesan sukses
     }
 }

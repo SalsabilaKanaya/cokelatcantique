@@ -41,28 +41,31 @@
 @endforelse
 
 <script type="text/javascript">
+    // Fungsi untuk mengatur biaya pengiriman berdasarkan paket, kurir, dan ID alamat
     function setShippingFee(deliveryPackage, courier, addressID) {
         $.ajax({
-            url: "/user/choose-package",
-            method: "POST",
+            url: "/user/choose-package", // URL endpoint untuk request AJAX
+            method: "POST", // Metode HTTP yang digunakan untuk request
             data: {
-                delivery_package: deliveryPackage,
-                courier: courier,
-                address_id: addressID,
-                _token: $('meta[name="csrf-token"]').attr('content'),
+                delivery_package: deliveryPackage, // Paket pengiriman yang dipilih
+                courier: courier, // Kurir yang dipilih
+                address_id: addressID, // ID alamat pengiriman
+                _token: $('meta[name="csrf-token"]').attr('content'), // Token CSRF untuk keamanan
             },
             success: function (result) {
+                // Fungsi yang dijalankan jika request AJAX berhasil
                 // Memperbarui elemen HTML dengan hasil dari server
-                $('#shipping-cost').html("Rp " + result.shipping_fee);
-                $('#jumlah-harga').html("Rp " + result.total_price);
+                $('#shipping-cost').html("Rp " + result.shipping_fee); // Menampilkan biaya pengiriman
+                $('#jumlah-harga').html("Rp " + result.total_price); // Menampilkan harga total
 
                 // Mengatur nilai input tersembunyi untuk pengiriman data ke server
-                $('#delivery_package').val(deliveryPackage);
-                $('#shipping_cost').val(result.shipping_fee.replace(/\D/g, '')); // Menghapus karakter non-digit
-                $('#total_price').val(result.total_price.replace(/\D/g, '')); // Menghapus karakter non-digit
+                $('#delivery_package').val(deliveryPackage); // Menyimpan paket pengiriman ke input tersembunyi
+                $('#shipping_cost').val(result.shipping_fee.replace(/\D/g, '')); // Menghapus karakter non-digit dari biaya pengiriman
+                $('#total_price').val(result.total_price.replace(/\D/g, '')); // Menghapus karakter non-digit dari harga total
             },
             error: function (e) {
-                console.error("Terjadi kesalahan: ", e);
+                // Fungsi yang dijalankan jika terjadi kesalahan pada request AJAX
+                console.error("Terjadi kesalahan: ", e); // Menampilkan kesalahan di console
             }
         });
     }

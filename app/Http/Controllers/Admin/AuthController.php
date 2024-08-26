@@ -10,11 +10,13 @@ use App\Http\Controllers\Controller;
 
 class AuthController extends Controller
 {
+    // Menampilkan form login untuk admin
     public function showLoginForm()
     {
         return view('admin.login_admin'); // Mengarahkan ke view login_admin.blade.php
     }
 
+    // Proses autentikasi login admin
     public function login(Request $request)
     {
         $request->validate([
@@ -22,66 +24,28 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        $admin = LoginAdmin::where('username', $request->username)->first();
+        $admin = LoginAdmin::where('username', $request->username)->first(); // Mencari admin berdasarkan username
 
+        // Memeriksa apakah admin ditemukan dan password yang diberikan cocok
         if ($admin && Hash::check($request->password, $admin->password)) {
-            Auth::guard('admin')->login($admin);
-            return redirect()->intended(route('admin.dashboard'));
+            Auth::guard('admin')->login($admin); // Melakukan login untuk admin
+            return redirect()->intended(route('admin.dashboard')); // Mengarahkan ke dashboard admin
         }
 
+        // Jika kredensial tidak cocok, mengarahkan kembali dengan pesan error
         return back()->withErrors([
             'username' => 'The provided credentials do not match our records.',
         ]);
     }
 
+    // Proses logout admin
     public function logout(Request $request)
     {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        Auth::logout(); // Melakukan logout
+        $request->session()->invalidate(); // Menghapus sesi
+        $request->session()->regenerateToken(); // Menghasilkan ulang token sesi untuk keamanan
 
-        return redirect()->route('admin.login');
+        return redirect()->route('admin.login'); // Mengarahkan kembali ke halaman login
     }
 
 }
-
-
-
-
-
-
-
-
-// namespace App\Http\Controllers;
-
-// use Illuminate\Http\Request;
-// use App\Models\LoginAdmin;
-// use Illuminate\Support\Facades\Auth;
-// use Illuminate\Support\Facades\Hash;
-
-// class AuthController extends Controller
-// {
-//     public function showLoginForm()
-//     {
-//         return view('login_admin'); // Mengarahkan ke view login_admin.blade.php
-//     }
-
-//     public function login(Request $request)
-//     {
-//         $request->validate([
-//             'username' => 'required',
-//             'password' => 'required',
-//         ]);
-
-//         $admin = LoginAdmin::where('username', $request->username)->first();
-
-//         if ($admin && Hash::check($request->password, $admin->password)) {
-//             Auth::login($admin);
-//             return redirect()->intended('dashboard');
-//         }
-
-//         return back()->withErrors([
-//             'username' => 'The provided credentials do not match our records.',
-//         ]);
-//     }
-// }

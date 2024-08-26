@@ -10,37 +10,42 @@ use App\Http\Controllers\Controller;
 
 class SocialController extends Controller
 {
-    
+    // Method untuk redirect ke halaman login Google
     public function redirect()
     {
         return Socialite::driver('google')->redirect();
     }
 
-     // Method untuk callback setelah login Google
+    // Method untuk menangani callback setelah login menggunakan Google
     public function googleCallback()
-     {
-         $googleUser = Socialite::driver('google')->user();
+    {
+        // Mendapatkan data pengguna dari Google
+        $googleUser = Socialite::driver('google')->user();
      
-         // Cari pengguna berdasarkan email di database lokal
-         $user = User::where('email', $googleUser->email)->first();
+        // Mencari pengguna di database lokal berdasarkan email
+        $user = User::where('email', $googleUser->email)->first();
      
-         if ($user) {
-             // Login pengguna ke aplikasi dengan guard default (web)
-             Auth::guard('web')->login($user);
-             return redirect()->route('user.beranda'); // Arahkan ke halaman beranda setelah login
-         } else {
-             // Jika pengguna tidak ditemukan, Anda bisa membuat pengguna baru atau menampilkan pesan
-             $user = User::create([
-                 'name' => $googleUser->name,
-                 'email' => $googleUser->email,
-                 'password' => bcrypt('password') // Anda bisa menggunakan password default atau generate password
-             ]);
+        if ($user) {
+            // Jika pengguna ditemukan, login pengguna
+            Auth::guard('web')->login($user);
+
+            // Redirect ke halaman beranda setelah login
+            return redirect()->route('user.beranda');
+        } else {
+            // Jika pengguna tidak ditemukan, buat pengguna baru
+            $user = User::create([
+                'name' => $googleUser->name,
+                'email' => $googleUser->email,
+                'password' => bcrypt('password') // Set password default atau generate password
+            ]);
              
-             // Login pengguna ke aplikasi dengan guard default (web)
-             Auth::guard('web')->login($user);
-             return redirect()->route('user.beranda'); // Arahkan ke halaman beranda setelah login
-         }
-     }
+            // Login pengguna baru
+            Auth::guard('web')->login($user);
+
+            // Redirect ke halaman beranda setelah login
+            return redirect()->route('user.beranda');
+        }
+    }
 
     public function logout(Request $request)
     {

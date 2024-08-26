@@ -233,5 +233,4 @@
         });
     </script>    
     <script src="{{ asset('js/user/main.js')}}"></script>
-    {{-- <script src="{{ asset('js/user/pemesanan.js')}}"></script> --}}
 @endpush

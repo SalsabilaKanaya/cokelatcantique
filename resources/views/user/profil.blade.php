@@ -72,7 +72,7 @@
                                 <div class="detail-item">
                                     <p class="title">City</p>
                                     <p>{{ $user->userAddress->city_name }}</p>
-                                </div>                                                             
+                                </div>
                                 <div class="detail-item">
                                     <p class="title">Alamat Lengkap</p>
                                     <p>{{ $user->userAddress->address }}</p>
