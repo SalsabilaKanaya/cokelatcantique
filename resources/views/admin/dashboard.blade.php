@@ -98,7 +98,7 @@
                         @foreach ($orders as $order)
                             @foreach ($order->items as $item)
                                 <tr>
-                                    <td>{{ $order->id }}</td>
+                                    <td>{{ \Illuminate\Support\Str::limit($order->id, 10, '...') }}</td>
                                     <td>{{ $order->user->name }}</td>
                                     <td>{{ $item->jenisCokelat->nama }}</td> <!-- Pastikan `name` ada di tabel jenis_cokelat -->
                                     <td>{{ $order->delivery_date->format('d/m/Y') }}</td>

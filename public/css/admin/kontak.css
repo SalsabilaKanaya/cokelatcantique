@@ -145,7 +145,7 @@ body{
 
 .table th, .table td {
     padding: 12px;
-    text-align: left;
+    text-align: center;
     border-bottom: 1px solid #dee2e6;
     width: 80px;
     max-width: 120px;
@@ -163,3 +163,21 @@ body{
     font-size: 14px;
     font-weight: 400;
 }
+
+.badge {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.btn-checklist{
+    background-color: white;
+    color: #2DCC71;
+    border: none;
+    font-size: 28px;
+}
+
+.btn-checklist:hover{
+    color: #219653;
+}
+

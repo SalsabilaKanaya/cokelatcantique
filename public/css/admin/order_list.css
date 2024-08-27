@@ -136,6 +136,15 @@ body{
     font-weight: 700;
 }
 
+.box .form-select{
+    background-color: white;
+    box-shadow: 0 0 0 1px #DEDEDE;
+    font-family: 'Montserrat' sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: black;
+}
+
 /* Table styling */
 .table {
     width: 100%;
@@ -145,7 +154,7 @@ body{
 
 .table th, .table td {
     padding: 12px;
-    text-align: left;
+    text-align: center;
     border-bottom: 1px solid #dee2e6;
     width: 60px;
     max-width: 100px;
@@ -154,7 +163,7 @@ body{
 
 .table th {
     color: black;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
 }
 
@@ -174,4 +183,20 @@ body{
 
 .btn-text:hover{
     color: #BFA47F;
+}
+
+.btn-success {
+    background-color: #2DCC71;
+    color: white;
+    border-radius: 100px;
+    box-shadow: 0 2px 4px rgba(45, 204, 113, 0.5);
+    border: none;
+    margin-right: 5px;
+    font-size: 14px;
+}
+
+.badge {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
 }

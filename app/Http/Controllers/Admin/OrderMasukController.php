@@ -40,11 +40,15 @@ class OrderMasukController extends Controller
     // Menampilkan daftar order yang sudah diterima
     public function orderList(Request $request)
     {
-        // Filter order yang sudah diterima
-        $orders = Order::where('status', 'accepted') // Mencari order dengan status 'accepted'
-                    ->with(['user', 'items.jenisCokelat']) // Memuat relasi user dan jenisCokelat terkait
-                    ->get(); // Mengambil semua order yang cocok
+        // Ambil parameter sort_order dari request, default ke 'desc' (terbaru)
+        $sortOrder = $request->input('sort_order', 'desc');
 
+        // Filter order yang sudah diterima
+        $orders = Order::whereIn('status', ['accepted', 'completed']) // Mencari order dengan status 'accepted'
+                    ->with(['user', 'items.jenisCokelat']) // Memuat relasi user dan jenisCokelat terkait
+                    ->orderBy('created_at', $sortOrder) // Urutkan berdasarkan tanggal pembuatan
+                    ->get(); // Mengambil semua order yang cocok
+                    
         return view('admin.order_list', compact('orders')); // Mengarahkan ke view order_list dengan data orders
     }
 
@@ -59,4 +63,17 @@ class OrderMasukController extends Controller
 
         return view('admin.detail_order', compact('order', 'subtotal')); // Mengarahkan ke view detail_order dengan data order dan subtotal
     }
+
+    public function markAsDone(Order $order)
+    {
+        $order->status = 'completed'; // Update status ke 'completed'
+        $order->save();
+
+        // Log data untuk debugging
+        \Log::info('Order marked as done:', ['order' => $order]);
+
+        return response()->json(['status' => 'success']);
+    }
+
+
 }

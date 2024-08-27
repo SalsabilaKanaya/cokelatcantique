@@ -81,13 +81,13 @@
         </nav>
 
         <div class="content">
+            <div class="content-title mb-3 mt-3 d-flex justify-content-between align-items-center">
+                <h1>Karakter Cokelat</h1>
+                <a href="{{ route('admin.create_karakter') }}">
+                    <button class="btn btn-tambah">Tambah Karakter Cokelat</button>
+                </a>
+            </div>
             <div class="box">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h1>Karakter Cokelat</h1>
-                    <a href="{{ route('admin.create_karakter') }}">
-                        <button class="btn btn-tambah">Tambah Karakter Cokelat</button>
-                    </a>
-                </div>
                 <table class="table">
                     <thead>
                         <tr>
@@ -102,7 +102,7 @@
                         @foreach($karakterCokelat as $cokelat)
                         <tr>
                             <td>
-                                <img src="{{ asset($cokelat->foto) }}" alt="{{ $cokelat->nama }}" width="100">
+                                <img src="{{ asset($cokelat->foto) }}" alt="{{ $cokelat->nama }}" width="50">
                             </td>
                             <td>{{ $cokelat->nama }}</td>
                             <td>
@@ -117,7 +117,15 @@
                                 @endphp
                                 {{ $kategoriLabels[$cokelat->kategori] ?? 'Unknown' }}
                             </td>
-                            <td>{{ $cokelat->deskripsi }}</td>
+                            <td>
+                                @php
+                                    // Cari posisi dari kata "bahan: cokelat compound"
+                                    $pos = strpos($cokelat->deskripsi, 'Bahan:Cokelat Compound');
+                                    // Jika ditemukan, potong teks dari posisi tersebut hingga akhir
+                                    $deskripsi = $pos !== false ? substr($cokelat->deskripsi, $pos) : $cokelat->deskripsi;
+                                @endphp
+                                {{ $deskripsi }}
+                            </td>
                             <td>
                                 <a href="{{ route('admin.edit_karakter', ['id' => $cokelat->id]) }}" class="btn btn-warning">Edit</a>
                                 <form action="{{ route('admin.delete_karakter', ['id' => $cokelat->id]) }}" method="POST" style="display:inline; margin-top: 10px;">

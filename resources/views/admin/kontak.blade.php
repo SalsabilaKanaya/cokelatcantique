@@ -1,25 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Beranda Cokelat Cantique</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
-
-    <!--BoxIcons CDN Link-->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
-
-    <!--FONT-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css"/>
-
     <link rel="stylesheet" href="{{ asset('css/admin/kontak.css') }}">
 </head>
 <body>
@@ -91,16 +85,33 @@
                             <th>No Telp</th>
                             <th>Email</th>
                             <th>Isi Pesan</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($kontak as $kontak)
-                        <tr>
-                            <td>{{ $kontak->id }}</td>
-                            <td>{{ $kontak->nama}}</td>
-                            <td>{{ $kontak->no_telp}}</td>
-                            <td>{{ $kontak->email }}</td>
-                            <td>{{ $kontak->pesan }}</td>
+                        @php $no = 1; @endphp
+                        @foreach($kontak as $item)
+                        <tr id="row-{{ $item->id }}">
+                            <td>{{ $no++ }}</td>
+                            <td>{{ $item->nama }}</td>
+                            <td>{{ $item->no_telp }}</td>
+                            <td>{{ $item->email }}</td>
+                            <td>{{ $item->pesan }}</td>
+                            <td>
+                                @if ($item->status === 'unread')
+                                    <span class="badge bg-warning text-dark">Belum Dibaca</span>
+                                @else
+                                    <span class="badge bg-success">Sudah Dibaca</span>
+                                @endif
+                            </td>
+                            <td>
+                                @if ($item->status === 'unread')
+                                    <button class="btn-checklist btn-primary btn-sm" onclick="markAsRead({{ $item->id }})">
+                                        <i class='bx bx-check'></i>
+                                    </button>
+                                @endif
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -108,7 +119,32 @@
             </div>
         </div>
     </section>
+
+
     <script src="{{ asset('js/admin/dashboard.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function markAsRead(id) {
+            if (confirm("Apakah Anda yakin pesan ini sudah dibaca?")) {
+                fetch(`/admin/kontak/${id}/mark-as-read`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({})
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        let row = document.getElementById(`row-${id}`);
+                        row.querySelector('td:nth-child(6)').innerHTML = '<span class="badge bg-success">Sudah Dibaca</span>';
+                        row.querySelector('td:nth-child(7)').innerHTML = ''; // Hapus tombol aksi
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        }
+    </script>    
 </body>
 </html>

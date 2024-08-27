@@ -17,5 +17,6 @@ class Kontak extends Model
         'no_telp',
         'email',
         'pesan',
+        'status',
     ];
 }

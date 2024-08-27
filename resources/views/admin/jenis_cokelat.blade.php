@@ -81,13 +81,13 @@
         </nav>
 
         <div class="content">
+            <div class="content-title mb-3 mt-3 d-flex justify-content-between align-items-center">
+                <h1>Jenis Cokelat</h1>
+                <a href="{{ route('admin.create_jenis') }}">
+                    <button class="btn btn-tambah">Tambah Jenis Cokelat</button>
+                </a>
+            </div>
             <div class="box">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h1>Jenis Cokelat</h1>
-                    <a href="{{ route('admin.create_jenis') }}">
-                        <button class="btn btn-tambah">Tambah Jenis Cokelat</button>
-                    </a>
-                </div>
                 <table class="table">
                     <thead>
                         <tr>
@@ -104,7 +104,7 @@
                         @foreach($jenisCokelat as $cokelat)
                         <tr>
                             <td>
-                                <img src="{{ asset($cokelat->foto) }}" alt="{{ $cokelat->nama }}" width="100">
+                                <img src="{{ asset($cokelat->foto) }}" alt="{{ $cokelat->nama }}" width="50">
                             </td>
                             <td>{{ $cokelat->nama }}</td>
                             <td>
@@ -120,7 +120,7 @@
                             </td>
                             <td>{{ $cokelat->jumlah_karakter }}</td>
                             <td>Rp {{ number_format($cokelat->harga, 0, ',', '.') }}</td>
-                            <td>{{ $cokelat->deskripsi }}</td>
+                            <td>{{ \Illuminate\Support\Str::limit($cokelat->deskripsi, 50, '...') }}</td>
                             <td>
                                 <a href="{{ route('admin.edit_jenis', ['id' => $cokelat->id]) }}" class="btn btn-warning">Edit</a>
                                 <form action="{{ route('admin.delete_jenis', ['id' => $cokelat->id]) }}" method="POST" style="display:inline; margin-top: 10px;">

@@ -110,6 +110,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/order/{order}/reject', [OrderMasukController::class, 'rejectOrder'])->name('order.reject');
         Route::get('/order_list', [OrderMasukController::class, 'orderList'])->name('order_list');
         Route::get('/order/{order}/detail', [OrderMasukController::class, 'detailOrder'])->name('detail_order');
+        Route::post('/order/{order}/mark-as-done', [OrderMasukController::class, 'markAsDone'])->name('mark_as_done');
 
         Route::get('/jenis_cokelat', [CreateJenisCokelatController::class, 'index'])->name('jenis_cokelat');
         Route::delete('/jenis_cokelat/{id}', [CreateJenisCokelatController::class, 'destroy'])->name('delete_jenis');
@@ -126,6 +127,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('/edit_karakter/{id}', [CreateKarakterCokelatController::class, 'update'])->name('edit_karakter.update');
 
         Route::get('/kontak', [KontakMasukController::class, 'index'])->name('kontak');
+        Route::post('/kontak/{id}/mark-as-read', [KontakMasukController::class, 'markAsRead'])->name('admin.kontak.mark_as_read');
     });
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
