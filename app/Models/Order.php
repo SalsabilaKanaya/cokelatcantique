@@ -26,8 +26,8 @@ class Order extends Model
         'notes',
         'payment_proof',
         'courier',
-        'service name',
-        'delivery_cost',
+        'delivery_package',
+        'shipping_cost',
         'total_price',
         'status'
     ];

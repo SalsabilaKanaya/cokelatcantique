@@ -22,43 +22,44 @@
                         <div class="produk-title">
                             <h5>Produk Dipesan</h5>
                         </div>
-                        @if(isset($order))
-                            <div class="produk-list">
-                                @if($orderItems->isEmpty())
-                                    <p>Belum ada produk yang dipesan.</p>
-                                @else
-                                    @foreach($orderItems as $orderItem)
-                                        <div class="produk-item d-flex">
-                                            <div class="produk-info">
-                                                <img src="{{ asset($orderItem->jenisCokelat->foto) }}" alt="{{ $orderItem->jenisCokelat->nama }}" class="produk-img">
-                                                <div class="produk-isi">
-                                                    <h5>{{ $orderItem->jenisCokelat->nama }}</h5>
-                                                    @foreach($orderItem->karakterItems as $karakterItem)
-                                                        <p>{{ $karakterItem->karakterCokelat->nama }}</p>
-                                                    @endforeach
-                                                </div>
-                                            </div>
-                                            <p class="price"style="font-size: 18px; color: #000; font-weight: 700; font-family: 'Montserrat', sans-serif;">Rp {{ number_format($orderItem->price, 0, ',', '.') }}</p>
-                                        </div>
-                                    @endforeach
-                                @endif
-                            </div>
-                            <form action="#" method="POST" id="order-form">
-                                @csrf
-                                <div class="row note-date mt-3">
-                                    <div class="col-md-6">
-                                        <label for="notes">Catatan Lainnya</label>
-                                        <textarea class="form-control" id="notes" name="notes" rows="3" required></textarea> 
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="delivery_date" >Tanggal Pengiriman</label>
-                                        <input type="date" class="form-control" id="delivery_date" name="delivery_date" required>
-                                        <p>Masukkan tanggal pengiriman 7 hari sebelum digunakan</p>
+                        <div class="produk-list">
+                            <!-- Tampilkan detail jenis cokelat -->
+                            <div class="produk-item d-flex">
+                                <div class="produk-info">
+                                    <img src="{{ asset($jenisCokelat->foto) }}" alt="{{ $jenisCokelat->nama }}" class="produk-img">
+                                    <div class="produk-isi">
+                                        <h5>{{ $jenisCokelat->nama }}</h5>
+                                        <!-- Tampilkan karakter-karakter yang dipilih -->
+                                        @foreach($karakterCokelat as $karakter)
+                                            <p>{{ $karakter->nama }}</p>
+                                            @if(!empty($selectedKarakter[$karakter->id]['catatan']))
+                                                <p>{{ $selectedKarakter[$karakter->id]['catatan'] }}</p>
+                                            @endif
+                                        @endforeach
                                     </div>
                                 </div>
-                            </form>
-                        @endif
+                                <p class="price" style="font-size: 18px; color: #000; font-weight: 700; font-family: 'Montserrat', sans-serif;">
+                                    Rp {{ number_format($jenisCokelat->harga, 0, ',', '.') }}
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Form untuk catatan dan tanggal pengiriman -->
+                        <form action="#" method="POST" id="order-form">
+                            @csrf
+                            <div class="row note-date mt-3">
+                                <div class="col-md-6">
+                                    <label for="notes">Catatan Lainnya</label>
+                                    <textarea class="form-control" id="notes" name="notes" rows="3" required></textarea> 
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="delivery_date" >Tanggal Pengiriman</label>
+                                    <input type="date" class="form-control" id="delivery_date" name="delivery_date" required>
+                                    <p>Masukkan tanggal pengiriman 7 hari sebelum digunakan</p>
+                                </div>
+                            </div>
+                        </form>
                     </div>
+                    
                     <div class="alamat-pengiriman">
                         <div class="address-title">
                             <i class="fa-solid fa-location-dot icon-spacing"></i>

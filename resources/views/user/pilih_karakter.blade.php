@@ -162,7 +162,8 @@
                     <form>
                         <div class="mb-3 catatan">
                             <label for="deskripsi" class="form-label catatan-title">Catatan Kustomisasi</label>
-                            <p class="note">Masukkan catatan kustomisasi seperti warna, tulisan, dan yang lainnya sesuai dengan keinginan</p>
+                            <p class="note">Masukkan catatan kustomisasi seperti warna, tulisan, dan yang lainnya sesuai dengan keinginan.</p>
+                            <p class="note mt-0">Contoh: Saya ingin karakter pororo saja, Saya ingin warna karakternya biru, dll.</p>
                             <textarea class="form-control" id="deskripsi" rows="3"></textarea>
                         </div>
                     </form>

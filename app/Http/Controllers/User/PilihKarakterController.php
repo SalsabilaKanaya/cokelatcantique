@@ -9,6 +9,7 @@ use App\Models\OrderItem; // Menggunakan model OrderItem untuk menyimpan item pe
 use App\Models\OrderItemKarakter; // Menggunakan model OrderItemKarakter untuk menyimpan karakter item pesanan
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 
 class PilihKarakterController extends Controller
 {
@@ -69,10 +70,13 @@ class PilihKarakterController extends Controller
         // Simpan data karakter yang dipilih ke dalam sesi
         $selectedKarakter = session()->get('selected_karakter', []);
         $selectedKarakter[$karakterId] = [
-            'jumlah' => $jumlah,
+            'jumlah' => (int) $jumlah,
             'catatan' => $catatan,
         ];
         session()->put('selected_karakter', $selectedKarakter);
+
+        // Simpan log data karakter yang dipilih
+        Log::info('Selected karakter data:', $selectedKarakter);
 
         // Kembalikan respon JSON yang menandakan penyimpanan berhasil
         return response()->json(['success' => true]);
@@ -119,57 +123,19 @@ class PilihKarakterController extends Controller
             return redirect()->route('user.profil', ['#alamat'])->with('message', 'Silakan lengkapi alamat Anda.');
         }
 
-        // Ambil data jenis cokelat dan karakter yang dipilih dari sesi
+        // Ambil data dari sesi
         $selectedJenis = session()->get('selected_jenis');
         $selectedKarakter = session()->get('selected_karakter', []);
 
-        // Buat entri order baru di database
-        $order = Order::create([
-            'user_id' => auth()->id(), // ID pengguna yang melakukan pemesanan
-            'delivery_date' => now()->addDays(7), // Tanggal pengiriman ditetapkan 7 hari dari sekarang
-            'notes' => '', // Catatan kosong untuk saat ini
-            'payment_proof' => '', // Bukti pembayaran kosong untuk saat ini
-            'courier' => '', // Kurir belum ditentukan
-            'delivery_package' => '', // Paket pengiriman belum ditentukan
-            'total_price' => 0, // Harga total awalnya nol, akan dihitung nanti
-            'shipping_cost' => '', // Biaya pengiriman belum ditentukan
-            'status' => 'pending' // Status order awalnya 'pending'
+        // Simpan data pesanan ke sesi
+        session()->put('order_details', [
+            'selected_jenis' => $selectedJenis,
+            'selected_karakter' => $selectedKarakter,
+            'user_id' => auth()->id(),
         ]);
 
-        // Cari jenis cokelat yang dipilih berdasarkan ID dari sesi
-        $jenisCokelat = JenisCokelat::find($selectedJenis);
-        $totalPrice = 0;
-
-        if ($jenisCokelat) {
-            // Jika jenis cokelat ditemukan, buat entri item pesanan baru
-            $orderItem = new OrderItem();
-            $orderItem->order_id = $order->id; // Hubungkan item pesanan dengan order
-            $orderItem->jenis_cokelat_id = $selectedJenis; // Simpan ID jenis cokelat yang dipilih
-            $orderItem->price = $jenisCokelat->harga; // Simpan harga jenis cokelat
-            $orderItem->save(); // Simpan item pesanan ke database
-
-            // Simpan setiap karakter yang dipilih untuk item pesanan ini
-            foreach ($selectedKarakter as $karakterId => $detail) {
-                $karakterItem = new OrderItemKarakter();
-                $karakterItem->order_item_id = $orderItem->id; // Hubungkan karakter dengan item pesanan
-                $karakterItem->karakter_cokelat_id = $karakterId; // Simpan ID karakter yang dipilih
-                $karakterItem->quantity = $detail['jumlah']; // Simpan jumlah karakter yang dipilih
-                $karakterItem->notes = $detail['catatan']; // Simpan catatan untuk karakter yang dipilih
-                $karakterItem->save(); // Simpan data karakter item ke database
-            }
-
-            // Tambahkan harga jenis cokelat ke total harga pesanan
-            $totalPrice += $orderItem->price;
-        }
-
-        // Update total harga di order setelah semua item ditambahkan
-        $order->total_price = $totalPrice;
-        $order->save(); // Simpan perubahan ke order
-
-        // Kosongkan data sesi setelah pesanan diproses
-        session()->forget('selected_jenis');
-        session()->forget('selected_karakter');
-        session()->forget('total_karakter');
+        // Simpan log data karakter yang dipilih
+        Log::info('Selected karakter data during order processing:', $selectedKarakter);
 
         // Redirect ke halaman pemesanan
         return redirect()->route('user.pemesanan');

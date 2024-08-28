@@ -17,6 +17,7 @@ class HistoriController extends Controller
         // Dengan memuat relasi 'items', 'jenisCokelat', 'karakterItems', dan 'karakterCokelat'
         $orders = Order::with(['items.jenisCokelat', 'items.karakterItems.karakterCokelat'])
             ->where('user_id', $userId) // Filter order berdasarkan ID user yang sedang login
+            ->orderBy('created_at', 'desc')
             ->get();
 
         // Kembalikan ke view 'user.histori' dengan data orders

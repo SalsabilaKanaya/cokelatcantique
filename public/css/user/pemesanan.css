@@ -59,7 +59,7 @@ body {
 .produk-info {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: left;
 }
 
 .produk-info h5 {

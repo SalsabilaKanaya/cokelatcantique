@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\OrderItemKarakter;
 use App\Models\OrderAddress;
 use App\Models\UserAddress;
 use App\Models\JenisCokelat;
@@ -28,29 +29,37 @@ class ProsesOrderController extends Controller
     // Menampilkan halaman pemesanan dengan detail pesanan terbaru dari pengguna
     public function index()
     {
-        $order = Order::where('user_id', auth()->id())->latest()->first();
-    
-        $orderItems = [];
-        $shippingCost = 0;
-        $subtotal = 0;
-        $totalPrice = 0;
-    
+        // Ambil data dari sesi
+        $selectedJenis = session()->get('order_details.selected_jenis');
+        $selectedKarakter = session()->get('order_details.selected_karakter', []);
+
+        // Ambil data jenis cokelat dari database berdasarkan ID yang disimpan di sesi
+        $jenisCokelat = JenisCokelat::find($selectedJenis);
+
+        // Jika jenis cokelat tidak ditemukan, kembalikan ke halaman sebelumnya dengan pesan kesalahan
+        if (!$jenisCokelat) {
+            return redirect()->back()->with('error', 'Jenis cokelat tidak ditemukan.');
+        }
+
+        // Ambil data karakter dari database berdasarkan ID yang disimpan di sesi
+        $karakterCokelat = KarakterCokelat::whereIn('id', array_keys($selectedKarakter))->get();
+
         // Ambil alamat pengguna dari tabel user_address
         $userAddress = UserAddress::where('user_id', auth()->id())->first();
-    
-        if ($order) {
-            $orderItems = OrderItem::with('karakterItems.karakterCokelat')
-                ->where('order_id', $order->id)
-                ->get();
-    
-            $subtotal = $orderItems->sum('price');
-        }
-    
-        // Hitung total harga dengan biaya pengiriman jika ada
+
+        // Hitung subtotal dari harga jenis cokelat
+        $subtotal = $jenisCokelat->harga;
+
+        // Inisialisasi biaya pengiriman
+        $shippingCost = 0; // Misalnya, $shippingCost dihitung berdasarkan logika yang ada atau API eksternal
+
+        // Hitung total harga
         $totalPrice = $subtotal + $shippingCost;
-    
-        return view('user.pemesanan', compact('order', 'orderItems', 'userAddress', 'subtotal', 'shippingCost', 'totalPrice'));
-    }    
+
+        // Kirim data ke view
+        return view('user.pemesanan', compact('jenisCokelat', 'karakterCokelat', 'selectedKarakter', 'userAddress', 'subtotal', 'shippingCost', 'totalPrice'));
+    }
+
 
     // Menghitung biaya pengiriman berdasarkan alamat dan kurir yang dipilih
     public function shippingfee(Request $request)
@@ -162,18 +171,23 @@ class ProsesOrderController extends Controller
                 'total_price' => 0,
             ]);
         }
+
+        // Ambil data dari sesi
+        $selectedJenis = session()->get('order_details.selected_jenis');
+
+        // Ambil data jenis cokelat dari database berdasarkan ID yang disimpan di sesi
+        $jenisCokelat = JenisCokelat::find($selectedJenis);
         
         // Hitung total harga
-        $subtotal = $orderItems->sum('price');
+        $subtotal = $jenisCokelat->harga;
         $shippingCost = $selectedPackage['cost'];
         $totalPrice = $subtotal + $shippingCost;
 
-        // Simpan total harga ke dalam tabel order
-        $order->courier = $courier;
-        $order->delivery_package = $deliveryPackage;
-        $order->shipping_cost = $shippingCost;
-        $order->total_price = $totalPrice;
-        $order->save();
+        // Simpan informasi ke dalam sesi dengan nama yang berbeda
+        session()->put('shipping_details.courier', $courier);
+        session()->put('shipping_details.delivery_package', $deliveryPackage);
+        session()->put('shipping_details.shipping_cost', $shippingCost);
+        session()->put('shipping_details.total_price', $totalPrice);
 
         return response()->json([
             'shipping_fee' => number_format($shippingCost, 0, ',', '.'),
@@ -182,11 +196,8 @@ class ProsesOrderController extends Controller
     }
 
     // Menyimpan data pemesanan ke database
-    public function store(Request $request) {
-        Log::info('Store method called', [
-            'request_data' => $request->all()
-        ]);
-
+    public function store(Request $request) 
+    {
         // Validasi input
         $request->validate([
             'delivery_date' => 'required|date',
@@ -194,20 +205,29 @@ class ProsesOrderController extends Controller
             'payment_proof' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048', // Validasi file
         ]);
 
-        Log::info('Validation passed.');
+        // Ambil data dari sesi
+        $orderDetails = session()->get('order_details');
+        $shippingDetails = session()->get('shipping_details');
 
-        // Simpan order ke database
-        $order = Order::where('user_id', auth()->id())->latest()->first();
-        if (!$order) {
-            Log::error('Order not found for user', ['user_id' => auth()->id()]);
-            return redirect()->route('user.pemesanan')->with('error', 'Order tidak ditemukan.');
+        // Cek apakah data sesi tersedia
+        if (!$orderDetails || !$shippingDetails) {
+            Log::error('Order details or shipping details missing from session');
+            return redirect()->route('user.pemesanan')->with('error', 'Data pemesanan tidak lengkap.');
         }
 
-        Log::info('Order found', ['order_id' => $order->id]);
+        // Log data karakter yang dipilih sebelum menyimpan
+        Log::info('Selected karakter data before saving order:', $orderDetails['selected_karakter']);
 
-        // Simpan catatan dan tanggal pengiriman
-        $order->notes = $request->input('notes');
+        // Simpan order ke database
+        $order = new Order();
+        $order->user_id = $orderDetails['user_id'];
         $order->delivery_date = $request->input('delivery_date');
+        $order->notes = $request->input('notes');
+        $order->courier = $shippingDetails['courier'];
+        $order->delivery_package = $shippingDetails['delivery_package'];
+        $order->shipping_cost = $shippingDetails['shipping_cost'];
+        $order->total_price = $shippingDetails['total_price'];
+        $order->status = 'pending'; // Status awal pesanan
 
         // Jika ada bukti pembayaran, simpan file
         if ($request->hasFile('payment_proof')) {
@@ -216,11 +236,41 @@ class ProsesOrderController extends Controller
             $order->payment_proof = $filePath;
         }
 
-        $order->save();
+        
 
+        // Simpan data order ke database
+        $order->save();
         Log::info('Order saved successfully', ['order_id' => $order->id]);
 
+        // Ambil data order item dari sesi
+        $selectedJenis = $orderDetails['selected_jenis'];
+        $selectedKarakter = $orderDetails['selected_karakter'];
+
+        // Simpan data order item ke database
+        $jenisCokelat = JenisCokelat::find($selectedJenis);
+        $orderItem = new OrderItem();
+        $orderItem->order_id = $order->id;
+        $orderItem->jenis_cokelat_id = $selectedJenis;
+        $orderItem->price = $jenisCokelat ? $jenisCokelat->harga : 0;
+        $orderItem->save();
+
+        // Simpan data order item karakter ke database
+        foreach ($selectedKarakter as $karakterId => $karakterDetail) {
+            $orderItemKarakter = new OrderItemKarakter();
+            $orderItemKarakter->order_item_id = $orderItem->id;
+            $orderItemKarakter->karakter_cokelat_id = $karakterId;
+            $orderItemKarakter->quantity = (int)($karakterDetail['jumlah'] ?? 1); // Pastikan ini adalah integer
+            $orderItemKarakter->notes = $karakterDetail['catatan'] ?? ''; // Default catatan jika tidak ada
+            $orderItemKarakter->save();
+        }
+
+        // Hapus data sesi setelah menyimpan
+        session()->forget('order_details');
+        session()->forget('shipping_details');
+
+        // Kembalikan respons JSON dengan pesan sukses
         return response()->json(['success' => 'Order berhasil disimpan!']);
     }
+
     
 }
