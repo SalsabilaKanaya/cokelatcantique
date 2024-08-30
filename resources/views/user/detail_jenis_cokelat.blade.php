@@ -38,7 +38,11 @@
                     <h1 class="title">{{ $cokelat->nama }}</h1>
                     <p class="deskripsi">{!! nl2br(e($cokelat->deskripsi)) !!}</p>
                     <p class="price">Rp {{ number_format($cokelat->harga, 0, ',', '.') }}</p>
-                    <button class="btn btn-kustomisasi">Kustomisasi Cokelat</button>
+                    <form action="{{ route('user.store_jenis_cokelat_selection') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="jenis_cokelat_id" value="{{ $cokelat->id }}">
+                        <button type="submit" class="btn btn-kustomisasi">Kustomisasi Cokelat</button>
+                    </form>
                 </div>
             </div>
             <div class="related-products">

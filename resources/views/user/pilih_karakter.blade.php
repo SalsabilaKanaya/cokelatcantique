@@ -127,7 +127,10 @@
                             </p>
                         </div>
                         <div class="button d-flex justify-content-between">
-                            <a class="btn button-keranjang" href="#" role="button">Keranjang</a>
+                            <form action="{{ route('user.add_to_cart') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn button-keranjang {{ $isDisabled }}" role="button" {{ $isDisabled ? 'disabled' : '' }}>Keranjang</button>
+                            </form>
                             <form action="{{ route('user.process_order') }}" method="POST">
                                 @csrf
                                 <button type="submit" class="btn button-pesan {{ $isDisabled }}" data-id="{{ $cokelat->id }}" {{ $isDisabled ? 'disabled' : '' }}>Pesan</button>

@@ -4,7 +4,7 @@
 @section('title', 'Jenis Cokelat')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/user/pemesanan.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/user/pemesanan.css') }}">
 @endpush
 
 @section('content')
@@ -24,24 +24,25 @@
                         </div>
                         <div class="produk-list">
                             <!-- Tampilkan detail jenis cokelat -->
-                            <div class="produk-item d-flex">
-                                <div class="produk-info">
-                                    <img src="{{ asset($jenisCokelat->foto) }}" alt="{{ $jenisCokelat->nama }}" class="produk-img">
-                                    <div class="produk-isi">
-                                        <h5>{{ $jenisCokelat->nama }}</h5>
-                                        <!-- Tampilkan karakter-karakter yang dipilih -->
-                                        @foreach($karakterCokelat as $karakter)
-                                            <p>{{ $karakter->nama }}</p>
-                                            @if(!empty($selectedKarakter[$karakter->id]['catatan']))
-                                                <p>{{ $selectedKarakter[$karakter->id]['catatan'] }}</p>
+                            @foreach($jenisCokelat as $jenis)
+                                <div class="produk-item d-flex">
+                                    <div class="produk-info">
+                                        <img src="{{ asset($jenis->foto) }}" alt="{{ $jenis->nama }}" class="produk-img">
+                                        <div class="produk-isi">
+                                            <h5>{{ $jenis->nama }}</h5>
+                                            <!-- Tampilkan karakter-karakter yang dipilih -->
+                                            @if(isset($selectedKarakter[$jenis->id]))
+                                                @foreach($selectedKarakter[$jenis->id] as $karakter)
+                                                    <p>{{ $karakter['nama'] }}</p>
+                                                @endforeach
                                             @endif
-                                        @endforeach
+                                        </div>
                                     </div>
+                                    <p class="price" style="font-size: 18px; color: #000; font-weight: 700; font-family: 'Montserrat', sans-serif;">
+                                        Rp {{ number_format($jenis->harga, 0, ',', '.') }}
+                                    </p>
                                 </div>
-                                <p class="price" style="font-size: 18px; color: #000; font-weight: 700; font-family: 'Montserrat', sans-serif;">
-                                    Rp {{ number_format($jenisCokelat->harga, 0, ',', '.') }}
-                                </p>
-                            </div>
+                            @endforeach
                         </div>
                         <!-- Form untuk catatan dan tanggal pengiriman -->
                         <form action="#" method="POST" id="order-form">
@@ -52,7 +53,7 @@
                                     <textarea class="form-control" id="notes" name="notes" rows="3" required></textarea> 
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="delivery_date" >Tanggal Pengiriman</label>
+                                    <label for="delivery_date">Tanggal Pengiriman</label>
                                     <input type="date" class="form-control" id="delivery_date" name="delivery_date" required>
                                     <p>Masukkan tanggal pengiriman 7 hari sebelum digunakan</p>
                                 </div>
@@ -84,7 +85,7 @@
                         </div>
                         <form id="courier-form" action="{{ route('user.shippingfee') }}" method="POST">
                             @csrf
-                            <div id="courier-options">
+                            <div class="courier-options" id="courier-options">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input courier_code" type="radio" name="courier_code" id="jne" value="jne">
                                     <label class="form-check-label" for="jne">JNE</label>
@@ -100,7 +101,7 @@
                             </div>
                         </form>
                         <div class="courier-cost">
-                            <p>Available Service</p> 
+                            <p style="font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 500;">Available Service</p> 
                             <ul class="list-group-item list-group-flush available-services" style="display: none">
                             </ul>
                         </div>
@@ -233,5 +234,5 @@
             });
         });
     </script>    
-    <script src="{{ asset('js/user/main.js')}}"></script>
+    <script src="{{ asset('js/user/main.js') }}"></script>
 @endpush

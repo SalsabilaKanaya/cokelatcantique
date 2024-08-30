@@ -1,67 +1,91 @@
 @extends('user.layouts.app')
 
-@section('title', 'Jenis Cokelat')
+@section('title', 'Keranjang Saya')
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/user/keranjang.css')}}">
 @endpush
 
 @section('content')
-   <!--Main Content-->
+   <!-- Main Content -->
     <section class="main-content">
         <div class="container">
             <h2>Keranjang Saya</h2>
-            <div class="cart-item d-flex align-items-center justify-content-between p-3 mb-3">
-                <div class="left d-flex align-items-center">
-                    <input type="checkbox" class="form-check-input me-3">
-                    <div class="cart-info d-flex align-items-start">
-                        <div class="cart-img me-3">
-                            <img src="img/jenis_cokelat/kiloan.PNG" alt="Cokelat Box" class="cart-img">
+            <form action="{{ route('user.cart_process') }}" method="POST">
+                @csrf
+                @if($cart && $cart->items->count() > 0)
+                    @foreach($cart->items as $cartItem)
+                        <div class="cart-item d-flex align-items-center justify-content-between p-3 mb-3" data-item-id="{{ $cartItem->id }}">
+                            <div class="left d-flex align-items-center">
+                                <input type="checkbox" name="selected_items[]" value="{{ $cartItem->id }}" class="form-check-input me-3">
+                                <div class="cart-info d-flex align-items-start">
+                                    <div class="cart-img me-3">
+                                        <img src="{{ asset($cartItem->jenisCokelat->foto) }}" alt="{{ $cartItem->jenisCokelat->foto }}" class="cart-img">
+                                    </div>
+                                    <div>
+                                        <h5>{{ $cartItem->jenisCokelat->nama }}</h5>
+
+                                        @foreach($cartItem->karakterItems as $karakterItem)
+                                        <p> {{ $karakterItem->karakterCokelat->nama }} ({{ $karakterItem->quantity }})</p>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="right d-flex align-items-center">
+                                <div class="cart-price me-3">
+                                    <p>Rp {{ number_format($cartItem->price, 0, ',', '.') }}</p>
+                                </div>
+                                <button type="button" class="btn btn-delete" data-item-id="{{ $cartItem->id }}"><i class="fa fa-trash"></i></button>
+                            </div>
                         </div>
-                        <div>
-                            <h5>Cokelat Box (28 sekat)</h5>
-                            <p>Robocar Poli</p>
-                            <p>Teks</p>
-                        </div>
+                    @endforeach
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-pesan">Pesan</button>
                     </div>
-                </div>
-                <div class="cart-quantity me-3 align-self-center">
-                    <p>1</p>
-                </div>
-                <div class="right d-flex align-items-center">
-                    <div class="cart-price me-3">
-                        <p>Rp 168.000</p>
+                @else
+                    <div class="cart-kosong">
+                        <h5>Keranjang Anda Kosong.</h5>
+                        <img src="{{ asset('img/cart.PNG')}}" alt="" width="40%" class="mt-0">
                     </div>
-                    <button class="btn btn-delete"><i class="fa fa-trash"></i></button>
-                </div>
-            </div>
-            <div class="cart-item d-flex align-items-center justify-content-between p-3 mb-3">
-                <div class="left d-flex align-items-center">
-                    <input type="checkbox" class="form-check-input me-3">
-                    <div class="cart-info d-flex align-items-start">
-                        <div class="cart-img me-3">
-                            <img src="img/jenis_cokelat/kiloan.PNG" alt="Cokelat Box" class="cart-img">
-                        </div>
-                        <div>
-                            <h5>Cokelat Box (28 sekat)</h5>
-                            <p>Robocar Poli</p>
-                            <p>Teks</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="cart-quantity me-3 align-self-center">
-                    <p>1</p>
-                </div>
-                <div class="right d-flex align-items-center">
-                    <div class="cart-price me-3">
-                        <p>Rp 168.000</p>
-                    </div>
-                    <button class="btn btn-delete"><i class="fa fa-trash"></i></button>
-                </div>
-            </div>
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-pesan">Pesan</button>
-            </div>
+                @endif
+            </form>
         </div>
     </section>
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.btn-delete').forEach(button => {
+                button.addEventListener('click', function() {
+                    const itemId = this.getAttribute('data-item-id');
+                    const cartItemElement = document.querySelector(`.cart-item[data-item-id="${itemId}"]`);
+
+                    if (confirm('Apakah Anda yakin ingin menghapus item ini dari keranjang?')) {
+                        fetch('{{ route('user.cart_delete') }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({ item_id: itemId })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                cartItemElement.remove();
+                                alert(data.message);
+                            } else {
+                                alert(data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Terjadi kesalahan saat menghapus item dari keranjang.');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+@endpush

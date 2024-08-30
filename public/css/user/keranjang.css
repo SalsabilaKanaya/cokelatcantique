@@ -34,14 +34,15 @@
     font-size: 16px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
+    margin-bottom: 10px;
 }
 
 .cart-info p {
     margin: 0;
-    font-size: 14px;
+    font-size: 12px;
     font-family: 'Montserrat', sans-serif;
-    font-weight: 500;
-    color: #404852;
+    font-weight: 400;
+    color: #aaa;
 }
 
 .cart-quantity p{
@@ -91,4 +92,21 @@
 .btn-pesan:hover{
     color: black;
     background-color: #D2B48C;
+}
+
+.cart-kosong {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center; /* Pusatkan teks */
+    padding: 0px;
+    margin: 0px;
+}
+
+.cart-kosong h5{
+    font-size: 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: #D2B48C;
 }

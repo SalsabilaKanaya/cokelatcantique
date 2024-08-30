@@ -14,7 +14,10 @@
 
             @foreach ($orders as $order)
                 <div class="produk-container" data-url="{{ route('user.pesanan.detail', $order) }}">
-                    @foreach ($order->items as $item)
+                    @if ($order->items->isNotEmpty())
+                        @php
+                            $item = $order->items->first();
+                        @endphp
                         <div class="row produk-histori">
                             <div class="col-md-4 nama-gambar">
                                 <img src="{{ asset($item->jenisCokelat->foto) }}" alt="{{ $item->jenisCokelat->foto }}" class="produk-img">
@@ -28,7 +31,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4 produk-harga">
-                                <p>Rp {{ number_format($item->price, 0, ',', '.') }}</p>
+                                <p>Rp {{ number_format($order->subtotal, 0, ',', '.') }}</p>
                             </div>
                             <div class="col-md-4 status">
                                 @php
@@ -37,7 +40,7 @@
                                 <p class="{{ $statusClass }}">{{ ucfirst(strtolower($order->status)) }}</p>
                             </div>
                         </div>
-                    @endforeach
+                    @endif
 
                     <div class="row produk-total">
                         <div class="col total">
@@ -49,10 +52,8 @@
             @endforeach
         </div>
     </section>
-
 @endsection
 
 @push('scripts')
     <script src="{{ asset('js/user/histori.js')}}"></script>
 @endpush
-

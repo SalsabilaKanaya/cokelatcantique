@@ -16,6 +16,17 @@
 </head>
 <body>
     <div class="container-fluid h-100">
+        @if (session('session_cleared'))
+            @if (session('session_cleared') === true)
+                <div class="alert alert-success">
+                    Session berhasil dihapus.
+                </div>
+            @else
+                <div class="alert alert-danger">
+                    Gagal menghapus session.
+                </div>
+            @endif
+        @endif
         <div class="row h-100">
             <div class="col-lg-6" id="sideleft">
                 <div class="header">

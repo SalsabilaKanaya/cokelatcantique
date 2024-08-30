@@ -5,6 +5,9 @@ namespace App\Http\Controllers\User;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\OrderItemKarakter;
+use App\Models\Cart;
+use App\Models\CartItem;
+use App\Models\CartItemKarakter;
 use App\Models\OrderAddress;
 use App\Models\UserAddress;
 use App\Models\JenisCokelat;
@@ -14,7 +17,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\Controller;
-
 
 class ProsesOrderController extends Controller
 {
@@ -29,26 +31,59 @@ class ProsesOrderController extends Controller
     // Menampilkan halaman pemesanan dengan detail pesanan terbaru dari pengguna
     public function index()
     {
+        \Log::info('Pemesanan page accessed');
+        \Log::info('Session data on pemesanan page:', session()->all());
+
         // Ambil data dari sesi
-        $selectedJenis = session()->get('order_details.selected_jenis');
-        $selectedKarakter = session()->get('order_details.selected_karakter', []);
+        $selectedItems = session()->get('selected_items', []);
+        $orderDetails = session()->get('order_details', []);
 
-        // Ambil data jenis cokelat dari database berdasarkan ID yang disimpan di sesi
-        $jenisCokelat = JenisCokelat::find($selectedJenis);
+        \Log::info('Selected items from session:', $selectedItems);
+        \Log::info('Order details from session:', $orderDetails);
 
-        // Jika jenis cokelat tidak ditemukan, kembalikan ke halaman sebelumnya dengan pesan kesalahan
-        if (!$jenisCokelat) {
-            return redirect()->back()->with('error', 'Jenis cokelat tidak ditemukan.');
+        $jenisCokelat = [];
+        $karakterCokelat = [];
+        $selectedKarakter = [];
+        $subtotal = 0;
+
+        if (!empty($selectedItems)) {
+            // Case 1: Data berasal dari keranjang
+            foreach ($selectedItems as $item) {
+                $jenis = JenisCokelat::find($item['jenis_cokelat_id']);
+                if ($jenis) {
+                    $jenisCokelat[] = $jenis;
+                    $subtotal += $jenis->harga;
+                }
+
+                if (isset($item['karakter_items'])) {
+                    foreach ($item['karakter_items'] as $karakterItem) {
+                        $selectedKarakter[$item['jenis_cokelat_id']][] = [
+                            'nama' => KarakterCokelat::find($karakterItem['karakter_cokelat_id'])->nama,
+                            'notes' => $karakterItem['notes'] ?? '',
+                        ];
+                    }
+                }
+            }
+        } elseif (!empty($orderDetails)) {
+            // Case 2: Data berasal dari sesi pemesanan langsung
+            $selectedJenis = $orderDetails['selected_jenis'];
+            $selectedKarakter = $orderDetails['selected_karakter'];
+
+            $jenis = JenisCokelat::find($selectedJenis);
+            if ($jenis) {
+                $jenisCokelat[] = $jenis;
+                $subtotal += $jenis->harga;
+            }
+
+            foreach ($selectedKarakter as $karakterId => $karakterDetail) {
+                $karakterCokelat[] = KarakterCokelat::find($karakterId);
+            }
+        } else {
+            return redirect()->route('user.keranjang')->with('error', 'Tidak ada item yang dipilih.');
         }
-
-        // Ambil data karakter dari database berdasarkan ID yang disimpan di sesi
-        $karakterCokelat = KarakterCokelat::whereIn('id', array_keys($selectedKarakter))->get();
 
         // Ambil alamat pengguna dari tabel user_address
         $userAddress = UserAddress::where('user_id', auth()->id())->first();
-
-        // Hitung subtotal dari harga jenis cokelat
-        $subtotal = $jenisCokelat->harga;
 
         // Inisialisasi biaya pengiriman
         $shippingCost = 0; // Misalnya, $shippingCost dihitung berdasarkan logika yang ada atau API eksternal
@@ -59,7 +94,6 @@ class ProsesOrderController extends Controller
         // Kirim data ke view
         return view('user.pemesanan', compact('jenisCokelat', 'karakterCokelat', 'selectedKarakter', 'userAddress', 'subtotal', 'shippingCost', 'totalPrice'));
     }
-
 
     // Menghitung biaya pengiriman berdasarkan alamat dan kurir yang dipilih
     public function shippingfee(Request $request)
@@ -78,11 +112,54 @@ class ProsesOrderController extends Controller
         // Ambil alamat menggunakan model UserAddress
         $address = UserAddress::findOrFail($addressID);
 
-        // mendapatkan pesanan terbaru dari pengguna yang sedang login
-        $order = Order::where('user_id', auth()->id())->latest()->first();
-        // mendapatkan semua item yang terkait dengan pesanan terbaru dari pengguna yang sedang login.
-        $orderItems = OrderItem::where('order_id', $order->id)->get();
+        // Ambil data pesanan dari sesi
+        $selectedItems = session()->get('selected_items', []);
+        $orderDetails = session()->get('order_details', []);
 
+        // Tambahkan pengecekan apakah selectedItems atau orderDetails ditemukan
+        if (empty($selectedItems) && empty($orderDetails)) {
+            Log::error('No selected items or order details found in session for user', ['user_id' => auth()->id()]);
+            return response()->json(['error' => 'No selected items or order details found. Please add items to your cart first.'], 404);
+        }
+
+        // Buat array orderItems dari selectedItems atau orderDetails
+        $orderItems = collect();
+
+        if (!empty($selectedItems)) {
+            // Case 1: Data berasal dari keranjang
+            $orderItems = collect($selectedItems)->map(function ($item) {
+                return (object) [
+                    'id' => $item['id'],
+                    'cart_id' => $item['cart_id'],
+                    'jenis_cokelat_id' => $item['jenis_cokelat_id'],
+                    'price' => $item['price'],
+                    'created_at' => $item['created_at'],
+                    'updated_at' => $item['updated_at'],
+                    'karakter_items' => collect($item['karakter_items'])->map(function ($karakterItem) {
+                        return (object) [
+                            'karakter_cokelat_id' => $karakterItem['karakter_cokelat_id'],
+                            'quantity' => $karakterItem['quantity'],
+                            'notes' => $karakterItem['notes'],
+                        ];
+                    }),
+                ];
+            });
+        } elseif (!empty($orderDetails)) {
+            // Case 2: Data berasal dari sesi pemesanan langsung
+            $selectedJenis = $orderDetails['selected_jenis'];
+            $selectedKarakter = $orderDetails['selected_karakter'];
+
+            $orderItems->push((object) [
+                'jenis_cokelat_id' => $selectedJenis,
+                'karakter_items' => collect($selectedKarakter)->map(function ($karakterDetail, $karakterId) {
+                    return (object) [
+                        'karakter_cokelat_id' => $karakterId,
+                        'quantity' => $karakterDetail['jumlah'] ?? 1,
+                        'notes' => $karakterDetail['catatan'] ?? '',
+                    ];
+                }),
+            ]);
+        }
         // Hitung biaya pengiriman
         $availableServices = $this->calculateShippingfee($orderItems, $address, $courier);
 
@@ -149,9 +226,56 @@ class ProsesOrderController extends Controller
         $courier = $request->input('courier');
         $deliveryPackage = $request->input('delivery_package');
         $address = UserAddress::findOrFail($addressID);
-        $order = Order::where('user_id', auth()->id())->latest()->first();
-        $orderItems = OrderItem::where('order_id', $order->id)->get();
 
+        // Ambil data pesanan dari sesi
+        $selectedItems = session()->get('selected_items', []);
+        $orderDetails = session()->get('order_details', []);
+
+        // Tambahkan pengecekan apakah selectedItems atau orderDetails ditemukan
+        if (empty($selectedItems) && empty($orderDetails)) {
+            Log::error('No selected items or order details found in session for user', ['user_id' => auth()->id()]);
+            return response()->json(['error' => 'No selected items or order details found. Please add items to your cart first.'], 404);
+        }
+
+        // Buat array orderItems dari selectedItems atau orderDetails
+        $orderItems = collect();
+
+        if (!empty($selectedItems)) {
+            // Case 1: Data berasal dari keranjang
+            $orderItems = collect($selectedItems)->map(function ($item) {
+                return (object) [
+                    'id' => $item['id'],
+                    'cart_id' => $item['cart_id'],
+                    'jenis_cokelat_id' => $item['jenis_cokelat_id'],
+                    'price' => $item['price'],
+                    'created_at' => $item['created_at'],
+                    'updated_at' => $item['updated_at'],
+                    'karakter_items' => collect($item['karakter_items'])->map(function ($karakterItem) {
+                        return (object) [
+                            'karakter_cokelat_id' => $karakterItem['karakter_cokelat_id'],
+                            'quantity' => $karakterItem['quantity'],
+                            'notes' => $karakterItem['notes'],
+                        ];
+                    }),
+                ];
+            });
+        } elseif (!empty($orderDetails)) {
+            // Case 2: Data berasal dari sesi pemesanan langsung
+            $selectedJenis = $orderDetails['selected_jenis'];
+            $selectedKarakter = $orderDetails['selected_karakter'];
+
+            $orderItems->push((object) [
+                'jenis_cokelat_id' => $selectedJenis,
+                'karakter_items' => collect($selectedKarakter)->map(function ($karakterDetail, $karakterId) {
+                    return (object) [
+                        'karakter_cokelat_id' => $karakterId,
+                        'quantity' => $karakterDetail['jumlah'] ?? 1,
+                        'notes' => $karakterDetail['catatan'] ?? '',
+                    ];
+                }),
+            ]);
+        }
+        
         // Hitung biaya pengiriman
         $availableServices = $this->calculateShippingfee($orderItems, $address, $courier);
 
@@ -172,14 +296,50 @@ class ProsesOrderController extends Controller
             ]);
         }
 
-        // Ambil data dari sesi
-        $selectedJenis = session()->get('order_details.selected_jenis');
+        // // Ambil data dari sesi
+        // $selectedJenis = session()->get('order_details.selected_jenis');
 
-        // Ambil data jenis cokelat dari database berdasarkan ID yang disimpan di sesi
-        $jenisCokelat = JenisCokelat::find($selectedJenis);
-        
+        // // Ambil data jenis cokelat dari database berdasarkan ID yang disimpan di sesi
+        // $jenisCokelat = JenisCokelat::find($selectedJenis);
+
+        $subtotal = 0;
+
+        if (!empty($selectedItems)) {
+            // Case 1: Data berasal dari keranjang
+            foreach ($selectedItems as $item) {
+                $jenis = JenisCokelat::find($item['jenis_cokelat_id']);
+                if ($jenis) {
+                    $subtotal += $jenis->harga;
+                } else {
+                    Log::error('JenisCokelat tidak ditemukan', ['jenis_cokelat_id' => $item['jenis_cokelat_id']]);
+                    return response()->json([
+                        'shipping_fee' => 0,
+                        'total_price' => 0,
+                    ]);
+                }
+            }
+        } elseif (!empty($orderDetails)) {
+            // Case 2: Data berasal dari sesi pemesanan langsung
+            $selectedJenis = $orderDetails['selected_jenis'];
+            $jenisCokelat = JenisCokelat::find($selectedJenis);
+            if ($jenisCokelat) {
+                $subtotal = $jenisCokelat->harga;
+            } else {
+                Log::error('JenisCokelat tidak ditemukan', ['selected_jenis' => $selectedJenis]);
+                return response()->json([
+                    'shipping_fee' => 0,
+                    'total_price' => 0,
+                ]);
+            }
+        } else {
+            return response()->json([
+                'shipping_fee' => 0,
+                'total_price' => 0,
+            ]);
+        }
+
+
         // Hitung total harga
-        $subtotal = $jenisCokelat->harga;
         $shippingCost = $selectedPackage['cost'];
         $totalPrice = $subtotal + $shippingCost;
 
@@ -198,6 +358,9 @@ class ProsesOrderController extends Controller
     // Menyimpan data pemesanan ke database
     public function store(Request $request) 
     {
+        // Log data yang diterima
+        Log::info('Data yang diterima di store:', $request->all());
+
         // Validasi input
         $request->validate([
             'delivery_date' => 'required|date',
@@ -208,19 +371,22 @@ class ProsesOrderController extends Controller
         // Ambil data dari sesi
         $orderDetails = session()->get('order_details');
         $shippingDetails = session()->get('shipping_details');
+        $selectedItems = session()->get('selected_items', []);
 
         // Cek apakah data sesi tersedia
-        if (!$orderDetails || !$shippingDetails) {
-            Log::error('Order details or shipping details missing from session');
+        if (empty($selectedItems) && empty($orderDetails)) {
+            Log::error('Order details or selected items missing from session');
             return redirect()->route('user.pemesanan')->with('error', 'Data pemesanan tidak lengkap.');
         }
 
         // Log data karakter yang dipilih sebelum menyimpan
-        Log::info('Selected karakter data before saving order:', $orderDetails['selected_karakter']);
+        if (!empty($orderDetails)) {
+            Log::info('Selected karakter data before saving order:', $orderDetails);
+        }
 
         // Simpan order ke database
         $order = new Order();
-        $order->user_id = $orderDetails['user_id'];
+        $order->user_id = auth()->id(); // Menggunakan ID pengguna yang sedang login
         $order->delivery_date = $request->input('delivery_date');
         $order->notes = $request->input('notes');
         $order->courier = $shippingDetails['courier'];
@@ -236,41 +402,69 @@ class ProsesOrderController extends Controller
             $order->payment_proof = $filePath;
         }
 
-        
-
         // Simpan data order ke database
         $order->save();
         Log::info('Order saved successfully', ['order_id' => $order->id]);
 
-        // Ambil data order item dari sesi
-        $selectedJenis = $orderDetails['selected_jenis'];
-        $selectedKarakter = $orderDetails['selected_karakter'];
-
-        // Simpan data order item ke database
-        $jenisCokelat = JenisCokelat::find($selectedJenis);
-        $orderItem = new OrderItem();
-        $orderItem->order_id = $order->id;
-        $orderItem->jenis_cokelat_id = $selectedJenis;
-        $orderItem->price = $jenisCokelat ? $jenisCokelat->harga : 0;
-        $orderItem->save();
-
-        // Simpan data order item karakter ke database
-        foreach ($selectedKarakter as $karakterId => $karakterDetail) {
-            $orderItemKarakter = new OrderItemKarakter();
-            $orderItemKarakter->order_item_id = $orderItem->id;
-            $orderItemKarakter->karakter_cokelat_id = $karakterId;
-            $orderItemKarakter->quantity = (int)($karakterDetail['jumlah'] ?? 1); // Pastikan ini adalah integer
-            $orderItemKarakter->notes = $karakterDetail['catatan'] ?? ''; // Default catatan jika tidak ada
-            $orderItemKarakter->save();
+        // Case 1: Data berasal dari keranjang
+        if (!empty($selectedItems)) {
+            foreach ($selectedItems as $item) {
+                $jenisCokelat = JenisCokelat::find($item['jenis_cokelat_id']);
+                $orderItem = new OrderItem();
+                $orderItem->order_id = $order->id;
+                $orderItem->jenis_cokelat_id = $item['jenis_cokelat_id'];
+                $orderItem->price = $jenisCokelat ? $jenisCokelat->harga : 0;
+                $orderItem->save();
+    
+                foreach ($item['karakter_items'] as $karakterItem) {
+                    $orderItemKarakter = new OrderItemKarakter();
+                    $orderItemKarakter->order_item_id = $orderItem->id;
+                    $orderItemKarakter->karakter_cokelat_id = $karakterItem['karakter_cokelat_id'];
+                    $orderItemKarakter->quantity = (int) $karakterItem['quantity']; // Pastikan quantity dipindahkan
+                    $orderItemKarakter->notes = $karakterItem['notes'] ?? ''; // Default catatan jika tidak ada
+                    $orderItemKarakter->save();
+                }
+    
+                // Hapus item dari tabel cart_items
+                CartItem::where('id', $item['id'])->delete();
+            }
+    
+            // Hapus keranjang jika tidak ada item yang tersisa
+            $cart = Cart::where('user_id', auth()->id())->first();
+            if ($cart && $cart->items()->count() == 0) {
+                $cart->delete();
+            }
+        }
+        // Case 2: Data berasal dari sesi pemesanan langsung
+        if (!empty($orderDetails)) {
+            $selectedJenis = $orderDetails['selected_jenis'];
+            $selectedKarakter = $orderDetails['selected_karakter'];
+    
+            // Simpan data order item ke database
+            $jenisCokelat = JenisCokelat::find($selectedJenis);
+            $orderItem = new OrderItem();
+            $orderItem->order_id = $order->id;
+            $orderItem->jenis_cokelat_id = $selectedJenis;
+            $orderItem->price = $jenisCokelat ? $jenisCokelat->harga : 0;
+            $orderItem->save();
+    
+            // Simpan data order item karakter ke database
+            foreach ($selectedKarakter as $karakterId => $karakterDetail) {
+                $orderItemKarakter = new OrderItemKarakter();
+                $orderItemKarakter->order_item_id = $orderItem->id;
+                $orderItemKarakter->karakter_cokelat_id = $karakterId;
+                $orderItemKarakter->quantity = (int)($karakterDetail['jumlah'] ?? 1); // Pastikan ini adalah integer
+                $orderItemKarakter->notes = $karakterDetail['catatan'] ?? ''; // Default catatan jika tidak ada
+                $orderItemKarakter->save();
+            }
         }
 
         // Hapus data sesi setelah menyimpan
         session()->forget('order_details');
         session()->forget('shipping_details');
+        session()->forget('selected_items');
 
         // Kembalikan respons JSON dengan pesan sukses
         return response()->json(['success' => 'Order berhasil disimpan!']);
     }
-
-    
 }

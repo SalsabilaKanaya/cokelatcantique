@@ -20,6 +20,11 @@ class HistoriController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
+        // Hitung subtotal untuk setiap order
+        foreach ($orders as $order) {
+            $order->subtotal = $order->items->sum('price');
+        }
+
         // Kembalikan ke view 'user.histori' dengan data orders
         return view('user.histori', compact('orders'));
     }

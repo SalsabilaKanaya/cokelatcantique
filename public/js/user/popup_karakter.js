@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const pilihButtons = document.querySelectorAll('.button-pilih'); // Tombol untuk memilih karakter
     const pesanButtons = document.querySelectorAll('.button-pesan'); // Tombol untuk memesan karakter
+    const keranjangButtons = document.querySelectorAll('.button-keranjang'); // Tombol untuk menambahkan ke keranjang
     const modalFoto = document.getElementById('modal-foto'); // Elemen gambar dalam modal untuk menampilkan foto karakter
     const modalNama = document.getElementById('modal-nama'); // Elemen teks dalam modal untuk menampilkan nama karakter
     const quantitySpan = document.querySelector('.num'); // Elemen untuk menampilkan jumlah karakter yang dipilih
@@ -110,23 +111,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 button.classList.add('disabled'); // Menambahkan kelas 'disabled' ke tombol pilih
                 button.setAttribute('disabled', 'true'); // Menonaktifkan tombol pilih
             });
+            pesanButtons.forEach(button => {
+                button.classList.remove('disabled'); // Menghapus kelas 'disabled' dari tombol pesan
+                button.removeAttribute('disabled'); // Mengaktifkan kembali tombol pesan
+            });
+            keranjangButtons.forEach(button => {
+                button.classList.remove('disabled'); // Menghapus kelas 'disabled' dari tombol keranjang
+                button.removeAttribute('disabled'); // Mengaktifkan kembali tombol keranjang
+            });
         } else {
             pilihButtons.forEach(button => {
                 button.classList.remove('disabled'); // Menghapus kelas 'disabled' dari tombol pilih
                 button.removeAttribute('disabled'); // Mengaktifkan kembali tombol pilih
             });
-        }
-
-        // Nonaktifkan tombol pesan jika progress belum 100%
-        if (progress < 100) {
             pesanButtons.forEach(button => {
                 button.classList.add('disabled'); // Menambahkan kelas 'disabled' ke tombol pesan
                 button.setAttribute('disabled', 'true'); // Menonaktifkan tombol pesan
             });
-        } else {
-            pesanButtons.forEach(button => {
-                button.classList.remove('disabled'); // Menghapus kelas 'disabled' dari tombol pesan
-                button.removeAttribute('disabled'); // Mengaktifkan kembali tombol pesan
+            keranjangButtons.forEach(button => {
+                button.classList.add('disabled'); // Menambahkan kelas 'disabled' ke tombol keranjang
+                button.setAttribute('disabled', 'true'); // Menonaktifkan tombol keranjang
             });
         }
     }

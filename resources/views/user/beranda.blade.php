@@ -37,7 +37,7 @@
                             <a href=""><i class="fa-solid fa-magnifying-glass"></i></a>
                         </div>
                         <div class="navbar-icons d-flex justify-content-between">
-                            <a href="{{ route('user.keranjang')}}" class="nav-link"><i class="fa-solid fa-cart-shopping"></i></a>
+                            <a href="{{ route('user.showCart')}}" class="nav-link"><i class="fa-solid fa-cart-shopping"></i></a>
                             <a href="{{ route('user.histori')}}" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i></a>
                             <div class="dropdown">
                                 <a class="nav-link dropdown" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">

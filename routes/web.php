@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\SessionController;
 
 //  USER
 use App\Http\Controllers\User\SocialController;
@@ -19,6 +20,7 @@ use App\Http\Controllers\User\KurirController;
 use App\Http\Controllers\User\OngkirController;
 use App\Http\Controllers\User\AddressController;
 use App\Http\Controllers\User\HistoriController;
+use App\Http\Controllers\User\CartController;
 
 // ADMIN
 use App\Http\Controllers\Admin\AdminController;
@@ -27,6 +29,9 @@ use App\Http\Controllers\Admin\CreateKarakterCokelatController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\KontakMasukController;
 use App\Http\Controllers\Admin\OrderMasukController;
+
+
+Route::post('/clear-session', [SessionController::class, 'clearSession']);
 
 
 // Rute User
@@ -44,7 +49,6 @@ Route::prefix('user')->name('user.')->group(function () {
 
         Route::get('/gift_idea', [WebController::class, 'giftIdea'])->name('gift_idea');
 
-
         Route::get('/jenis_cokelat', [JenisCokelatController::class, 'index'])->name('jenis_cokelat');
         Route::get('/jenis_cokelat/{id}', [JenisCokelatController::class, 'show'])->name('detail_jenis_cokelat.show');
 
@@ -61,6 +65,11 @@ Route::prefix('user')->name('user.')->group(function () {
         Route::get('/get-progress', [PilihKarakterController::class, 'getProgress']);
         Route::post('/process-order', [PilihKarakterController::class, 'processOrder'])->name('process_order');
 
+        Route::post('/keranjang/tambah', [PilihKarakterController::class, 'addToCart'])->name('add_to_cart');
+        Route::get('/keranjang', [CartController::class, 'showCart'])->name('showCart');
+        Route::post('/cart/process', [CartController::class, 'cartProcess'])->name('cart_process');
+        Route::post('/user/cart/delete', [CartController::class, 'deleteItem'])->name('cart_delete');
+
         Route::get('/pemesanan', [ProsesOrderController::class, 'index'])->name('pemesanan');
         Route::post('/available_services', [ProsesOrderController::class, 'shippingfee'])->name('shippingfee');
         Route::post('/choose-package', [ProsesOrderController::class, 'choosePackage'])->name('choosepackage');
@@ -68,7 +77,6 @@ Route::prefix('user')->name('user.')->group(function () {
 
         Route::get('/kontak', [KontakController::class, 'create'])->name('kontak');
         Route::post('/kontak', [KontakController::class, 'store'])->name('kontak.store');
-        Route::get('/keranjang', [WebController::class, 'keranjang'])->name('keranjang');
         Route::get('/histori', [HistoriController::class, 'showHistori'])->name('histori');
         // Route untuk menampilkan detail pesanan
         Route::get('/pesanan/{order}', [HistoriController::class, 'showDetail'])->name('pesanan.detail');

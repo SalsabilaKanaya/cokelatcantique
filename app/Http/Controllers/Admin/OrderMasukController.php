@@ -14,6 +14,7 @@ class OrderMasukController extends Controller
         // Mengambil semua order yang statusnya 'pending'
         $orders = Order::where('status', 'pending') // Mencari order dengan status 'pending'
                     ->with(['user', 'items.jenisCokelat']) // Memuat relasi user dan jenisCokelat terkait
+                    ->orderBy('created_at', 'desc')
                     ->get(); // Mengambil semua order yang cocok
 
         return view('admin.dashboard', compact('orders')); // Mengarahkan ke view dashboard dengan data orders

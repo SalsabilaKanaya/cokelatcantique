@@ -75,18 +75,16 @@
         </nav>
 
         <div class="content">
+            <div class="content-title mb-3 mt-3 d-flex justify-content-between align-items-center">
+                <h1 class="m-0">Order List</h1>
+                <form action="{{ route('admin.order_list') }}" method="GET">
+                    <select name="sort_order" class="form-select" style="width: auto;" onchange="this.form.submit()">
+                        <option value="desc" {{ request('sort_order') == 'desc' ? 'selected' : '' }}>Terbaru</option>
+                        <option value="asc" {{ request('sort_order') == 'asc' ? 'selected' : '' }}>Terlama</option>
+                    </select>
+                </form>
+            </div>
             <div class="box">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h1 class="m-0">Order List</h1>
-                    <div>
-                        <form action="{{ route('admin.order_list') }}" method="GET">
-                            <select name="sort_order" class="form-select" style="width: auto;" onchange="this.form.submit()">
-                                <option value="desc" {{ request('sort_order') == 'desc' ? 'selected' : '' }}>Terbaru</option>
-                                <option value="asc" {{ request('sort_order') == 'asc' ? 'selected' : '' }}>Terlama</option>
-                            </select>
-                        </form>
-                    </div>
-                </div>
                 <table class="table">
                     <thead>
                         <tr>
@@ -101,25 +99,29 @@
                     </thead>
                     <tbody>
                         @foreach ($orders as $order)
-                            @foreach ($order->items as $item)
-                                <tr>
-                                    <td>{{ $loop->parent->iteration }}</td>
-                                    <td>{{ $order->created_at->format('d/m/Y') }}</td>
-                                    <td>{{ $order->user->name }}</td>
-                                    <td>{{ $item->jenisCokelat->nama }}</td>
-                                    <td>Rp {{ number_format($order->total_price, 2, ',', '.') }}</td>
-                                    <td>
-                                        <a href="{{ route('admin.detail_order', $order->id) }}" class="btn btn-text">Lihat Detail</a>
-                                    </td>
-                                    <td>
-                                        @if ($order->status === 'accepted')
-                                            <button id="btn-selesai-{{ $order->id }}" class="btn btn-success" onclick="markAsDone('{{ $order->id }}')">Selesai</button>
-                                        @elseif ($order->status === 'completed')
-                                            <span class="badge bg-success">Selesai</span>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $order->created_at->format('d/m/Y') }}</td>
+                                <td>{{ $order->user->name }}</td>
+                                <td>
+                                    @php
+                                        $jenisCokelatNames = $order->items->pluck('jenisCokelat.nama')->toArray();
+                                    @endphp
+                                    {!! nl2br(e(implode("\n", $jenisCokelatNames))) !!}
+                                </td>
+                                <td>Rp {{ number_format($order->total_price, 2, ',', '.') }}</td>
+                                <td>
+                                    <a href="{{ route('admin.detail_order', $order->id) }}" class="btn btn-text">Lihat Detail</a>
+                                </td>
+                                <td>
+                                    @if ($order->status === 'accepted')
+                                        <button id="btn-selesai-{{ $order->id }}" class="btn btn-success" onclick="markAsDone('{{ $order->id }}')">Selesai</button>
+                                        <span id="status-text-{{ $order->id }}" class="badge bg-success" style="display: none;">Selesai</span>
+                                    @elseif ($order->status === 'completed')
+                                        <span id="status-text-{{ $order->id }}" class="badge bg-success">Selesai</span>
+                                    @endif
+                                </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>

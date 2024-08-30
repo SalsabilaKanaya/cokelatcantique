@@ -96,25 +96,28 @@
                     </thead>
                     <tbody>
                         @foreach ($orders as $order)
-                            @foreach ($order->items as $item)
-                                <tr>
-                                    <td>{{ \Illuminate\Support\Str::limit($order->id, 10, '...') }}</td>
-                                    <td>{{ $order->user->name }}</td>
-                                    <td>{{ $item->jenisCokelat->nama }}</td> <!-- Pastikan `name` ada di tabel jenis_cokelat -->
-                                    <td>{{ $order->delivery_date->format('d/m/Y') }}</td>
-                                    <td>Rp {{ number_format($order->total_price, 2, ',', '.') }}</td>
-                                    <td>
-                                        <form action="{{ route('admin.order.accept', $order->id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            <button type="submit" class="btn btn-success" onclick="return confirm('Apakah kamu yakin ingin menerima orderan ini?')">Terima</button>
-                                        </form>
-                                        <form action="{{ route('admin.order.reject', $order->id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Apakah kamu yakin ingin menolak orderan ini?')">Tolak</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
+                            <tr>
+                                <td>{{ \Illuminate\Support\Str::limit($order->id, 10, '...') }}</td>
+                                <td>{{ $order->user->name }}</td>
+                                <td>
+                                    @php
+                                        $jenisCokelatNames = $order->items->pluck('jenisCokelat.nama')->toArray();
+                                    @endphp
+                                    {!! nl2br(e(implode("\n", $jenisCokelatNames))) !!}
+                                </td>
+                                <td>{{ $order->delivery_date->format('d/m/Y') }}</td>
+                                <td>Rp {{ number_format($order->total_price, 2, ',', '.') }}</td>
+                                <td>
+                                    <form action="{{ route('admin.order.accept', $order->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        <button type="submit" class="btn btn-success" onclick="return confirm('Apakah kamu yakin ingin menerima orderan ini?')">Terima</button>
+                                    </form>
+                                    <form action="{{ route('admin.order.reject', $order->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Apakah kamu yakin ingin menolak orderan ini?')">Tolak</button>
+                                    </form>
+                                </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>

@@ -1,13 +1,13 @@
 <li class="list-group-item py-3 border-top fw-bold">
     <div class="row align-items-center">
         <div class="col-2 col-md-2 col-lg-2"></div>
-        <div class="col-4 col-md-4 col-lg-5">
+        <div class="col-4 col-md-4 col-lg-5" style="font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 600;">
             Service
         </div>
-        <div class="col-3 col-md-2 col-lg-2">
+        <div class="col-3 col-md-2 col-lg-2" style="font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 600;">
             Estimate
         </div>
-        <div class="col-3 text-lg-end text-start text-md-end col-md-3">
+        <div class="col-3 text-lg-end text-start text-md-end col-md-3" style="font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 600;">
             Cost
         </div>
     </div>
@@ -23,13 +23,13 @@
                 @endphp
                 <input class="form-check-input delivery-package" type="radio" name="delivery_package" id="inlineRadio2" value="{{ $service['service'] }}" onclick="setShippingFee('{{ $serviceName}}', '{{ $courier}}', '{{ $addressID }}')">
             </div>
-            <div class="col-4 col-md-4 col-lg-5">
+            <div class="col-4 col-md-4 col-lg-5" style="font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 400;">
                 {{ $service['service'] }} - {{ $service['description'] }}
             </div>
-            <div class="col-3 col-md-2 col-lg-2">
+            <div class="col-3 col-md-2 col-lg-2" style="font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 400;">
                 {{ $service['etd'] }}
             </div>
-            <div class="col-3 text-lg-end text-start text-md-end col-md-3">
+            <div class="col-3 text-lg-end text-start text-md-end col-md-3" style="font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 700;">
                 <span class="fw-bold">IDR {{ $service['cost'] }}</span>
             </div>
         </div>

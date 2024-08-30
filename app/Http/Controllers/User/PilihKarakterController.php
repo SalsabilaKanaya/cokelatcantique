@@ -7,6 +7,9 @@ use App\Models\JenisCokelat; // Menggunakan model JenisCokelat untuk mengakses d
 use App\Models\Order; // Menggunakan model Order untuk menyimpan data pesanan
 use App\Models\OrderItem; // Menggunakan model OrderItem untuk menyimpan item pesanan
 use App\Models\OrderItemKarakter; // Menggunakan model OrderItemKarakter untuk menyimpan karakter item pesanan
+use App\Models\Cart; 
+use App\Models\CartItem;
+use App\Models\CartItemKarakter;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
@@ -139,6 +142,40 @@ class PilihKarakterController extends Controller
 
         // Redirect ke halaman pemesanan
         return redirect()->route('user.pemesanan');
+    }
+
+
+    public function addToCart(Request $request)
+    {
+        // Ambil ID user yang sedang login
+        $userId = auth()->id();
+
+        // Ambil data dari sesi
+        $selectedJenis = session()->get('selected_jenis');
+        $selectedKarakter = session()->get('selected_karakter', []);
+
+        // Cari atau buat keranjang baru untuk user
+        $cart = Cart::firstOrCreate(['user_id' => $userId]);
+        // Ambil data jenis cokelat dari model JenisCokelat
+        $jenisCokelat = JenisCokelat::find($selectedJenis);
+
+        // Simpan item ke dalam keranjang
+        $cartItem = $cart->items()->create([
+            'jenis_cokelat_id' => $selectedJenis,
+            'price' => $jenisCokelat->harga,
+        ]);
+
+        // Simpan karakter yang dipilih sebagai item keranjang
+        foreach ($selectedKarakter as $karakterId => $detail) {
+            $cartItem->karakterItems()->create([
+                'karakter_cokelat_id' => $karakterId,
+                'quantity' => $detail['jumlah'],
+                'notes' => $detail['catatan'],
+            ]);
+        }
+
+        // Kembalikan respon atau redirect ke halaman keranjang
+        return redirect()->route('user.showCart')->with('message', 'Item ditambahkan ke keranjang.');
     }
 
 }

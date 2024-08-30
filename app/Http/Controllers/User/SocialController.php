@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 
@@ -49,16 +50,25 @@ class SocialController extends Controller
 
     public function logout(Request $request)
     {
-         // Hapus data karakter dan jenis cokelat dari sesi
-         $request->session()->forget('selected_karakter');
-         $request->session()->forget('selected_jenis'); 
-     
-         // Logout pengguna
-         Auth::logout();
-         $request->session()->invalidate();
-         $request->session()->regenerateToken();
-         
-         // Redirect ke halaman login
-         return redirect()->route('user.login'); // Pastikan rute ini sesuai dengan nama rute untuk login
+        // Hapus semua data session
+        Session::flush();
+        
+        
+        // Periksa apakah session sudah kosong
+        if (empty(session()->all())) {
+            // Session berhasil dihapus
+            $sessionCleared = true;
+        } else {
+            // Session tidak berhasil dihapus
+            $sessionCleared = false;
+        }
+        
+        // Logout pengguna
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        
+        // Redirect ke halaman login
+        return redirect()->route('user.login'); // Pastikan rute ini sesuai dengan nama rute untuk login
     }
 }
