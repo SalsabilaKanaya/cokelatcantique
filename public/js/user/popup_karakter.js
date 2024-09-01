@@ -11,24 +11,43 @@ document.addEventListener('DOMContentLoaded', function() {
     // Menambahkan event listener pada setiap tombol pilih karakter
     pilihButtons.forEach(button => {
         button.addEventListener('click', function() {
-            currentKarakterId = this.getAttribute('data-id'); // Mendapatkan ID karakter dari atribut tombol yang diklik
-
-            quantitySpan.textContent = '1'; // Mengatur jumlah awal menjadi 1
-            textarea.value = ''; // Mengosongkan textarea catatan
-
-            // Mengambil data karakter berdasarkan ID dan menampilkan di modal
-            fetch(`/user/karakter_cokelat/details/${currentKarakterId}`)
+            // Pengecekan apakah jenis cokelat sudah dipilih
+            fetch('/user/check-selected-jenis')
                 .then(response => response.json())
                 .then(data => {
-                    if (modalFoto && modalNama) {
-                        if (data.foto) {
-                            modalFoto.src = `/${data.foto}`; // Menampilkan foto karakter dalam modal
-                        }
-                        modalNama.textContent = data.nama; // Menampilkan nama karakter dalam modal
+                    if (data.selected) {
+                        currentKarakterId = this.getAttribute('data-id'); // Mendapatkan ID karakter dari atribut tombol yang diklik
+
+                        quantitySpan.textContent = '1'; // Mengatur jumlah awal menjadi 1
+                        textarea.value = ''; // Mengosongkan textarea catatan
+
+                        // Mengambil data karakter berdasarkan ID dan menampilkan di modal
+                        fetch(`/user/karakter_cokelat/details/${currentKarakterId}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (modalFoto && modalNama) {
+                                    if (data.foto) {
+                                        modalFoto.src = `/${data.foto}`; // Menampilkan foto karakter dalam modal
+                                    }
+                                    modalNama.textContent = data.nama; // Menampilkan nama karakter dalam modal
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error fetching character data:', error); // Menampilkan error jika terjadi masalah saat mengambil data
+                            });
+                    } else {
+                        Swal.fire({
+                            title: 'Jenis Cokelat Belum Dipilih',
+                            text: 'Harap pilih jenis cokelat terlebih dahulu.',
+                            icon: 'warning',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.href = document.querySelector('meta[name="kustomisasi-cokelat-url"]').getAttribute('content');
+                        });
                     }
                 })
                 .catch(error => {
-                    console.error('Error fetching character data:', error); // Menampilkan error jika terjadi masalah saat mengambil data
+                    console.error('Error checking selected jenis:', error); // Menampilkan error jika terjadi masalah saat pengecekan
                 });
         });
     });

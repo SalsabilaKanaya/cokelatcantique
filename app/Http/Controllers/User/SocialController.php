@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class SocialController extends Controller
 {
@@ -48,11 +49,53 @@ class SocialController extends Controller
         }
     }
 
+    // Method untuk login dengan email
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        // Cek apakah email ada di database
+        $user = User::where('email', $request->email)->first();
+        if (!$user) {
+            return redirect()->route('user.login')->withErrors(['email' => 'Akun belum tersedia, harap lakukan registrasi terlebih dahulu.']);
+        }
+
+        // Coba login dengan kredensial
+        if (Auth::attempt($credentials)) {
+            return redirect()->route('user.beranda');
+        }
+
+        return redirect()->route('user.login')->withErrors(['email' => 'Email atau password salah.']);
+    }
+    
+    // Method untuk registrasi
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->route('user.login')->with('success', 'Registrasi berhasil. Silakan login.');
+    }
+
     public function logout(Request $request)
     {
+        // Hapus sesi yang spesifik
+        session()->forget(['selected_items', 'order_details', 'shipping_details']);
+        
+        // Log session data after clearing
+        \Log::info('Session data after clearing:', session()->all());
+        
         // Hapus semua data session
         Session::flush();
-        
         
         // Periksa apakah session sudah kosong
         if (empty(session()->all())) {

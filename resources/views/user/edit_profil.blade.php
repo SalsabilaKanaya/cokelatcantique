@@ -53,7 +53,7 @@
                     </div>
                     <div class="d-flex justify-content-end">
                         <a href="javascript:history.back()" type="button" class="btn btn-danger" id="cancelButton">Cancel</a>
-                        <button type="submit" class="btn btn-submit">Update</button>
+                        <button type="submit" class="btn btn-submit" id="updateButton">Update</button>
                     </div>
                 </form>
             </div>
@@ -61,3 +61,26 @@
     </section>    
 
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('updateButton').addEventListener('click', function() {
+                Swal.fire({
+                    title: 'Apakah data sudah benar?',
+                    text: "Pastikan semua data sudah benar sebelum melanjutkan.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, sudah benar!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('update-form').submit();
+                    }
+                });
+            });
+        });
+    </script>
+@endpush

@@ -108,6 +108,14 @@
     background-color: #D2B48C;
 }
 
+.btn-kustomisasi:disabled {
+    background-color: #dedede; /* Warna abu-abu untuk background */
+    color: #aaa; /* Warna abu-abu lebih tua untuk teks */
+    cursor: not-allowed; /* Ubah cursor menjadi not-allowed */
+    border: none;
+    box-shadow: 0 2px 5px rgba(222, 222, 222, 0.25);
+}
+
 .related-products {
     margin-top: 150px;
 }

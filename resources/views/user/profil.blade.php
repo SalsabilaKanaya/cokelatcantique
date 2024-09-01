@@ -1,6 +1,6 @@
 @extends('user.layouts.app')
 
-@section('title', 'Jenis Cokelat')
+@section('title', 'Profil Pengguna')
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/user/profil.css')}}">
@@ -78,16 +78,30 @@
                                     <p>{{ $user->userAddress->address }}</p>
                                 </div>
                             </div>
+                            <a href="{{ route('user.address_edit') }}" class="btn btn-edit">Edit Alamat</a>
                         @else
                             <div class="no-address">
                                 <img src="{{ asset('img/address.jpg') }}" alt="No address" class="no-address-img">
                                 <p class="no-address-text">Alamat belum ada</p>
+                                <a href="{{ route('user.address_create') }}" class="btn btn-edit">Tambah Alamat</a>
                             </div>
                         @endif
-                        <a href="{{ route('user.address.editAddress') }}" class="btn btn-edit">Edit Alamat</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Periksa apakah URL memiliki hash fragment #alamat
+            if (window.location.hash === '#alamat') {
+                // Aktifkan tab Alamat
+                var alamatTab = new bootstrap.Tab(document.querySelector('#alamat-tab'));
+                alamatTab.show();
+            }
+        });
+    </script>
+@endpush

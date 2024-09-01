@@ -58,5 +58,7 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'clear.session.on.navbar.click' => \App\Http\Middleware\ClearSessionOnNavbarClick::class,
+        'check.session' => \App\Http\Middleware\CheckSession::class,
     ];
 }

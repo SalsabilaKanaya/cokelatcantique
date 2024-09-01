@@ -6,8 +6,6 @@
     box-sizing: border-box;
 }
 
-// ... existing code ...
-
 .container-fluid{
     height: 100vh;
 }
@@ -80,41 +78,11 @@
     color: #AAAAAA;
 }
 
-.google-login {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Box shadow yang lebih lembut */
-    border-radius: 50px; /* Ubah border-radius agar sudutnya lebih halus */
-    padding: 5px 20px; /* Tambahkan padding untuk membuat elemen lebih besar */
-    background-color: #fff;
-}
-
-.google-login img {
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    margin-right: 15px;
-    border-radius: 50%;
-}
-
-.google-login span {
-    line-height: 50px; /* Samakan line-height dengan tinggi gambar untuk memusatkan teks secara vertikal */
-    font-size: 16px;
-    font-weight: 600;
-    font-family: 'Montserrat', sans-serif;
-    white-space: nowrap; /* Mencegah teks pecah ke baris baru */
-    color: #000;
-}
-
-
 /* ... existing CSS ... */
 
 .input-box {
     height: auto; /* Ubah dari 50px ke auto untuk menyesuaikan dengan konten */
     width: 100%;
-    margin: 10px 0;
     text-align: left; /* Ensure the container aligns text to the left */
 }
 
@@ -152,7 +120,7 @@
     margin-left: -1px; /* Hilangkan margin antara input dan tombol */
 }
 
-.btn-login{
+.btn-register{
     font-size: 16px;
     font-weight: 600;
     color: black;
@@ -166,47 +134,18 @@
     margin-top: 20px;
 }
 
-.btn-login:hover{
+.btn-register:hover{
     background-color: #D2B48C;
     color: black;
 }
 
-.register p{
+.login p{
     font-size: 14px;
     font-weight: 400;
     color: #AAAAAA;
 }
 
-.separator {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    margin: 20px 0;
-}
-
-.separator span{
-    font-size: 14px;
-    font-weight: 400;
-    color: #AAAAAA;
-}
-
-.separator::before,
-.separator::after {
-    content: '';
-    flex: 1;
-    border-bottom: 1px solid #ccc;
-}
-
-.separator:not(:empty)::before {
-    margin-right: .25em;
-}
-
-.separator:not(:empty)::after {
-    margin-left: .25em;
-}
-
-.error-message{
-    color: red;
+.password-error{
     font-size: 14px;
     font-weight: 400;
 }

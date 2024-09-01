@@ -69,3 +69,16 @@
         </div>
     </section>
 @endsection
+
+@push('scripts')
+    <script>
+        @if(session('success'))
+            Swal.fire({
+                title: 'Berhasil!',
+                text: '{{ session('success') }}',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        @endif
+    </script>
+@endpush

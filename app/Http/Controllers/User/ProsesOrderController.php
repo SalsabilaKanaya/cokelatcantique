@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\Controller;
+use App\Events\NavbarClicked;
 
 class ProsesOrderController extends Controller
 {
@@ -29,11 +30,14 @@ class ProsesOrderController extends Controller
     }
 
     // Menampilkan halaman pemesanan dengan detail pesanan terbaru dari pengguna
-    public function index()
+    public function index(Request $request)
     {
+        // if ($request->query('navbar_click')) {
+        //     event(new NavbarClicked());
+        // }
+
         \Log::info('Pemesanan page accessed');
         \Log::info('Session data on pemesanan page:', session()->all());
-
         // Ambil data dari sesi
         $selectedItems = session()->get('selected_items', []);
         $orderDetails = session()->get('order_details', []);
@@ -76,10 +80,17 @@ class ProsesOrderController extends Controller
             }
 
             foreach ($selectedKarakter as $karakterId => $karakterDetail) {
-                $karakterCokelat[] = KarakterCokelat::find($karakterId);
+                $karakter = KarakterCokelat::find($karakterId);
+                if ($karakter) {
+                    $karakterCokelat[] = $karakter;
+                    $selectedKarakter[$selectedJenis][] = [
+                        'nama' => $karakter->nama,
+                        'notes' => $karakterDetail['catatan'] ?? '',
+                    ];
+                }
             }
         } else {
-            return redirect()->route('user.keranjang')->with('error', 'Tidak ada item yang dipilih.');
+            // return redirect()->route('user.showCart')->with('error', 'Tidak ada item yang dipilih.');
         }
 
         // Ambil alamat pengguna dari tabel user_address
@@ -465,6 +476,16 @@ class ProsesOrderController extends Controller
         session()->forget('selected_items');
 
         // Kembalikan respons JSON dengan pesan sukses
-        return response()->json(['success' => 'Order berhasil disimpan!']);
+        return response()->json(['success' => 'Pesanan berhasil dibuat!']);
+    }
+
+    public function clearSession(Request $request)
+    {
+        session()->forget(['selected_items', 'order_details', 'shipping_details']);
+        
+        // Log session data after clearing
+        \Log::info('Session data after clearing:', session()->all());
+        
+        return response()->json(['status' => 'Session cleared']);
     }
 }

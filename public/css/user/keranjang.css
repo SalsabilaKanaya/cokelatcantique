@@ -110,3 +110,26 @@
     font-weight: 600;
     color: #D2B48C;
 }
+
+.btn-login{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: black;
+    background-color: #D2B48C;
+    width: 200px;
+    height: 33px;
+    border-radius: 100px;
+    padding: 0 12px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(210, 180, 140, 0.25);
+    display: block;
+    margin: 20px auto;
+    text-align: center; /* Menyelaraskan teks secara horizontal */
+    line-height: 33px; 
+}
+
+.btn-login:hover{
+    background-color: #D2B48C;
+}

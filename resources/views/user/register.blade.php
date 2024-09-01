@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>Register Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="{{ asset('css/user/login.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/user/register.css')}}">
 </head>
 <body>
     <div class="container-fluid h-100">
@@ -53,15 +53,14 @@
             <div class="col-lg-6" id="sideright">
                 <div class="d-flex vh-100 justify-content-center align-items-center">
                     <div class="body">
-                        <h1>Welcome!</h1>
-                        <p>Harap memasukkan email dan password dengan benar</p>
-                        @if ($errors->has('email'))
-                            <div class="error-message">
-                                {{ $errors->first('email') }}
-                            </div>
-                        @endif
-                        <form method="POST" action="{{ route('user.login_submit') }}">
+                        <h1>Registrasi Akun</h1>
+                        <p>Harap mengisi data dengan benar.</p>
+                        <form id="registerForm" method="POST" action="{{ route('user.register_submit') }}">
                             @csrf
+                            <div class="mb-3 input-box">
+                                <label for="name" class="form-label">Nama Lengkap</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
                             <div class="mb-3 input-box">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="email" class="form-control" id="email" name="email" required>
@@ -74,32 +73,27 @@
                                         <i class="fa fa-eye"></i>
                                     </button>
                                 </div>
+                                <div id="passwordLengthError" class="text-danger mt-2 password-error" style="display: none;">Minimal 8 karakter</div>
                             </div>
-                            <button type="submit" class="btn btn-login">Login</button>
+                            <div class="mb-3 input-box">
+                                <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
+                                <div class="input-group">
+                                    <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                                    <button class="btn btn-secondary" type="button" id="togglePasswordConfirmation" style="height: 40px;">
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                </div>
+                                <div id="passwordError" class="text-danger mt-2 password-error" style="display: none;">Password tidak cocok</div>
+                            </div>
+                            <button type="submit" class="btn btn-register">Register</button>
                         </form>
-                        <div class="separator">
-                            <span>atau dengan akun Google</span>
-                        </div>
-                        <a href="{{ route('user.google.redirect') }}" class="google-login">
-                            <img src="http://www.androidpolice.com/wp-content/themes/ap2/ap_resize/ap_resize.php?src=http%3A%2F%2Fwww.androidpolice.
-                            com%2Fwp-content%2Fuploads%2F2015%2F10%2Fnexus2cee_Search-Thumb-150x150.png&w=150&h=150&zc=3" alt="Google">
-                            <span>Masuk dengan Google</span>
-                        </a>
-                        <p class="mt-3 register">Belum punya akun? <a href="{{ route('user.register') }}">Registrasi</a></p>
+                        <p class="mt-3 login">Sudah punya akun? <a href="{{ route('user.login') }}">Login</a></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="{{ asset('js/user/login.js')}}"></script>
+    <script src="{{ asset('js/user/register.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        document.getElementById('togglePassword').addEventListener('click', function () {
-            const password = document.getElementById('password');
-            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-            password.setAttribute('type', type);
-            this.querySelector('i').classList.toggle('fa-eye-slash');
-        });
-    </script>
 </body>
 </html>

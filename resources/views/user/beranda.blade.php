@@ -39,18 +39,22 @@
                         <div class="navbar-icons d-flex justify-content-between">
                             <a href="{{ route('user.showCart')}}" class="nav-link"><i class="fa-solid fa-cart-shopping"></i></a>
                             <a href="{{ route('user.histori')}}" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i></a>
-                            <div class="dropdown">
-                                <a class="nav-link dropdown" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-user"></i>
-                                </a>
-                                <ul class="dropdown-menu custom-dropdown-menu" aria-labelledby="userDropdown">
-                                    <li><a class="dropdown-item" href="{{ route('user.profil')}}">Profile</a></li>
-                                    <form action="{{ route('user.logout') }}" method="POST" id="logout-form">
-                                        @csrf
-                                        <button type="submit" class="dropdown-item logout-link">Logout</button>
-                                    </form>
-                                </ul>
-                            </div>
+                            @if(Auth::check())
+                                <div class="dropdown">
+                                    <a class="nav-link dropdown" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-user"></i>
+                                    </a>
+                                    <ul class="dropdown-menu custom-dropdown-menu" aria-labelledby="userDropdown">
+                                        <li><a class="dropdown-item" href="{{ route('user.profil')}}">Profile</a></li>
+                                        <form action="{{ route('user.logout') }}" method="POST" id="logout-form">
+                                            @csrf
+                                            <button type="submit" class="dropdown-item logout-link">Logout</button>
+                                        </form>
+                                    </ul>
+                                </div>
+                            @else
+                                <a href="{{ route('user.login') }}" class="nav-link login-link d-flex align-items-center">Login</a>
+                            @endif
                         </div>
                     </div>
                     <div class="col-12">
@@ -110,6 +114,14 @@
     <!--Content-->
     <section class="content-1">
         <div class="container">
+            @if (session('session_expired'))
+                <div class="alert alert-warning">
+                    {{ session('session_expired') }}
+                </div>
+                <script>
+                    console.log('Session expired message detected.');
+                </script>
+            @endif
             <div class="row justify-content-between align-items-center">
                 <div class="col-md-6">
                     <div class="imageabout">
@@ -224,7 +236,6 @@
         </div>
     </section>
 
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.js"></script>
     <script type="text/javascript">
@@ -249,6 +260,14 @@
                     }
                 }
             });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            @if (session('session_expired'))
+                console.log('Session expired message detected in script.');
+                alert('{{ session('session_expired') }}');
+            @endif
         });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

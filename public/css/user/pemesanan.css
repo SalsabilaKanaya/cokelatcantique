@@ -6,7 +6,7 @@ body {
 
 /* ----- Main Content -----*/
 .main-content {
-    margin-top: 150px;
+    margin-top: 80px;
     margin-bottom:50px;
 }
 
@@ -323,12 +323,12 @@ h2{
 
 .btn-pesan{
     font-family: 'Montserrat', sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     color: black;
     background-color: #D2B48C;
     width: 100%;
-    height: 46px;
+    height: 34px;
     border-radius: 100px;
     margin-top: auto;
     box-shadow: 0 2px 5px #D2B48C;
@@ -336,5 +336,25 @@ h2{
 
 .btn-pesan:hover{
     background-color: #D2B48C;
+}
+
+.btn-cancel{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #f24848;
+    background-color: #fff;
+    width: 100%;
+    height: 34px;
+    border-radius: 100px;
+    margin-top: auto;
+    margin-right: 20px;
+    border: 1px solid #f24848;
+}
+
+.btn-cancel:hover{
+    color: #fff;
+    background-color: #f24848;
+    box-shadow: 0 2px 5px #f24848;
 }
 /* ----- Main Content -----*/

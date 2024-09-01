@@ -17,6 +17,11 @@
     margin-right: 15px;
 }
 
+.login-link {
+    font-size: 18px;
+    font-weight: 500;
+}
+
 .navbar-icons .nav-link:not(:last-child) {
     margin-right: 15px;
 }

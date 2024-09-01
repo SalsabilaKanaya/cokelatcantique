@@ -1,6 +1,7 @@
 @extends('user.layouts.app')
 
-@section('title', 'Edit Alamat')
+@section('title', 'Tambah Alamat')
+
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/user/edit_alamat.css')}}">
@@ -11,19 +12,18 @@
     <!--Main Content-->
     <section class="main-content">
         <div class="content">
-            <h1>Edit Alamat Saya</h1>
+            <h1>Tambah Alamat Saya</h1>
             <div class="profile">
-                <form action="{{ route('user.address_update') }}" method="POST">
+                <form action="{{ route('user.address_store') }}" method="POST">
                     @csrf
-                    @method('PUT')
                     <div class="row mb-3">
                         <div class="col">
                             <label for="name" class="form-label">Nama</label>
-                            <input type="text" class="form-control" name="name" id="name" value="{{ $user->userAddress->name ?? '' }}" placeholder="Masukkan Nama" required>
+                            <input type="text" class="form-control" name="name" id="name" placeholder="Masukkan Nama" required>
                         </div>
                         <div class="col">
                             <label for="phone" class="form-label">No Hp</label>
-                            <input type="text" class="form-control" name="phone" id="phone" value="{{ $user->userAddress->phone ?? '' }}" placeholder="08xxxxxx">
+                            <input type="text" class="form-control" name="phone" id="phone" placeholder="08xxxxxx">
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -48,12 +48,12 @@
                         <div class="col">
                             <label for="address" class="form-label">Alamat Lengkap</label>
                             <p class="address-note">Masukkan nama jalan, gedung, no rumah dengan lengkap</p>
-                            <textarea class="form-control" name="address" id="address" placeholder="Masukkan alamat lengkap" required>{{ $user->userAddress->address ?? '' }}</textarea>
+                            <textarea class="form-control" name="address" id="address" placeholder="Masukkan alamat lengkap" required></textarea>
                         </div>
                     </div>
                     <div class="d-flex justify-content-end">
                         <a href="javascript:history.back()" type="button" class="btn btn-danger" id="cancelButton">Cancel</a>
-                        <button type="submit" class="btn btn-submit" id="updateButton">Update</button>
+                        <button type="submit" class="btn btn-submit">Tambah</button>
                     </div>
                 </form>
             </div>
@@ -63,25 +63,5 @@
 @endsection
 
 @push('scripts')
-<script src="{{ asset('js/user/profil.js')}}"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('updateButton').addEventListener('click', function() {
-                Swal.fire({
-                    title: 'Apakah data sudah benar?',
-                    text: "Pastikan semua data sudah benar sebelum melanjutkan.",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ya, sudah benar!',
-                    cancelButtonText: 'Batal'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        document.getElementById('update-form').submit();
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="{{ asset('js/user/profil.js')}}"></script>
 @endpush

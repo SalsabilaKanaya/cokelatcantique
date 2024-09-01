@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\SessionController;
 
 //  USER
 use App\Http\Controllers\User\SocialController;
@@ -30,54 +29,94 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\KontakMasukController;
 use App\Http\Controllers\Admin\OrderMasukController;
 
+use Illuminate\Support\Facades\Log;
 
-Route::post('/clear-session', [SessionController::class, 'clearSession']);
-
+Route::get('/test-log', function () {
+    Log::info('Test log route triggered.');
+    return 'Log tested';
+});
 
 // Rute User
 Route::prefix('user')->name('user.')->group(function () {
-    Route::get('/', function () {
+    Route::get('/login', function () {
         return view('user.login');
     })->name('login');
-    
+
+    Route::post('login', [SocialController::class, 'login'])->name('login_submit');
+
+    Route::get('/register', function () {
+        return view('user.register');
+    })->name('register');
+
+    Route::post('/register', [SocialController::class, 'register'])->name('register_submit');
+
     Route::get('/auth/redirect', [SocialController::class, 'redirect'])->name('google.redirect');
     Route::get('/google/redirect', [SocialController::class, 'googleCallback'])->name('google.callback');
 
+    Route::get('/cokelatcantique/beranda', [WebController::class, 'beranda'])->name('beranda');
+    Route::get('/tentang', [WebController::class, 'tentang'])->name('tentang');
+
+    Route::get('/gift_idea', [WebController::class, 'giftIdea'])->name('gift_idea');
+
+    Route::get('/jenis_cokelat', [JenisCokelatController::class, 'index'])->name('jenis_cokelat');
+    Route::get('/jenis_cokelat/{id}', [JenisCokelatController::class, 'show'])->name('detail_jenis_cokelat.show');
+
+    Route::get('/karakter_cokelat', [KarakterCokelatController::class, 'index'])->name('karakter_cokelat');
+    Route::get('/karakter_cokelat/{id}', [KarakterCokelatController::class, 'show'])->name('detail_karakter_cokelat.show');
+    Route::post('/store-selection', [KarakterController::class, 'storeSelection'])->name('store.selection');
+
+    Route::get('/kustomisasi_cokelat', [KustomisasiCokelatController::class, 'index'])->name('kustomisasi_cokelat');
+
+    Route::get('/pilih_karakter', [PilihKarakterController::class, 'index'])->name('pilih_karakter');
+
+    Route::get('/pemesanan', [ProsesOrderController::class, 'index'])->name('pemesanan');
+
+    Route::get('/keranjang', [CartController::class, 'showCart'])->name('showCart');
+    Route::get('/histori', [HistoriController::class, 'showHistori'])->name('histori');
+
+    Route::get('/kontak', [KontakController::class, 'create'])->name('kontak');
+    Route::post('/kontak', [KontakController::class, 'store'])->name('kontak.store');
+
+    Route::get('/faq', [WebController::class, 'faq'])->name('faq');
+    Route::get('/cara_pemesanan', [WebController::class, 'caraPemesanan'])->name('cara_pemesanan');
+
     Route::middleware('auth')->group(function () {
-        Route::get('/beranda', [WebController::class, 'beranda'])->name('beranda');
-        Route::get('/tentang', [WebController::class, 'tentang'])->name('tentang');
+        // Route::get('/beranda', [WebController::class, 'beranda'])->name('beranda');
+        // Route::get('/tentang', [WebController::class, 'tentang'])->name('tentang');
 
-        Route::get('/gift_idea', [WebController::class, 'giftIdea'])->name('gift_idea');
+        // Route::get('/gift_idea', [WebController::class, 'giftIdea'])->name('gift_idea');
 
-        Route::get('/jenis_cokelat', [JenisCokelatController::class, 'index'])->name('jenis_cokelat');
-        Route::get('/jenis_cokelat/{id}', [JenisCokelatController::class, 'show'])->name('detail_jenis_cokelat.show');
+        // Route::get('/jenis_cokelat', [JenisCokelatController::class, 'index'])->name('jenis_cokelat');
+        // Route::get('/jenis_cokelat/{id}', [JenisCokelatController::class, 'show'])->name('detail_jenis_cokelat.show');
 
-        Route::get('/karakter_cokelat', [KarakterCokelatController::class, 'index'])->name('karakter_cokelat');
-        Route::get('/karakter_cokelat/{id}', [KarakterCokelatController::class, 'show'])->name('detail_karakter_cokelat.show');
-        Route::post('/store-selection', [KarakterController::class, 'storeSelection'])->name('store.selection');
+        // Route::get('/karakter_cokelat', [KarakterCokelatController::class, 'index'])->name('karakter_cokelat');
+        // Route::get('/karakter_cokelat/{id}', [KarakterCokelatController::class, 'show'])->name('detail_karakter_cokelat.show');
+        // Route::post('/store-selection', [KarakterController::class, 'storeSelection'])->name('store.selection');
 
-        Route::get('/kustomisasi_cokelat', [KustomisasiCokelatController::class, 'index'])->name('kustomisasi_cokelat');
+        // Route::get('/kustomisasi_cokelat', [KustomisasiCokelatController::class, 'index'])->name('kustomisasi_cokelat');
         Route::post('/store-jenis-cokelat-selection', [KustomisasiCokelatController::class, 'storeJenisCokelatSelection'])->name('store_jenis_cokelat_selection');
 
-        Route::get('/pilih_karakter', [PilihKarakterController::class, 'index'])->name('pilih_karakter');
+        // Route::get('/pilih_karakter', [PilihKarakterController::class, 'index'])->name('pilih_karakter');
         Route::get('/karakter_cokelat/details/{id}', [PilihKarakterController::class, 'getKarakterDetails'])->name('karakter_cokelat.details');
         Route::post('/store-selection', [PilihKarakterController::class, 'storeSelection'])->name('store_selection');
         Route::get('/get-progress', [PilihKarakterController::class, 'getProgress']);
         Route::post('/process-order', [PilihKarakterController::class, 'processOrder'])->name('process_order');
+        Route::get('/check-selected-jenis', [PilihKarakterController::class, 'checkSelectedJenis']);
 
         Route::post('/keranjang/tambah', [PilihKarakterController::class, 'addToCart'])->name('add_to_cart');
-        Route::get('/keranjang', [CartController::class, 'showCart'])->name('showCart');
+        // Route::get('/keranjang', [CartController::class, 'showCart'])->name('showCart');
         Route::post('/cart/process', [CartController::class, 'cartProcess'])->name('cart_process');
-        Route::post('/user/cart/delete', [CartController::class, 'deleteItem'])->name('cart_delete');
+        Route::post('/cart/delete', [CartController::class, 'deleteItem'])->name('cart_delete');
 
-        Route::get('/pemesanan', [ProsesOrderController::class, 'index'])->name('pemesanan');
+        // Route::get('/pemesanan', [ProsesOrderController::class, 'index'])->name('pemesanan');
         Route::post('/available_services', [ProsesOrderController::class, 'shippingfee'])->name('shippingfee');
         Route::post('/choose-package', [ProsesOrderController::class, 'choosePackage'])->name('choosepackage');
         Route::post('/order', [ProsesOrderController::class, 'store'])->name('order.store');
+        Route::post('/clear-session', [ProsesOrderController::class, 'clearSession'])->name('clearSession');
 
-        Route::get('/kontak', [KontakController::class, 'create'])->name('kontak');
-        Route::post('/kontak', [KontakController::class, 'store'])->name('kontak.store');
-        Route::get('/histori', [HistoriController::class, 'showHistori'])->name('histori');
+        // Route::get('/kontak', [KontakController::class, 'create'])->name('kontak');
+        // Route::post('/kontak', [KontakController::class, 'store'])->name('kontak.store');
+        // Route::get('/histori', [HistoriController::class, 'showHistori'])->name('histori');
         // Route untuk menampilkan detail pesanan
         Route::get('/pesanan/{order}', [HistoriController::class, 'showDetail'])->name('pesanan.detail');
 
@@ -87,20 +126,23 @@ Route::prefix('user')->name('user.')->group(function () {
         Route::get('/profil/edit', [ProfileController::class, 'editProfil'])->name('profil.edit');
 
         // Address Routes
-        Route::get('/address/edit', [AddressController::class, 'edit'])->name('address.editAddress');
-        Route::put('/address/update', [AddressController::class, 'update'])->name('address.updateAddress');
+        Route::get('/address/create', [AddressController::class, 'create'])->name('address_create');
+        Route::post('/address/store', [AddressController::class, 'store'])->name('address_store');
+        Route::get('/address/edit', [AddressController::class, 'edit'])->name('address_edit');
+        Route::put('/address/update', [AddressController::class, 'update'])->name('address_update');
 
         // API Routes for Provinces and Cities
         Route::get('/api/get-provinces', [AddressController::class, 'getProvinces']);
         Route::get('/api/get-cities/{provinceId}', [AddressController::class, 'getCities']);
 
 
-        Route::get('/faq', [WebController::class, 'faq'])->name('faq');
-        Route::get('/cara_pemesanan', [WebController::class, 'caraPemesanan'])->name('cara_pemesanan');
+        // Route::get('/faq', [WebController::class, 'faq'])->name('faq');
+        // Route::get('/cara_pemesanan', [WebController::class, 'caraPemesanan'])->name('cara_pemesanan');
         Route::post('/logout', [SocialController::class, 'logout'])->name('logout');
 
     });
 });
+
 
 
 // Rute Admin
@@ -140,4 +182,3 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
-

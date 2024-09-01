@@ -10,6 +10,70 @@ use App\Http\Controllers\Controller;
 
 class AddressController extends Controller
 {
+    // Method untuk menampilkan halaman create alamat pengguna
+    public function create()
+    {
+        // Mengambil data pengguna yang sedang login
+        $user = Auth::user();
+
+        // Mengirim data pengguna ke view 'user.create_alamat'
+        return view('user.create_alamat', compact('user'));
+    }
+
+    // Method untuk menyimpan alamat baru pengguna
+    public function store(Request $request)
+    {
+        // Mengambil data pengguna yang sedang login
+        $user = Auth::user();
+
+        // Mengambil nama provinsi dari API RajaOngkir
+        $provinceResponse = Http::withHeaders([
+            'key' => 'f587d9fb3201bbc06ed11b0116fe4b56',
+        ])->get('https://api.rajaongkir.com/starter/province', [
+            'id' => $request->input('province_id')
+        ]);
+    
+        // Mengambil nama kota dari API RajaOngkir
+        $cityResponse = Http::withHeaders([
+            'key' => 'f587d9fb3201bbc06ed11b0116fe4b56',
+        ])->get('https://api.rajaongkir.com/starter/city', [
+            'id' => $request->input('city_id')
+        ]);
+    
+        // Mengambil nama provinsi dari respons API
+        $provinceName = $provinceResponse->json()['rajaongkir']['results']['province'];
+
+        // Mengambil nama kota dari respons API
+        $cityName = $cityResponse->json()['rajaongkir']['results']['city_name'];
+    
+        // Membuat instance baru dari UserAddress
+        $address = new UserAddress();
+        $address->fill([
+            'name' => $request->input('name'),
+            'phone' => $request->input('phone'),
+            'province_id' => $request->input('province_id'),
+            'city_id' => $request->input('city_id'),
+            'province_name' => $provinceName,
+            'city_name' => $cityName,
+            'address' => $request->input('address'),
+        ]);
+    
+        // Menetapkan ID pengguna untuk alamat tersebut
+        $address->user_id = $user->id;
+
+        // Menyimpan alamat baru ke database
+        $address->save();
+    
+        // Logging informasi alamat yang dibuat untuk debugging
+        \Log::info('Address created', [
+            'user_id' => $user->id,
+            'address' => $address->toArray(),
+        ]);
+    
+        // Mengarahkan kembali ke halaman profil dengan pesan sukses
+        return redirect()->route('user.profil', ['#alamat'])->with('success', 'Address created successfully.');
+    }
+
     // Method untuk menampilkan halaman edit alamat pengguna
     public function edit()
     {
@@ -19,7 +83,7 @@ class AddressController extends Controller
         // Logging informasi pengguna untuk debugging
         \Log::info('User data for edit', [
             'user_id' => $user->id,
-            'user_address' => $user->user_address,
+            'user_address' => $user->userAddress,
         ]);
 
         // Mengirim data pengguna ke view 'user.edit_alamat'
@@ -33,7 +97,7 @@ class AddressController extends Controller
         $user = Auth::user();
 
         // Mengambil data alamat pengguna atau membuat instance baru jika belum ada
-        $address = $user->user_address ?? new \App\Models\UserAddress();
+        $address = $user->userAddress ?? new \App\Models\UserAddress();
     
         // Mengambil nama provinsi dari API RajaOngkir
         $provinceResponse = Http::withHeaders([
@@ -135,5 +199,4 @@ class AddressController extends Controller
             return response()->json(['error' => 'An error occurred'], 500);
         }
     }
-
 }

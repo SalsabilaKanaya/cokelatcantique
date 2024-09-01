@@ -13,4 +13,6 @@ class SessionController extends Controller
         Session::flush();
         return response()->json(['status' => 'Session cleared']);
     }
+
+    
 }

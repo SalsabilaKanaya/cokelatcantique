@@ -178,4 +178,10 @@ class PilihKarakterController extends Controller
         return redirect()->route('user.showCart')->with('message', 'Item ditambahkan ke keranjang.');
     }
 
+    public function checkSelectedJenis()
+    {
+        $selectedJenis = session()->get('selected_jenis');
+        return response()->json(['selected' => !is_null($selectedJenis)]);
+    }
+
 }
