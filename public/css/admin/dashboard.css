@@ -97,7 +97,7 @@ body{
     left: 60px;
 }
 
-.home-section nav{
+.home-section .header-home{
     height: 80px;
     background: #fff;
     padding: 0 20px;
@@ -106,21 +106,116 @@ body{
     justify-content: space-between;
 }
 
-.home-section nav .sidebar-button{
+.home-section .header-home .sidebar-button{
     display: flex;
     align-items: center;
     font-size: 20px;
     font-weight: 500;
 }
 
-.home-section nav .sidebar-button i{
+.home-section .header-home .sidebar-button i{
     font-size: 30px;
     margin-right: 10px;
 }
-
 /* Content */
 .content {
     padding: 20px;
+}
+
+.card{
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-body .title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.card-body .title h5 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.card-body .title p {
+    margin: 0;
+    padding-left: 10px;
+    border-left: 1px solid #aaa;
+    color: #aaa;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.total-sales{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.total-sales .icon{
+    display: flex; /* Menambahkan Flexbox */
+    justify-content: center; /* Memusatkan secara horizontal */
+    align-items: center;
+    margin-right: 10px;
+    border-radius: 100px;
+    background-color: #F0F7FF;
+    width: 60px;
+    height: 60px;
+}
+
+.total-sales .icon i{
+    font-size: 30px;
+    color: #8A93E5;
+}
+
+.total-revenue{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.total-revenue .icon{
+    display: flex; /* Menambahkan Flexbox */
+    justify-content: center; /* Memusatkan secara horizontal */
+    align-items: center;
+    margin-right: 10px;
+    border-radius: 100px;
+    background-color: #E2F8EB;
+    width: 60px;
+    height: 60px;
+}
+
+.total-revenue .icon i{
+    font-size: 30px;
+    color: #55C285;
+}
+
+.card-text {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.increase {
+    font-size: 14px;
+    color: #aaa; 
+}
+
+.increase .percentage {
+    color: #55C285;
+    font-weight: 500;
 }
 
 /* Box styling */
@@ -178,4 +273,40 @@ body{
 
 .btn-success:hover {
     background-color: #219653;
+}
+
+/* SweetAlert Custom Styles */
+.swal2-popup {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px; /* Ukuran font yang lebih kecil */
+}
+
+.swal2-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px; /* Ukuran font yang lebih kecil untuk judul */
+}
+
+.swal2-confirm, .swal2-cancel {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px; /* Ukuran font yang lebih kecil untuk tombol */
+}
+
+/* Custom Pagination Layout */
+.pagination-section{
+    width: 100%;
+}
+
+.pagination-nav nav {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pagination-nav .pagination{
+    margin: 0;
+}
+
+.pagination-nav .text{
+    margin-left: 20px;
 }

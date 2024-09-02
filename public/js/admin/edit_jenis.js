@@ -9,11 +9,32 @@ sidebarBtn.onclick = function(){
 
 // Event listener ketika DOM selesai dimuat
 document.addEventListener('DOMContentLoaded', function() {
-    // Menambahkan event listener pada tombol cancel untuk kembali ke halaman sebelumnya
+    const form = document.getElementById('edit-jenis-form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        Swal.fire({
+            title: 'Apakah data sudah benar?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, update!',
+            cancelButtonText: 'Batal',
+            customClass: {
+                popup: 'swal2-popup',
+                title: 'swal2-title',
+                confirmButton: 'swal2-confirm',
+                cancelButton: 'swal2-cancel'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        });
+    });
+
     const cancelButton = document.getElementById('cancelButton');
     if (cancelButton) {
         cancelButton.addEventListener('click', function() {
-            window.history.back(); // Mengarahkan pengguna kembali ke halaman sebelumnya
+            window.history.back();
         });
     }
 });

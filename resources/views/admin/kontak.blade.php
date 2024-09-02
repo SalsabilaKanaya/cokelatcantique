@@ -55,8 +55,8 @@
             </li>
             <li>
                 <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    <i class='bx bx-log-out'></i>
-                    <span class="link_name">Log out</span>
+                    <i class='bx bx-log-out' style="color: #dc3545;"></i>
+                    <span class="link_name" style="color: #dc3545; font-weight: 500;">Log out</span>
                 </a>
                 <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
                     @csrf
@@ -67,12 +67,12 @@
 
     <!--Main Content-->
     <section class="home-section">
-        <nav>
+        <div class="header-home">
             <div class="sidebar-button sidebarBtn">
                 <i class='bx bx-menu'></i>
                 <span class="dashboard">Dashboard</span>
             </div>
-        </nav>
+        </div>
 
         <div class="content">
             <div class="box">
@@ -90,7 +90,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @php $no = 1; @endphp
+                        @php $no = ($kontak->currentPage() - 1) * $kontak->perPage() + 1; @endphp
                         @foreach($kontak as $item)
                         <tr id="row-{{ $item->id }}">
                             <td>{{ $no++ }}</td>
@@ -116,34 +116,67 @@
                         @endforeach
                     </tbody>
                 </table>
+                <!-- Tambahkan link pagination -->
+                <div class="pagination-section">
+                    {{ $kontak->links('vendor.pagination.default') }}
+                </div>
             </div>
         </div>
     </section>
 
-
     <script src="{{ asset('js/admin/dashboard.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         function markAsRead(id) {
-            if (confirm("Apakah Anda yakin pesan ini sudah dibaca?")) {
-                fetch(`/admin/kontak/${id}/mark-as-read`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify({})
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 'success') {
-                        let row = document.getElementById(`row-${id}`);
-                        row.querySelector('td:nth-child(6)').innerHTML = '<span class="badge bg-success">Sudah Dibaca</span>';
-                        row.querySelector('td:nth-child(7)').innerHTML = ''; // Hapus tombol aksi
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-            }
+            Swal.fire({
+                title: 'Apakah Anda yakin pesan ini sudah dibaca?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, sudah dibaca',
+                cancelButtonText: 'Batal',
+                customClass: {
+                    popup: 'swal2-popup',
+                    title: 'swal2-title',
+                    confirmButton: 'swal2-confirm',
+                    cancelButton: 'swal2-cancel'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`/admin/kontak/${id}/mark-as-read`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({})
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            let row = document.getElementById(`row-${id}`);
+                            row.querySelector('td:nth-child(6)').innerHTML = '<span class="badge bg-success">Sudah Dibaca</span>';
+                            row.querySelector('td:nth-child(7)').innerHTML = ''; // Hapus tombol aksi
+                            
+                            // Pindahkan baris ke posisi yang tepat di antara baris yang sudah dibaca
+                            let tbody = row.parentNode;
+                            tbody.removeChild(row);
+                            let firstReadRow = Array.from(tbody.children).find(tr => tr.querySelector('td:nth-child(6) .badge').classList.contains('bg-success'));
+                            if (firstReadRow) {
+                                firstReadRow.before(row);
+                            } else {
+                                tbody.appendChild(row);
+                            }
+
+                            // Perbarui nomor urut
+                            Array.from(tbody.children).forEach((tr, index) => {
+                                tr.querySelector('td:first-child').textContent = index + 1;
+                            });
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                }
+            });
         }
     </script>    
 </body>

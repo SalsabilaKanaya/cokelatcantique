@@ -6,7 +6,38 @@ document.addEventListener('DOMContentLoaded', function() {
     const modalNama = document.getElementById('modal-nama'); // Elemen teks dalam modal untuk menampilkan nama karakter
     const quantitySpan = document.querySelector('.num'); // Elemen untuk menampilkan jumlah karakter yang dipilih
     const textarea = document.getElementById('deskripsi'); // Textarea untuk menulis catatan tentang karakter
+    const plusButton = document.querySelector('.plus'); // Tombol untuk menambah jumlah karakter
+    const minusButton = document.querySelector('.minus'); // Tombol untuk mengurangi jumlah karakter
     let currentKarakterId = null; // Variabel untuk menyimpan ID karakter yang sedang dipilih
+    const totalKarakter = parseInt(document.querySelector('meta[name="total-karakter"]').getAttribute('content')); // Total karakter yang diizinkan
+    const selectedKarakter = JSON.parse(document.querySelector('meta[name="selected-karakter"]').getAttribute('content')); // Karakter yang sudah dipilih
+
+    // Fungsi untuk menghitung total karakter yang sudah dipilih
+    function getTotalSelectedKarakter() {
+        return Object.values(selectedKarakter).reduce((total, karakter) => total + karakter.jumlah, 0);
+    }
+
+    // Fungsi untuk memperbarui status tombol plus dan minus
+    function updateButtonStatus() {
+        const currentQuantity = parseInt(quantitySpan.textContent);
+        const totalSelected = getTotalSelectedKarakter();
+
+        if (totalSelected + currentQuantity >= totalKarakter) {
+            plusButton.setAttribute('disabled', 'true');
+            plusButton.classList.add('button-disabled');
+        } else {
+            plusButton.removeAttribute('disabled');
+            plusButton.classList.remove('button-disabled');
+        }
+
+        if (currentQuantity <= 1) {
+            minusButton.setAttribute('disabled', 'true');
+            minusButton.classList.add('button-disabled');
+        } else {
+            minusButton.removeAttribute('disabled');
+            minusButton.classList.remove('button-disabled');
+        }
+    }
 
     // Menambahkan event listener pada setiap tombol pilih karakter
     pilihButtons.forEach(button => {
@@ -31,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     }
                                     modalNama.textContent = data.nama; // Menampilkan nama karakter dalam modal
                                 }
+                                updateButtonStatus(); // Perbarui status tombol plus dan minus saat modal dibuka
                             })
                             .catch(error => {
                                 console.error('Error fetching character data:', error); // Menampilkan error jika terjadi masalah saat mengambil data
@@ -53,16 +85,21 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Event listener untuk tombol tambah jumlah karakter
-    document.querySelector('.plus').addEventListener('click', function() {
+    plusButton.addEventListener('click', function() {
         let currentQuantity = parseInt(quantitySpan.textContent); // Mendapatkan jumlah karakter saat ini
-        quantitySpan.textContent = currentQuantity + 1; // Menambah jumlah karakter
+        const totalSelected = getTotalSelectedKarakter();
+        if (totalSelected + currentQuantity < totalKarakter) {
+            quantitySpan.textContent = currentQuantity + 1; // Menambah jumlah karakter
+            updateButtonStatus(); // Perbarui status tombol plus dan minus
+        }
     });
 
     // Event listener untuk tombol kurangi jumlah karakter
-    document.querySelector('.minus').addEventListener('click', function() {
+    minusButton.addEventListener('click', function() {
         let currentQuantity = parseInt(quantitySpan.textContent); // Mendapatkan jumlah karakter saat ini
         if (currentQuantity > 1) {
             quantitySpan.textContent = currentQuantity - 1; // Mengurangi jumlah karakter jika lebih dari 1
+            updateButtonStatus(); // Perbarui status tombol plus dan minus
         }
     });
 
@@ -75,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         let karakter = {
             id: currentKarakterId, // ID karakter yang dipilih
-            jumlah: quantitySpan.textContent, // Jumlah karakter yang dipilih
+            jumlah: parseInt(quantitySpan.textContent), // Jumlah karakter yang dipilih
             catatan: textarea.value // Catatan tentang karakter
         };
 
@@ -95,6 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
+                selectedKarakter[currentKarakterId] = karakter; // Perbarui data karakter yang dipilih
                 updateProgressBar(); // Memperbarui progress bar jika data berhasil disimpan
             } else {
                 console.error('Gagal menyimpan data:', data); // Menampilkan error jika gagal menyimpan data

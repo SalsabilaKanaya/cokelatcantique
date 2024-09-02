@@ -10,7 +10,7 @@ class CreateJenisCokelatController extends Controller
 {
     // Menampilkan daftar jenis cokelat
     public function index() {
-        $jenisCokelat = JenisCokelat::all(); // Mengambil semua data jenis cokelat
+        $jenisCokelat = JenisCokelat::orderBy('created_at', 'desc')->paginate(6); // Mengambil data jenis cokelat dengan pagination dan urutan terbaru // Mengambil semua data jenis cokelat
         return view('admin.jenis_cokelat', compact('jenisCokelat')); // Mengarahkan ke view jenis_cokelat.blade.php
     }
 

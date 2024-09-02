@@ -5,19 +5,62 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\User;
+use Carbon\Carbon;
 
 class OrderMasukController extends Controller
 {
     // Menampilkan dashboard dengan daftar order yang statusnya 'pending'
     public function dashboard()
     {
+        $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
+
+        // Jumlah orderan yang masuk pada bulan ini
+        $totalSales = Order::whereMonth('created_at', $currentMonth)
+                            ->whereYear('created_at', $currentYear)
+                            ->count();
+
+        // Jumlah orderan yang masuk pada bulan sebelumnya
+        $previousMonth = Carbon::now()->subMonth()->month;
+        $previousYear = Carbon::now()->subMonth()->year;
+        $previousMonthSales = Order::whereMonth('created_at', $previousMonth)
+                                    ->whereYear('created_at', $previousYear)
+                                    ->count();
+
+        // Menghitung persentase peningkatan order
+        if ($previousMonthSales > 0) {
+            $increasePercentage = (($totalSales - $previousMonthSales) / $previousMonthSales) * 100;
+        } else {
+            $increasePercentage = $totalSales > 0 ? 100 : 0; // Jika bulan sebelumnya tidak ada order, anggap peningkatan 100% jika ada order bulan ini
+        }
+
+        // Jumlah pendapatan per bulan
+        $totalRevenue = Order::whereIn('status', ['accepted', 'completed'])
+                            ->whereMonth('created_at', $currentMonth)
+                            ->whereYear('created_at', $currentYear)
+                            ->sum('total_price');
+
+        // Jumlah pendapatan bulan sebelumnya
+        $previousMonthRevenue = Order::whereIn('status', ['accepted', 'completed'])
+                                    ->whereMonth('created_at', $previousMonth)
+                                    ->whereYear('created_at', $previousYear)
+                                    ->sum('total_price');
+
+        // Menghitung persentase peningkatan pendapatan
+        if ($previousMonthRevenue > 0) {
+            $revenueIncreasePercentage = (($totalRevenue - $previousMonthRevenue) / $previousMonthRevenue) * 100;
+        } else {
+            $revenueIncreasePercentage = $totalRevenue > 0 ? 100 : 0; // Jika bulan sebelumnya tidak ada pendapatan, anggap peningkatan 100% jika ada pendapatan bulan ini
+        }
+
         // Mengambil semua order yang statusnya 'pending'
         $orders = Order::where('status', 'pending') // Mencari order dengan status 'pending'
                     ->with(['user', 'items.jenisCokelat']) // Memuat relasi user dan jenisCokelat terkait
                     ->orderBy('created_at', 'desc')
-                    ->get(); // Mengambil semua order yang cocok
+                    ->paginate(6); // Mengambil semua order yang cocok
 
-        return view('admin.dashboard', compact('orders')); // Mengarahkan ke view dashboard dengan data orders
+        return view('admin.dashboard', compact('orders', 'totalSales', 'totalRevenue', 'increasePercentage', 'revenueIncreasePercentage')); // Mengarahkan ke view dashboard dengan data orders
     }
 
     // Menerima order yang dipilih
@@ -43,14 +86,20 @@ class OrderMasukController extends Controller
     {
         // Ambil parameter sort_order dari request, default ke 'desc' (terbaru)
         $sortOrder = $request->input('sort_order', 'desc');
+        $activeTab = $request->input('active_tab', 'proses');
 
         // Filter order yang sudah diterima
-        $orders = Order::whereIn('status', ['accepted', 'completed']) // Mencari order dengan status 'accepted'
+        $ordersAccepted = Order::where('status', 'accepted') // Mencari order dengan status 'accepted'
                     ->with(['user', 'items.jenisCokelat']) // Memuat relasi user dan jenisCokelat terkait
                     ->orderBy('created_at', $sortOrder) // Urutkan berdasarkan tanggal pembuatan
-                    ->get(); // Mengambil semua order yang cocok
+                    ->paginate(5); // Mengambil semua order yang cocok dengan pagination
+
+        $ordersCompleted = Order::where('status', 'completed') // Mencari order dengan status 'completed'
+                    ->with(['user', 'items.jenisCokelat']) // Memuat relasi user dan jenisCokelat terkait
+                    ->orderBy('created_at', $sortOrder) // Urutkan berdasarkan tanggal pembuatan
+                    ->paginate(5); // Mengambil semua order yang cocok dengan pagination
                     
-        return view('admin.order_list', compact('orders')); // Mengarahkan ke view order_list dengan data orders
+        return view('admin.order_list', compact('ordersAccepted', 'ordersCompleted', 'activeTab')); // Mengarahkan ke view order_list dengan data orders
     }
 
     // Menampilkan detail dari order yang dipilih
@@ -75,6 +124,4 @@ class OrderMasukController extends Controller
 
         return response()->json(['status' => 'success']);
     }
-
-
 }

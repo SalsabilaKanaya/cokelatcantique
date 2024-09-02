@@ -97,7 +97,7 @@ body{
     left: 60px;
 }
 
-.home-section nav{
+.home-section .header-home{
     height: 80px;
     background: #fff;
     padding: 0 20px;
@@ -106,14 +106,14 @@ body{
     justify-content: space-between;
 }
 
-.home-section nav .sidebar-button{
+.home-section .header-home .sidebar-button{
     display: flex;
     align-items: center;
     font-size: 20px;
     font-weight: 500;
 }
 
-.home-section nav .sidebar-button i{
+.home-section .header-home .sidebar-button i{
     font-size: 30px;
     margin-right: 10px;
 }
@@ -181,3 +181,34 @@ body{
     color: #219653;
 }
 
+/* SweetAlert Custom Styles */
+.swal2-popup {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px; /* Ukuran font yang lebih kecil */
+}
+
+.swal2-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px; /* Ukuran font yang lebih kecil untuk judul */
+}
+
+.swal2-confirm, .swal2-cancel {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px; /* Ukuran font yang lebih kecil untuk tombol */
+}
+
+/* Custom Pagination Layout */
+.pagination-section{
+    width: 100%;
+}
+
+.pagination-nav nav {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pagination-nav .pagination{
+    margin: 0;
+}

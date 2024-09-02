@@ -8,31 +8,43 @@ sidebarBtn.onclick = function(){
 };
 
 // Mengonfirmasi sebelum mengirimkan formulir
-const form = document.querySelector('form');
-form.addEventListener('submit', function (event) {
-    const confirmSubmit = confirm('Apakah data sudah benar?'); // Menampilkan dialog konfirmasi
-    if (!confirmSubmit) {
-        event.preventDefault(); // Mencegah pengiriman formulir jika konfirmasi ditolak
-    }
-});
-
-// Event listener ketika DOM selesai dimuat
 document.addEventListener('DOMContentLoaded', function() {
-
-    // Mengonfirmasi sebelum mengirimkan formulir
-    const form = document.querySelector('form');
-    form.addEventListener('submit', function (event) {
-        const confirmSubmit = confirm('Apakah data sudah benar?'); // Menampilkan dialog konfirmasi
-        if (!confirmSubmit) {
-            event.preventDefault(); // Mencegah pengiriman formulir jika konfirmasi ditolak
-        }
+    const form = document.getElementById('create-karakter-form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        Swal.fire({
+            title: 'Apakah data sudah benar?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, simpan!',
+            cancelButtonText: 'Batal',
+            customClass: {
+                popup: 'swal2-popup',
+                title: 'swal2-title',
+                confirmButton: 'swal2-confirm',
+                cancelButton: 'swal2-cancel'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+                Swal.fire({
+                    title: 'Data berhasil dibuat!',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        popup: 'swal2-popup',
+                        title: 'swal2-title',
+                        confirmButton: 'swal2-confirm'
+                    }
+                });
+            }
+        });
     });
 
-    // Menambahkan event listener pada tombol cancel untuk kembali ke halaman sebelumnya
     const cancelButton = document.getElementById('cancelButton');
     if (cancelButton) {
         cancelButton.addEventListener('click', function() {
-            window.history.back(); // Mengarahkan pengguna kembali ke halaman sebelumnya
+            window.history.back();
         });
     }
 });

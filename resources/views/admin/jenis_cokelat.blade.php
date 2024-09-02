@@ -61,8 +61,8 @@
             </li>
             <li>
                 <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    <i class='bx bx-log-out'></i>
-                    <span class="link_name">Log out</span>
+                    <i class='bx bx-log-out' style="color: #dc3545;"></i>
+                    <span class="link_name" style="color: #dc3545; font-weight: 500;">Log out</span>
                 </a>
                 <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
                     @csrf
@@ -73,12 +73,12 @@
 
     <!--Main Content-->
     <section class="home-section">
-        <nav>
+        <div class="header-home">
             <div class="sidebar-button sidebarBtn">
                 <i class='bx bx-menu'></i>
                 <span class="dashboard">Dashboard</span>
             </div>
-        </nav>
+        </div>
 
         <div class="content">
             <div class="content-title mb-3 mt-3 d-flex justify-content-between align-items-center">
@@ -123,23 +123,23 @@
                             <td>{{ \Illuminate\Support\Str::limit($cokelat->deskripsi, 50, '...') }}</td>
                             <td>
                                 <a href="{{ route('admin.edit_jenis', ['id' => $cokelat->id]) }}" class="btn btn-warning">Edit</a>
-                                <form action="{{ route('admin.delete_jenis', ['id' => $cokelat->id]) }}" method="POST" style="display:inline; margin-top: 10px;">
+                                <button type="button" class="btn btn-danger btn-delete" data-id="{{ $cokelat->id }}">Hapus</button>
+                                <form id="delete-form-{{ $cokelat->id }}" action="{{ route('admin.delete_jenis', ['id' => $cokelat->id]) }}" method="POST" style="display: none;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Hapus</button>
                                 </form>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
+                {{ $jenisCokelat->links('vendor.pagination.default') }}
             </div>
         </div>
     </section>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('js/admin/jenis_cokelat.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
 </body>
 </html>

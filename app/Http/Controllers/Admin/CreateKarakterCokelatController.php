@@ -10,7 +10,7 @@ class CreateKarakterCokelatController extends Controller
 {
     // Menampilkan daftar karakter cokelat
     public function index() {
-        $karakterCokelat = KarakterCokelat::all(); // Mengambil semua data karakter cokelat
+        $karakterCokelat = KarakterCokelat::orderBy('created_at', 'desc')->paginate(6); // Mengambil semua data karakter cokelat
         return view('admin.karakter_cokelat', compact('karakterCokelat')); // Mengarahkan ke view karakter_cokelat.blade.php
     }
 

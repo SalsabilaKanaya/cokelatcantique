@@ -355,6 +355,11 @@
     font-family: 'Montserrat', sans-serif;
 }
 
+.button-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 .catatan-title{
     font-size: 14px;
     font-weight: 600;

@@ -61,8 +61,8 @@
             </li>
             <li>
                 <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    <i class='bx bx-log-out'></i>
-                    <span class="link_name">Log out</span>
+                    <i class='bx bx-log-out' style="color: #dc3545; font-weight: 500;"></i>
+                    <span class="link_name" style="color: #dc3545; font-weight: 500;">Log out</span>
                 </a>
                 <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
                     @csrf
@@ -73,14 +73,60 @@
 
     <!--Main Content-->
     <section class="home-section">
-        <nav>
+        <div class="header-home">
             <div class="sidebar-button sidebarBtn">
                 <i class='bx bx-menu'></i>
                 <span class="dashboard">Dashboard</span>
             </div>
-        </nav>
+        </div>
 
         <div class="content">
+            <!-- Kotak Informasi -->
+            <div class="info-order row mb-2">
+                <div class="col-md-4">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="title">
+                                <h5>Sales</h5>
+                                <p>This Month</p>
+                            </div>
+                            <div class="total-sales">
+                                <div class="icon">
+                                    <i class="bi bi-cart"></i>
+                                </div>
+                                <div>
+                                    <p class="card-text">{{ $totalSales }}</p>
+                                    <p class="increase">
+                                        <span class="percentage">{{ number_format($increasePercentage, 2) }}%</span> increase
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="title">
+                                <h5>Revenue</h5>
+                                <p>This Month</p>
+                            </div>
+                            <div class="total-revenue">
+                                <div class="icon">
+                                    <i class="bi bi-currency-dollar"></i>
+                                </div>
+                                <div>
+                                    <p class="card-text">Rp {{ number_format($totalRevenue, 2, ',', '.') }}</p>
+                                    <p class="increase">
+                                        <span class="percentage">{{ number_format($revenueIncreasePercentage, 2) }}%</span> increase
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="box">
                 <h1>Orderan Masuk</h1>
                 <table class="table">
@@ -108,23 +154,65 @@
                                 <td>{{ $order->delivery_date->format('d/m/Y') }}</td>
                                 <td>Rp {{ number_format($order->total_price, 2, ',', '.') }}</td>
                                 <td>
-                                    <form action="{{ route('admin.order.accept', $order->id) }}" method="POST" style="display:inline;">
+                                    <button type="button" class="btn btn-success btn-accept" data-id="{{ $order->id }}">Terima</button>
+                                    <button type="button" class="btn btn-outline-danger btn-reject" data-id="{{ $order->id }}">Tolak</button>
+                                    <form id="accept-form-{{ $order->id }}" action="{{ route('admin.order.accept', $order->id) }}" method="POST" style="display: none;">
                                         @csrf
-                                        <button type="submit" class="btn btn-success" onclick="return confirm('Apakah kamu yakin ingin menerima orderan ini?')">Terima</button>
                                     </form>
-                                    <form action="{{ route('admin.order.reject', $order->id) }}" method="POST" style="display:inline;">
+                                    <form id="reject-form-{{ $order->id }}" action="{{ route('admin.order.reject', $order->id) }}" method="POST" style="display: none;">
                                         @csrf
-                                        <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Apakah kamu yakin ingin menolak orderan ini?')">Tolak</button>
                                     </form>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
+                {{ $orders->links('vendor.pagination.default') }}
             </div>
         </div>
     </section>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('js/admin/dashboard.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const acceptButtons = document.querySelectorAll('.btn-accept');
+            const rejectButtons = document.querySelectorAll('.btn-reject');
+
+            acceptButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const orderId = this.getAttribute('data-id');
+                    Swal.fire({
+                        title: 'Apakah kamu yakin ingin menerima orderan ini?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Ya, terima!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            document.getElementById(`accept-form-${orderId}`).submit();
+                        }
+                    });
+                });
+            });
+
+            rejectButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const orderId = this.getAttribute('data-id');
+                    Swal.fire({
+                        title: 'Apakah kamu yakin ingin menolak orderan ini?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Ya, tolak!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            document.getElementById(`reject-form-${orderId}`).submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>

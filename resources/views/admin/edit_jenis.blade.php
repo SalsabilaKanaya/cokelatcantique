@@ -61,8 +61,8 @@
             </li>
             <li>
                 <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    <i class='bx bx-log-out'></i>
-                    <span class="link_name">Log out</span>
+                    <i class='bx bx-log-out' style="color: #dc3545;"></i>
+                    <span class="link_name" style="color: #dc3545; font-weight: 500;">Log out</span>
                 </a>
                 <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
                     @csrf
@@ -83,7 +83,7 @@
         <div class="content">
             <div class="box">
                 <h1>Edit Jenis Cokelat</h1>
-                <form action="{{ route('admin.edit_jenis.update', $jenis->id) }}" method="POST" enctype="multipart/form-data">
+                <form id="edit-jenis-form" action="{{ route('admin.edit_jenis.update', $jenis->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="row mb-3">
@@ -128,6 +128,7 @@
             </div>
         </div>
     </section>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('js/admin/edit_jenis.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

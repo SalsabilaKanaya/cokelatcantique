@@ -86,7 +86,7 @@ body {
 
 .search-bar input{
     border: none;
-    outline: none;
+    /* outline: none; */
     background: none;
 }
 

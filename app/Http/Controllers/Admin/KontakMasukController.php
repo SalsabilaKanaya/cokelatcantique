@@ -10,8 +10,8 @@ class KontakMasukController extends Controller
 {
     public function index()
     {
-        // Mengambil semua data kontak dan mengurutkannya dari yang terbaru ke terlama
-        $kontak = Kontak::orderBy('created_at', 'desc')->get();
+        // Mengambil data kontak dengan pagination dan mengurutkannya berdasarkan status dan waktu pembuatan
+        $kontak = Kontak::orderBy('status', 'asc')->orderBy('created_at', 'desc')->paginate(6); // 10 item per halaman
         return view('admin.kontak', compact('kontak'));
     }
 

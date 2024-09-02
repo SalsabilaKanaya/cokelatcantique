@@ -10,6 +10,8 @@
    <!-- MAIN -->
     @if(Auth::check())
         <meta name="kustomisasi-cokelat-url" content="{{ route('user.kustomisasi_cokelat') }}">
+        <meta name="total-karakter" content="{{ session()->get('total_karakter', 0) }}">
+        <meta name="selected-karakter" content="{{ json_encode(session()->get('selected_karakter', [])) }}">
         <section class="main-content">
             <div class="container">
                 <div class="row mt-5">
