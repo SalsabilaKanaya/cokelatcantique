@@ -27,11 +27,11 @@
                 <div class="col-md-6 produk-detail">
                     @php
                         $kategoriLabels = [
-                            'kategori1' => 'Huruf',
-                            'kategori2' => 'Kartun',
-                            'kategori3' => 'Makanan',
-                            'kategori4' => 'Hari Raya',
-                            'kategori5' => 'Orang',
+                            'huruf' => 'Huruf',
+                            'kartun' => 'Kartun',
+                            'makanan' => 'Makanan',
+                            'hari raya' => 'Hari Raya',
+                            'orang' => 'Orang',
                         ];
                         $namaKategori = $kategoriLabels[$cokelat->kategori] ?? 'Kategori Tidak Dikenal';
                     @endphp
@@ -51,11 +51,11 @@
                               <h5 class="card-title">{{ $relatedCokelat->nama }}</h5>
                                 @php
                                     $kategoriLabels = [
-                                        'kategori1' => 'Huruf',
-                                        'kategori2' => 'Kartun',
-                                        'kategori3' => 'Makanan',
-                                        'kategori4' => 'Hari Raya',
-                                        'kategori5' => 'Orang',
+                                        'huruf' => 'Huruf',
+                                        'kartun' => 'Kartun',
+                                        'makanan' => 'Makanan',
+                                        'hari raya' => 'Hari Raya',
+                                        'orang' => 'Orang',
                                     ];
                                     $namaKategori = $kategoriLabels[$cokelat->kategori] ?? 'Kategori Tidak Dikenal';
                                 @endphp

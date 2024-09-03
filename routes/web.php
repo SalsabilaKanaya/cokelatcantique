@@ -20,6 +20,7 @@ use App\Http\Controllers\User\OngkirController;
 use App\Http\Controllers\User\AddressController;
 use App\Http\Controllers\User\HistoriController;
 use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\SearchController;
 
 // ADMIN
 use App\Http\Controllers\Admin\AdminController;
@@ -79,6 +80,8 @@ Route::prefix('user')->name('user.')->group(function () {
 
     Route::get('/faq', [WebController::class, 'faq'])->name('faq');
     Route::get('/cara_pemesanan', [WebController::class, 'caraPemesanan'])->name('cara_pemesanan');
+
+    Route::get('/search', [SearchController::class, 'search'])->name('search');
 
     Route::middleware('auth')->group(function () {
         // Route::get('/beranda', [WebController::class, 'beranda'])->name('beranda');
@@ -142,8 +145,6 @@ Route::prefix('user')->name('user.')->group(function () {
 
     });
 });
-
-
 
 // Rute Admin
 Route::prefix('admin')->name('admin.')->group(function () {

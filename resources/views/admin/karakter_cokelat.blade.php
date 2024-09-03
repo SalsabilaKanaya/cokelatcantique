@@ -29,31 +29,31 @@
             <span class="logo_name">Cokelat Cantique </span>
         </div>
         <ul class="nav-link">
-            <li>
+            <li class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                 <a href="{{ route('admin.dashboard') }}">
                     <i class='bx bx-grid-alt'></i>
                     <span class="link_name">Dashboard</span>
                 </a>
             </li>
-            <li>
+            <li class="{{ request()->routeIs('admin.jenis_cokelat') ? 'active' : '' }}">
                 <a href="{{ route('admin.jenis_cokelat') }}">
                     <i class='bx bx-leaf'></i>
                     <span class="link_name">Jenis Cokelat</span>
                 </a>
             </li>
-            <li>
+            <li class="{{ request()->routeIs('admin.karakter_cokelat') ? 'active' : '' }}">
                 <a href="{{ route('admin.karakter_cokelat') }}">
                     <i class='bx bx-cookie'></i>
                     <span class="link_name">Karakter Cokelat</span>
                 </a>
             </li>
-            <li>
+            <li class="{{ request()->routeIs('admin.order_list') ? 'active' : '' }}">
                 <a href="{{ route('admin.order_list') }}">
                     <i class='bx bx-list-ul'></i>
                     <span class="link_name">Order List</span>
                 </a>
             </li>
-            <li>
+            <li class="{{ request()->routeIs('admin.kontak') ? 'active' : '' }}">
                 <a href="{{ route('admin.kontak') }}">
                     <i class='bx bx-chat'></i>
                     <span class="link_name">Pesan</span>
@@ -61,7 +61,7 @@
             </li>
             <li>
                 <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    <i class='bx bx-log-out' style="color: #dc3545;"></i>
+                    <i class='bx bx-log-out' style="color: #dc3545; font-weight: 500;"></i>
                     <span class="link_name" style="color: #dc3545; font-weight: 500;">Log out</span>
                 </a>
                 <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
@@ -108,11 +108,11 @@
                             <td>
                                 @php
                                     $kategoriLabels = [
-                                        'kategori1' => 'Karakter Huruf',
-                                        'kategori2' => 'Karakter Kartun',
-                                        'kategori3' => 'Karakter Makanan',
-                                        'kategori4' => 'Karakter Hari Raya',
-                                        'kategori5' => 'Karakter Orang',
+                                        'huruf' => 'Karakter Huruf',
+                                        'kartun' => 'Karakter Kartun',
+                                        'makanan' => 'Karakter Makanan',
+                                        'hari raya' => 'Karakter Hari Raya',
+                                        'orang' => 'Karakter Orang',
                                     ];
                                 @endphp
                                 {{ $kategoriLabels[$cokelat->kategori] ?? 'Unknown' }}

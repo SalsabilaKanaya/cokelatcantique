@@ -23,37 +23,37 @@
     <link rel="stylesheet" href="{{ asset('css/admin/dashboard.css') }}">
 </head>
 <body>
-    <section class="sidebar">
+<section class="sidebar">
         <div class="logo-details">
             <i class='bx bxl-c-plus-plus'></i>
             <span class="logo_name">Cokelat Cantique </span>
         </div>
         <ul class="nav-link">
-            <li>
+            <li class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                 <a href="{{ route('admin.dashboard') }}">
                     <i class='bx bx-grid-alt'></i>
                     <span class="link_name">Dashboard</span>
                 </a>
             </li>
-            <li>
+            <li class="{{ request()->routeIs('admin.jenis_cokelat') ? 'active' : '' }}">
                 <a href="{{ route('admin.jenis_cokelat') }}">
                     <i class='bx bx-leaf'></i>
                     <span class="link_name">Jenis Cokelat</span>
                 </a>
             </li>
-            <li>
+            <li class="{{ request()->routeIs('admin.karakter_cokelat') ? 'active' : '' }}">
                 <a href="{{ route('admin.karakter_cokelat') }}">
                     <i class='bx bx-cookie'></i>
                     <span class="link_name">Karakter Cokelat</span>
                 </a>
             </li>
-            <li>
+            <li class="{{ request()->routeIs('admin.order_list') ? 'active' : '' }}">
                 <a href="{{ route('admin.order_list') }}">
                     <i class='bx bx-list-ul'></i>
                     <span class="link_name">Order List</span>
                 </a>
             </li>
-            <li>
+            <li class="{{ request()->routeIs('admin.kontak') ? 'active' : '' }}">
                 <a href="{{ route('admin.kontak') }}">
                     <i class='bx bx-chat'></i>
                     <span class="link_name">Pesan</span>

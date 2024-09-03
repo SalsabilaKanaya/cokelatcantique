@@ -86,11 +86,17 @@ body {
 
 .search-bar input{
     border: none;
-    /* outline: none; */
+    outline: none;
     background: none;
 }
 
-.search-bar a{
+.search-bar button{
+   color: #828282;
+   background: none;
+   border: none;
+}
+
+.search-bar button:hover{
    color: #828282;
 }
 

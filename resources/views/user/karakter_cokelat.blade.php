@@ -36,12 +36,12 @@
                             <h5 class="card-title">{{ $cokelat->nama }}</h5>
                             @php
                                 $kategoriLabels = [
-                                    'kategori1' => 'Huruf',
-                                    'kategori2' => 'Kartun',
-                                    'kategori3' => 'Makanan',
-                                    'kategori4' => 'Hari Raya',
-                                    'kategori5' => 'Orang',
-                                ];
+                                'huruf' => 'Huruf',
+                                'kartun' => 'Kartun',
+                                'makanan' => 'Makanan',
+                                'hari raya' => 'Hari Raya',
+                                'orang' => 'Orang',
+                            ];
                                 $namaKategori = $kategoriLabels[$cokelat->kategori] ?? 'Kategori Tidak Dikenal';
                             @endphp
                             <p class="card-text">{{ $namaKategori }}</p>

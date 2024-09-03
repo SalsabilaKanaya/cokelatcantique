@@ -29,31 +29,31 @@
             <span class="logo_name">Cokelat Cantique </span>
         </div>
         <ul class="nav-link">
-            <li>
+            <li class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                 <a href="{{ route('admin.dashboard') }}">
                     <i class='bx bx-grid-alt'></i>
                     <span class="link_name">Dashboard</span>
                 </a>
             </li>
-            <li>
+            <li class="{{ request()->routeIs('admin.jenis_cokelat') ? 'active' : '' }}">
                 <a href="{{ route('admin.jenis_cokelat') }}">
                     <i class='bx bx-leaf'></i>
                     <span class="link_name">Jenis Cokelat</span>
                 </a>
             </li>
-            <li>
+            <li class="{{ request()->routeIs('admin.karakter_cokelat') ? 'active' : '' }}">
                 <a href="{{ route('admin.karakter_cokelat') }}">
                     <i class='bx bx-cookie'></i>
                     <span class="link_name">Karakter Cokelat</span>
                 </a>
             </li>
-            <li>
+            <li class="{{ request()->routeIs('admin.order_list') ? 'active' : '' }}">
                 <a href="{{ route('admin.order_list') }}">
                     <i class='bx bx-list-ul'></i>
                     <span class="link_name">Order List</span>
                 </a>
             </li>
-            <li>
+            <li class="{{ request()->routeIs('admin.kontak') ? 'active' : '' }}">
                 <a href="{{ route('admin.kontak') }}">
                     <i class='bx bx-chat'></i>
                     <span class="link_name">Pesan</span>
@@ -61,7 +61,7 @@
             </li>
             <li>
                 <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    <i class='bx bx-log-out' style="color: #dc3545;"></i>
+                    <i class='bx bx-log-out' style="color: #dc3545; font-weight: 500;"></i>
                     <span class="link_name" style="color: #dc3545; font-weight: 500;">Log out</span>
                 </a>
                 <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
@@ -99,11 +99,11 @@
                         <label for="kategori" class="form-label">Kategori Karakter</label>
                         <select class="form-control" name="kategori" id="kategori" required>
                             <option value="" disabled selected>Pilih Kategori</option>
-                            <option value="kategori1">Karakter Huruf</option>
-                            <option value="kategori2">Karakter Kartun</option>
-                            <option value="kategori3">Karakter Makanan</option>
-                            <option value="kategori4">Karakter Hari Raya</option>
-                            <option value="kategori5">Karakter Orang</option>
+                            <option value="huruf">Karakter Huruf</option>
+                            <option value="kartun">Karakter Kartun</option>
+                            <option value="makanan">Karakter Makanan</option>
+                            <option value="hari raya">Karakter Hari Raya</option>
+                            <option value="orang">Karakter Orang</option>
                         </select>
                     </div>
                     <div class="mb-3">

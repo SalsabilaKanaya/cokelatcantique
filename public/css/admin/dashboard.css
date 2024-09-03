@@ -67,6 +67,10 @@ body{
     background: #BFA47F;
 }
 
+.sidebar .nav-link li.active a {
+    background: #BFA47F;
+}
+
 .sidebar .nav-link li a i{
     min-width: 60px;
     text-align: center;

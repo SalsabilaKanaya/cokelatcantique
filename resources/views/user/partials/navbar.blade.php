@@ -6,8 +6,10 @@
                     <img src="{{ asset('img/logo.png')}}" alt="logo" width="150px">
                 </a>
                 <div class="search-bar d-flex">
-                    <input type="text" class="input-search flex-grow-1" placeholder="Search...">
-                    <a href=""><i class="fa-solid fa-magnifying-glass"></i></a>
+                    <form action="{{ route('user.search') }}" method="GET" class="d-flex w-100">
+                        <input type="text" name="query" class="input-search flex-grow-1" placeholder="Search...">
+                        <button type="submit" class="btn btn-link p-0"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </form>
                 </div>
                 <div class="navbar-icons d-flex justify-content-between">
                     <a href="{{ route('user.showCart', ['navbar_click' => 1]) }}" class="nav-link {{ request()->routeIs('user.showCart') ? 'active' : '' }}"><i class="fa-solid fa-cart-shopping"></i></a>
