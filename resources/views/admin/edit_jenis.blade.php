@@ -101,10 +101,10 @@
                             <label for="kategori" class="form-label">Kategori Jenis Cokelat</label>
                             <select class="form-control" name="kategori" id="kategori" required>
                                 <option value="" disabled>Pilih Kategori</option>
-                                <option value="kategori1" {{ $jenis->kategori == 'kategori1' ? 'selected' : '' }}>Cokelat Box</option>
-                                <option value="kategori2" {{ $jenis->kategori == 'kategori2' ? 'selected' : '' }}>Cokelat Kiloan</option>
-                                <option value="kategori3" {{ $jenis->kategori == 'kategori3' ? 'selected' : '' }}>Cokelat Loli</option>
-                                <option value="kategori4" {{ $jenis->kategori == 'kategori4' ? 'selected' : '' }}>Cokelat Tenteng</option>
+                                <option value="box" {{ $jenis->kategori == 'box' ? 'selected' : '' }}>Cokelat Box</option>
+                                <option value="kiloan" {{ $jenis->kategori == 'kiloan' ? 'selected' : '' }}>Cokelat Kiloan</option>
+                                <option value="loli" {{ $jenis->kategori == 'loli' ? 'selected' : '' }}>Cokelat Loli</option>
+                                <option value="tenteng" {{ $jenis->kategori == 'tenteng' ? 'selected' : '' }}>Cokelat Tenteng</option>
                             </select>
                         </div>
                         <div class="col">

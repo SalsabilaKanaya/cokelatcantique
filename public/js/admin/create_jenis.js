@@ -30,7 +30,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
                     title: 'Data berhasil dibuat!',
                     icon: 'success',
-                    confirmButtonText: 'OK',
+                    showConfirmButton: false, // Menghilangkan tombol OK
+                    timer: 1500,
                     customClass: {
                         popup: 'swal2-popup',
                         title: 'swal2-title',

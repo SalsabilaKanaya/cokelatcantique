@@ -27,10 +27,10 @@
                 <div class="col-md-6 produk-detail d-flex flex-column justify-content-center">
                     @php
                         $kategoriLabels = [
-                        'kategori1' => 'Cokelat Box',
-                        'kategori2' => 'Cokelat Kiloan',
-                        'kategori3' => 'Cokelat Loli',
-                        'kategori4' => 'Cokelat Tenteng',
+                            'box' => 'Cokelat Box',
+                            'kiloan' => 'Cokelat Kiloan',
+                            'loli' => 'Cokelat Loli',
+                            'tenteng' => 'Cokelat Tenteng',
                         ];
                         $namaKategori = $kategoriLabels[$cokelat->kategori] ?? 'Kategori Tidak Dikenal';
                     @endphp

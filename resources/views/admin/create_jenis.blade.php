@@ -100,10 +100,10 @@
                             <label for="kategori" class="form-label">Kategori Jenis Cokelat</label>
                             <select class="form-control" name="kategori" id="kategori" required>
                                 <option value="" disabled selected>Pilih Kategori</option>
-                                <option value="kategori1">Cokelat Box</option>
-                                <option value="kategori2">Cokelat Kiloan</option>
-                                <option value="kategori3">Cokelat Loli</option>
-                                <option value="kategori4">Cokelat Tenteng</option>
+                                <option value="box">Cokelat Box</option>
+                                <option value="kiloan">Cokelat Kiloan</option>
+                                <option value="loli">Cokelat Loli</option>
+                                <option value="tenteng">Cokelat Tenteng</option>
                             </select>
                         </div>
                         <div class="col">

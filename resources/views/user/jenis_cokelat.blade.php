@@ -25,10 +25,10 @@
                 </div>
                 @php
                     $kategoriLabels = [
-                        'kategori1' => 'Cokelat Box',
-                        'kategori2' => 'Cokelat Kiloan',
-                        'kategori3' => 'Cokelat Loli',
-                        'kategori4' => 'Cokelat Tenteng',
+                        'box' => 'Cokelat Box',
+                        'kiloan' => 'Cokelat Kiloan',
+                        'loli' => 'Cokelat Loli',
+                        'tenteng' => 'Cokelat Tenteng',
                     ];
 
                     // Mendapatkan kategori yang dipilih dari request

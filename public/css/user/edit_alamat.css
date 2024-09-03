@@ -135,3 +135,19 @@
     background-color: #D2B48C;
 }
 /* ----- Main Content -----*/
+
+/* SweetAlert Custom Styles */
+.swal2-popup {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px; /* Ukuran font yang lebih kecil */
+}
+
+.swal2-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px; /* Ukuran font yang lebih kecil untuk judul */
+}
+
+.swal2-confirm, .swal2-cancel {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px; /* Ukuran font yang lebih kecil untuk tombol */
+}

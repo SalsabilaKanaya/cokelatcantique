@@ -77,7 +77,8 @@
                 title: 'Berhasil!',
                 text: '{{ session('success') }}',
                 icon: 'success',
-                confirmButtonText: 'OK'
+                showConfirmButton: false, // Menghilangkan tombol OK
+                timer: 1500,
             });
         @endif
     </script>
