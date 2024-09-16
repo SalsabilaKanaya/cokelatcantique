@@ -150,6 +150,17 @@
                                 <h5>Catatan Lainnya</h5>
                                 <p>{{ $order->notes ?? '-' }}</p>
                             </div>
+                            <div class="form-group mt-3 bukti-pembayaran">
+                                <h5>Bukti Pembayaran</h5>
+                                @if($order->payment_proof)
+                                    <p><a href="{{ asset('storage/' . $order->payment_proof) }}" target="_blank" download>Unduh Bukti Pembayaran</a></p>
+                                    <a href="{{ asset('storage/' . $order->payment_proof) }}" target="_blank" download>
+                                        <img src="{{ asset('storage/' . $order->payment_proof) }}" alt="Bukti Pembayaran" style="max-width: 20%; height: auto;">
+                                    </a>
+                                @else
+                                    <p>Tidak ada bukti pembayaran yang diunggah.</p>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>

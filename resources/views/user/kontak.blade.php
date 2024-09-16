@@ -29,13 +29,13 @@
                     </div>
                     <div class="sosial-media details">
                         <a href="https://www.instagram.com/cokelat_cantique/">
-                            <img src="img/instagram.png" alt="">
+                            <img src="{{ asset('img/instagram.png') }}" alt="">
                         </a>
                         <a href="">
-                            <img src="img/facebook.png" alt="">
+                            <img src="{{ asset('img/facebook.png')}}" alt="">
                         </a>
                         <a href="https://www.tiktok.com/@cokelat_cantique?_t=8neVX6XFl6v&_r=1">
-                            <img src="img/tiktok.png" alt="">
+                            <img src="{{ asset('img/tiktok.png')}}" alt="">
                         </a>
                     </div>
                 </div>
