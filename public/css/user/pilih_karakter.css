@@ -138,6 +138,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 5px 10px rgba(210, 180, 140, 0.5);
 }
 
 .button-pilih:hover {
@@ -223,6 +224,15 @@
     margin-top: -10px; 
 }
 
+.btn-delete{
+    background-color: transparant;
+    color: #FD6969;
+}
+
+.btn-delete:hover{
+    color: #F24848;
+}
+
 .total-harga {
     display: flex;
     justify-content: space-between;
@@ -252,18 +262,12 @@
     height: 33px;
     border-radius: 100px;
     margin-top: auto;
+    box-shadow: 0 5px 10px rgba(210, 180, 140, 0.5);
 }
 
 .button-pesan:hover {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
     color: black;
     background-color: #D2B48C;
-    width: 150px;
-    height: 33px;
-    border-radius: 100px;
-    margin-top: auto;
 }
 
 .button-keranjang {
@@ -392,6 +396,7 @@
     height: 33px;
     border-radius: 100px;
     margin-top: auto;
+    box-shadow: 0 5px 10px rgba(210, 180, 140, 0.5);
 }
 
 .btn-simpan:hover {

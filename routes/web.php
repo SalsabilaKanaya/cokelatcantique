@@ -32,10 +32,12 @@ use App\Http\Controllers\Admin\OrderMasukController;
 
 use Illuminate\Support\Facades\Log;
 
-Route::get('/test-log', function () {
-    Log::info('Test log route triggered.');
-    return 'Log tested';
-});
+// Route::get('/test-log', function () {
+//     Log::info('Test log route triggered.');
+//     return 'Log tested';
+// });
+
+Route::get('/', [WebController::class, 'beranda'])->name('beranda');
 
 // Rute User
 Route::prefix('user')->name('user.')->group(function () {
@@ -54,7 +56,7 @@ Route::prefix('user')->name('user.')->group(function () {
     Route::get('/auth/redirect', [SocialController::class, 'redirect'])->name('google.redirect');
     Route::get('/google/redirect', [SocialController::class, 'googleCallback'])->name('google.callback');
 
-    Route::get('/cokelatcantique/beranda', [WebController::class, 'beranda'])->name('beranda');
+    // Route::get('/', [WebController::class, 'beranda'])->name('beranda');
     Route::get('/tentang', [WebController::class, 'tentang'])->name('tentang');
 
     Route::get('/gift_idea', [WebController::class, 'giftIdea'])->name('gift_idea');
@@ -105,6 +107,7 @@ Route::prefix('user')->name('user.')->group(function () {
         Route::get('/get-progress', [PilihKarakterController::class, 'getProgress']);
         Route::post('/process-order', [PilihKarakterController::class, 'processOrder'])->name('process_order');
         Route::get('/check-selected-jenis', [PilihKarakterController::class, 'checkSelectedJenis']);
+        Route::delete('/user/hapus-karakter/{id}', [PilihKarakterController::class, 'removeCharacter'])->name('hapus_karakter');
 
         Route::post('/keranjang/tambah', [PilihKarakterController::class, 'addToCart'])->name('add_to_cart');
         // Route::get('/keranjang', [CartController::class, 'showCart'])->name('showCart');

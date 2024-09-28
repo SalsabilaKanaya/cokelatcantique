@@ -1,7 +1,7 @@
 @extends('user.layouts.app_pemesanan')
 @extends('user.partials.navbar_pemesanan')
 
-@section('title', 'Checkout CokelatCantique')
+@section('title', 'Checkout - Cokelat Cantique')
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/user/pemesanan.css') }}">
@@ -111,28 +111,26 @@
                             <div class="payment-title">
                                 <h5>Pembayaran</h5>
                             </div>
-                            <table class="table jenis-pembayaran mt-3">
-                                <thead>
-                                    <tr>
-                                        <th>Jenis Pembayaran</th>
-                                        <th>No Rekening</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>BNI</td>
-                                        <td>1234567890</td> <!-- Ganti dengan nomor rekening yang sesuai -->
-                                    </tr>
-                                    <tr>
-                                        <td>BRI</td>
-                                        <td>1234567890</td> <!-- Ganti dengan nomor rekening yang sesuai -->
-                                    </tr>
-                                    <tr>
-                                        <td>DANA</td>
-                                        <td>081380260922</td> <!-- Ganti dengan nomor rekening yang sesuai -->
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="row pilihan-pembayaran align-items-center">
+                                <div class="col-md-12 d-flex align-items-center"> 
+                                    <img src="{{ asset('img/bni.png')}}" alt="" width="15%" class="me-3"> 
+                                    <div class="text">
+                                        <p class="jenis-pembayaran">BNI</p>
+                                        <p class="nomor">0197108113</p>
+                                        <p class="nama">Atas nama: Eliyana Candra</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3 pilihan-pembayaran align-items-center">
+                                <div class="col-md-12 d-flex align-items-center"> 
+                                    <img src="{{ asset('img/bca.png')}}" alt="" width="15%" class="me-3"> 
+                                    <div class="text">
+                                        <p class="jenis-pembayaran">BCA</p>
+                                        <p class="nomor">742 5090968</p>
+                                        <p class="nama">Atas nama: Eliyana Candra</p>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="upload-bukti mt-4">
                                 <h6>Unggah Bukti Pembayaran</h6>
                                 <form action="/upload-proof" method="POST" enctype="multipart/form-data">
@@ -268,7 +266,7 @@
                     },
                     success: function(response) {
                         if (response.status === 'Session cleared') {
-                            window.location.href = "{{ route('user.beranda') }}"; // Ganti dengan rute yang sesuai
+                            window.location.href = "{{ route('beranda') }}"; // Ganti dengan rute yang sesuai
                         } else {
                             Swal.fire({
                                 title: 'Error!',

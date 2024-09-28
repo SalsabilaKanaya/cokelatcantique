@@ -86,6 +86,7 @@
     height: 33px;
     border-radius: 100px;
     margin-top: auto;
+    box-shadow: 0 5px 10px rgba(210, 180, 140, 0.5);
 }
 
 .button-detail:hover {

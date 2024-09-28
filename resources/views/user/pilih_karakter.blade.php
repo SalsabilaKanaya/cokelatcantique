@@ -1,6 +1,6 @@
 @extends('user.layouts.app')
 
-@section('title', 'Jenis Cokelat')
+@section('title', 'Pilih Karakter - Cokelat Cantique')
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/user/pilih_karakter.css') }}">
@@ -110,9 +110,18 @@
                                             $karakter = \App\Models\KarakterCokelat::find($karakterId);
                                             $namaKarakter = $karakter ? $karakter->nama : 'Karakter Tidak Dikenal';
                                         @endphp
-                                        <div class="text-jumlah">
-                                            <p class="text">{{ $namaKarakter }}</p>
-                                            <p class="jumlah">{{ $detail['jumlah'] }}</p>
+                                        <div class="text-jumlah d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <p class="text">{{ $namaKarakter }}</p>
+                                                <p class="jumlah">{{ $detail['jumlah'] }}</p>
+                                            </div>
+                                            <form action="{{ route('user.hapus_karakter', $karakterId) }}" method="POST" class="ms-2 delete-form">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" class="btn btn-sm  btn-delete" title="Hapus" data-id="{{ $karakterId }}">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </form>
                                         </div>
                                         <p class="catatan">{{ $detail['catatan'] }}</p>
                                     @endforeach

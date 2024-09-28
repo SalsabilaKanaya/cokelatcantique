@@ -1,6 +1,6 @@
 @extends('user.layouts.app')
 
-@section('title', 'Tambah Alamat')
+@section('title', 'Tambah Alamat - Cokelat Cantique')
 
 
 @push('styles')

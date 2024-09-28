@@ -1,6 +1,6 @@
 @extends('user.layouts.app')
 
-@section('title', 'Keranjang Saya')
+@section('title', 'Keranjang Saya - Cokelat Cantique')
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/user/keranjang.css')}}">

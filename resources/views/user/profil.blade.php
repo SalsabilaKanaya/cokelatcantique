@@ -1,6 +1,6 @@
 @extends('user.layouts.app')
 
-@section('title', 'Profil Pengguna')
+@section('title', 'Profil Pengguna - Cokelat Cantique')
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/user/profil.css')}}">
@@ -104,4 +104,5 @@
             }
         });
     </script>
+    <script src="{{ asset('js/user/profil.js')}}"></script>
 @endpush

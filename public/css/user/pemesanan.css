@@ -9,20 +9,6 @@ body {
     margin-top: 80px;
     margin-bottom:50px;
 }
-
-.btn.button-back {
-    color: #D2B48C;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-}
-
-.btn.button-back i {
-    color: #D2B48C;
-    margin-right: 20px;
-}
 .produk-order {
     background-color: #fff;
     padding: 20px;
@@ -289,29 +275,34 @@ h2{
     color: #D2B48C;
 }
 
-.jenis-pembayaran {
-    width: 100%;
-    border-collapse: collapse;
+.pilihan-pembayaran .text{
+    margin: 0px;
 }
 
-.jenis-pembayaran th, .jenis-pembayaran td {
-    padding: 8px;
-    text-align: left;
-}
-
-.jenis-pembayaran th{
+.pilihan-pembayaran .text .jenis-pembayaran{
+    margin-bottom: 0px;
     font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 600;
     color: #000;
 }
 
-.jenis-pembayaran td {
-    border: none; /* Menghilangkan garis antar sel */
+.pilihan-pembayaran .text .nomor{
+    margin-bottom: 0px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: #000;
+    margin-top: 5px;
+}
+
+.pilihan-pembayaran .text .nama{
+    margin-bottom: 0px;
     font-family: 'Montserrat', sans-serif;
     font-size: 14px;
-    font-weight: 400;
-    color: #000;
+    font-weight: 500;
+    color: #aaa;
+    margin-top: 5px;
 }
 
 .upload-bukti h6{
@@ -332,10 +323,12 @@ h2{
     border-radius: 100px;
     margin-top: auto;
     box-shadow: 0 2px 5px #D2B48C;
+    box-shadow: 0 5px 10px rgba(210, 180, 140, 0.5);
 }
 
 .btn-pesan:hover{
     background-color: #D2B48C;
+    color: black;
 }
 
 .btn-cancel{
@@ -357,6 +350,8 @@ h2{
     background-color: #f24848;
     box-shadow: 0 2px 5px #f24848;
 }
+
+
 /* ----- Main Content -----*/
 
 /* SweetAlert Custom Styles */

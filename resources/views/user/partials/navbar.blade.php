@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12 d-flex justify-content-between align-items-center">
-                <a href="{{ route('user.beranda')}}">
+                <a href="{{ route('beranda')}}">
                     <img src="{{ asset('img/logo.png')}}" alt="logo" width="150px">
                 </a>
                 <div class="search-bar d-flex">
@@ -36,7 +36,7 @@
                 <div class="navbar-nav justify-content-center">
                     <ul class="nav justify-content-center">
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('user.beranda') ? 'active' : '' }}" aria-current="page" href="{{ route('user.beranda', ['navbar_click' => 1]) }}">Beranda</a>
+                            <a class="nav-link {{ request()->routeIs('beranda') ? 'active' : '' }}" aria-current="page" href="{{ route('beranda', ['navbar_click' => 1]) }}">Beranda</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('user.tentang') ? 'active' : '' }}" href="{{ route('user.tentang', ['navbar_click' => 1]) }}">Tentang Kami</a>

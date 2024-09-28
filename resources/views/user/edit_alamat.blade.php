@@ -1,6 +1,6 @@
 @extends('user.layouts.app')
 
-@section('title', 'Edit Alamat')
+@section('title', 'Edit Alamat - Cokelat Cantique')
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/user/edit_alamat.css')}}">
@@ -63,10 +63,11 @@
 @endsection
 
 @push('scripts')
-<script src="{{ asset('js/user/profil.js')}}"></script>
+    <script src="{{ asset('js/user/profil.js')}}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('updateButton').addEventListener('click', function() {
+                event.preventDefault(); // Mencegah pengiriman form secara default
                 Swal.fire({
                     title: 'Apakah data sudah benar?',
                     text: "Pastikan semua data sudah benar sebelum melanjutkan.",
@@ -78,7 +79,8 @@
                     cancelButtonText: 'Batal'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        document.getElementById('update-form').submit();
+                        // Mengirim form setelah konfirmasi
+                        this.closest('form').submit(); // Menggunakan this untuk mengirim form yang sesuai
                     }
                 });
             });

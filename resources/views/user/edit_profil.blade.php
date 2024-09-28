@@ -1,6 +1,6 @@
 @extends('user.layouts.app')
 
-@section('title', 'Jenis Cokelat')
+@section('title', 'Edit Profil - Cokelat Cantique')
 
 
 @push('styles')
@@ -65,7 +65,8 @@
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('updateButton').addEventListener('click', function() {
+            document.getElementById('updateButton').addEventListener('click', function(event) {
+                event.preventDefault(); // Mencegah pengiriman form secara default
                 Swal.fire({
                     title: 'Apakah data sudah benar?',
                     text: "Pastikan semua data sudah benar sebelum melanjutkan.",
@@ -77,7 +78,8 @@
                     cancelButtonText: 'Batal'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        document.getElementById('update-form').submit();
+                        // Mengirim form setelah konfirmasi
+                        this.closest('form').submit(); // Menggunakan this untuk mengirim form yang sesuai
                     }
                 });
             });

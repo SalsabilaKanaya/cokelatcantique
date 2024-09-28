@@ -96,7 +96,7 @@ class PilihKarakterController extends Controller
         $selectedJumlah = array_sum(array_column($selectedKarakter, 'jumlah'));
 
         // Hitung progres berdasarkan perbandingan jumlah karakter yang dipilih dengan total karakter yang diizinkan
-        $progress = $totalKarakter > 0 ? ($selectedJumlah / $totalKarakter) * 100 : 0;
+        $progress = $totalKarakter > 0 ? round(($selectedJumlah / $totalKarakter) * 100) : 0; // Menggunakan round untuk membulatkan
 
         // Kembalikan data progres dalam format JSON
         return response()->json([
@@ -184,4 +184,13 @@ class PilihKarakterController extends Controller
         return response()->json(['selected' => !is_null($selectedJenis)]);
     }
 
+    public function removeCharacter($id)
+    {
+    $selectedKarakter = session()->get('selected_karakter', []);
+    if (isset($selectedKarakter[$id])) {
+        unset($selectedKarakter[$id]); // Hapus karakter dari sesi
+        session()->put('selected_karakter', $selectedKarakter); // Simpan kembali ke sesi
+    }
+    return redirect()->back()->with('message', 'Karakter berhasil dihapus.');
+    }
 }

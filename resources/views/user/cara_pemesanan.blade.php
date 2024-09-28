@@ -1,6 +1,6 @@
 @extends('user.layouts.app')
 
-@section('title', 'Jenis Cokelat')
+@section('title', 'Cara Pemesanan - Cokelat Cantique')
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/user/cara_pemesanan.css')}}">

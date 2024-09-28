@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register Page</title>
+    <title>Register Page - Cokelat Cantique</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
@@ -30,7 +30,7 @@
         <div class="row h-100">
             <div class="col-lg-6" id="sideleft">
                 <div class="header">
-                    <img src="{{ asset('img/logo.png')}}" alt="" class="logo" width="20%" href="beranda.html">
+                    <img src="{{ asset('img/logo.png')}}" alt="" class="logo" width="20%" href="#">
                 </div>
                 <div class="body text-center justify-content-center align-items-center">
                     <h1>Cokelat Cantique!</h1>

@@ -1,6 +1,6 @@
 @extends('user.layouts.app')
 
-@section('title', 'Jenis Cokelat')
+@section('title', 'Detail Karakter - ' . $cokelat->nama)
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/user/detail_karakter_cokelat.css') }}">

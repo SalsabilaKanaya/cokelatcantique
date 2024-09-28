@@ -1,6 +1,6 @@
 @extends('user.layouts.app')
 
-@section('title', 'Jenis Cokelat')
+@section('title', 'Tentang Kami - Cokelat Cantique')
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/user/tentang.css')}}">
@@ -42,6 +42,19 @@
                 <div class="col-md-6">
                     <h1>Cara Pembuatannya</h1>
                     <p>Setiap cokelat di Cokelat Cantique dibuat dengan penuh ketelitian dan cinta. Proses pembuatan kami dimulai dengan mencairkan cokelat compound hingga mencapai konsistensi yang tepat. Setelah itu, cokelat dituang ke dalam cetakan silikon dengan desain khusus, yang kemudian didinginkan hingga mengeras. Teknik ini memastikan setiap cokelat memiliki bentuk yang sempurna dan detail yang menawan, siap untuk mempermanis momen-momen spesial Anda.</p>
+                </div>
+            </div>
+            <div class="row content izin-sertifikat justify-content-center">
+                <div class="col-md-12 text-center">
+                    <h2>Izin Usaha dan Sertifikat PIRT</h2>
+                </div>
+                <div class="col-md-6 izin-usaha text-center">
+                    <p class="title">Izin Usaha (NIB)</p>
+                    <p class="nomor">2612220027168</p>
+                </div>
+                <div class="col-md-6 sertifikat-pirt text-center">
+                    <p class="title">Sertifikat PIRT</p>
+                    <p class="nomor">P-IRT 2073215010768-29</p>
                 </div>
             </div>
         </div>

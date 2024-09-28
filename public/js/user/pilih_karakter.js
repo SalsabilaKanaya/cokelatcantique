@@ -43,4 +43,27 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.error('Element .btn-simpan tidak ditemukan di DOM.');
     }
+
+    // Menambahkan event listener untuk tombol hapus
+    document.querySelectorAll('.btn-delete').forEach(button => {
+        button.addEventListener('click', function() {
+            const karakterId = this.getAttribute('data-id');
+            const form = this.closest('.delete-form');
+
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Karakter ini akan dihapus dari pilihan Anda!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit(); // Mengirim form jika pengguna mengkonfirmasi
+                }
+            });
+        });
+    });
 });

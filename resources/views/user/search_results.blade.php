@@ -1,6 +1,6 @@
 @extends('user.layouts.app')
 
-@section('title', 'Search Results')
+@section('title', 'Search Results - Cokelat Cantique')
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/user/search_results.css') }}">

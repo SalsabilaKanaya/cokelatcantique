@@ -32,7 +32,7 @@ class SocialController extends Controller
             Auth::guard('web')->login($user);
 
             // Redirect ke halaman beranda setelah login
-            return redirect()->route('user.beranda');
+            return redirect()->route('beranda');
         } else {
             // Jika pengguna tidak ditemukan, buat pengguna baru
             $user = User::create([
@@ -45,7 +45,7 @@ class SocialController extends Controller
             Auth::guard('web')->login($user);
 
             // Redirect ke halaman beranda setelah login
-            return redirect()->route('user.beranda');
+            return redirect()->route('beranda');
         }
     }
 
@@ -62,7 +62,7 @@ class SocialController extends Controller
 
         // Coba login dengan kredensial
         if (Auth::attempt($credentials)) {
-            return redirect()->route('user.beranda');
+            return redirect()->route('beranda');
         }
 
         return redirect()->route('user.login')->withErrors(['email' => 'Email atau password salah.']);

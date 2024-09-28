@@ -16,7 +16,7 @@ class SearchController extends Controller
         ['title' => 'Gift Idea', 'content' => 'Ide Hadiah', 'route' => 'user.gift_idea'],
         ['title' => 'Produk', 'content' => 'Produk', 'route' => 'user.jenis_cokelat'],
         ['title' => 'Karakter', 'content' => 'Karakter cokelat', 'route' => 'user.karakter_cokelat'],
-        ['title' => 'Testimoni', 'content' => 'Testimoni dari pelanggan kami', 'route' => 'user.beranda', 'anchor' => '#testimoni'],
+        ['title' => 'Testimoni', 'content' => 'Testimoni dari pelanggan kami', 'route' => 'beranda', 'anchor' => '#testimoni'],
     ];
 
     public function search(Request $request)
