@@ -144,14 +144,29 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Fungsi untuk memperbarui progress bar
+    // Fungsi untuk memperbarui progress bar
     function updateProgressBar() {
         fetch('/user/get-progress')
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
                     const progressBar = document.getElementById('progress-bar'); // Mengambil elemen progress bar
-                    progressBar.style.width = data.progress + '%'; // Mengatur lebar progress bar sesuai dengan progress
-                    progressBar.textContent = data.progress + '%'; // Menampilkan persentase progress
+                    const totalKarakter = parseInt(document.querySelector('meta[name="total-karakter"]').getAttribute('content')); // Total karakter
+                    const selectedJumlah = getTotalSelectedKarakter(); // Jumlah karakter yang dipilih
+
+                    // Mengatur lebar progress bar sesuai dengan progress
+                    const progressPercentage = totalKarakter > 0 ? (selectedJumlah / totalKarakter) * 100 : 0; 
+                    progressBar.style.width = progressPercentage + '%'; 
+
+                    // Menampilkan format "jumlah karakter yang dipilih / total karakter"
+                    progressBar.textContent = `${selectedJumlah}/${totalKarakter}`; 
+
+                    // Jika tidak ada karakter yang dipilih, tampilkan "0/totalKarakter"
+                    if (selectedJumlah === 0) {
+                        progressBar.textContent = `0/${totalKarakter}`;
+                        progressBar.style.width = '0%'; // Set lebar progress bar ke 0%
+                    }
+
                     checkProgress(); // Memeriksa apakah progress sudah mencapai 100%
                 }
             });
@@ -160,10 +175,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fungsi untuk memeriksa progress dan mengatur status tombol
     function checkProgress() {
         const progressBar = document.getElementById('progress-bar'); // Mengambil elemen progress bar
-        const progress = parseFloat(progressBar.style.width); // Mendapatkan nilai progress dari lebar progress bar
-
-        // Nonaktifkan tombol pilih jika progress sudah 100%
-        if (progress >= 100) {
+        const [selectedJumlah, totalKarakter] = progressBar.textContent.split('/').map(Number); // Mendapatkan nilai dari progress bar
+    
+        // Nonaktifkan tombol pilih jika jumlah karakter yang dipilih sudah mencapai total
+        if (selectedJumlah >= totalKarakter) {
             pilihButtons.forEach(button => {
                 button.classList.add('disabled'); // Menambahkan kelas 'disabled' ke tombol pilih
                 button.setAttribute('disabled', 'true'); // Menonaktifkan tombol pilih
