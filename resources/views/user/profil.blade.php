@@ -48,7 +48,7 @@
                                 <p>{{ $user->datebirth ?? '-' }}</p>
                             </div>
                         </div>
-                        <a href="{{ route('user.profil.edit') }}" class="btn btn-edit">Edit Profile</a>
+                        <a href="{{ route('user.profil.edit') }}" class="btn btn-edit">Ubah Profil</a>
                     </div>
                 </div>
 
@@ -78,7 +78,7 @@
                                     <p>{{ $user->userAddress->address }}</p>
                                 </div>
                             </div>
-                            <a href="{{ route('user.address_edit') }}" class="btn btn-edit">Edit Alamat</a>
+                            <a href="{{ route('user.address_edit') }}" class="btn btn-edit">Ubah Alamat</a>
                         @else
                             <div class="no-address">
                                 <img src="{{ asset('img/address.jpg') }}" alt="No address" class="no-address-img">

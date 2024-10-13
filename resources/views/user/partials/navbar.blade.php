@@ -16,19 +16,19 @@
                     <a href="{{ route('user.histori', ['navbar_click' => 1]) }}" class="nav-link {{ request()->routeIs('user.histori') ? 'active' : '' }}"><i class="fa-solid fa-clock-rotate-left"></i></a>
                     @if(Auth::check())
                         <div class="dropdown">
-                            <a class="nav-link dropdown" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown {{ request()->routeIs('user.profil') ? 'active' : '' }}" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa-solid fa-user"></i>
                             </a>
                             <ul class="dropdown-menu custom-dropdown-menu" aria-labelledby="userDropdown">
-                                <li><a class="dropdown-item" href="{{ route('user.profil', ['navbar_click' => 1]) }}">Profile</a></li>
+                                <li><a class="dropdown-item" href="{{ route('user.profil', ['navbar_click' => 1]) }}">Profil</a></li>
                                 <form action="{{ route('user.logout') }}" method="POST" id="logout-form">
                                     @csrf
-                                    <button type="submit" class="dropdown-item logout-link">Logout</button>
+                                    <button type="submit" class="dropdown-item logout-link">Keluar</button>
                                 </form>
                             </ul>
                         </div>
                     @else
-                        <a href="{{ route('user.login', ['navbar_click' => 1]) }}" class="nav-link login-link d-flex align-items-center">Login</a>
+                        <a href="{{ route('user.login', ['navbar_click' => 1]) }}" class="nav-link login-link d-flex align-items-center">Masuk Akun</a>
                     @endif
                 </div>
             </div>
@@ -52,7 +52,7 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('user.kustomisasi_cokelat') ? 'active' : '' }}" href="{{ route('user.kustomisasi_cokelat', ['navbar_click' => 1]) }}">Kustomisasi Cokelat</a>
+                            <a class="nav-link {{ request()->routeIs('user.kustomisasi_cokelat') ? 'active' : '' }}" href="{{ route('user.kustomisasi_cokelat', ['navbar_click' => 1]) }}">Kreasikan Cokelatmu</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('user.kontak') ? 'active' : '' }}" href="{{ route('user.kontak', ['navbar_click' => 1]) }}">Kontak Kami</a>

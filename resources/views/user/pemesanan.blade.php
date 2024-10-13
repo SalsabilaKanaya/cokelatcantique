@@ -12,10 +12,14 @@
     <section class="main-content">
         <div class="container">
             @if(Auth::check())
-                <div class="row">
-                    <!-- <div class="col-12">
-                        <a href="{{ route('user.pemesanan', ['new_order' => 1]) }}" class="btn button-back"><i class="fa-solid fa-chevron-left"></i> Kembali</a>
-                    </div> -->
+                <div class="row mt-5 d-flex justify-content-center">
+                    <div class="col-12">
+                        <ul id="progress-tracker" class="progress-tracker">
+                            <li class="active step0 text-progress"><i class="icon-progress fa-solid fa-gift"></i>Pilih Jenis Cokelat</li>
+                            <li class="active step0 text-progress"><i class="icon-progress fa-solid fa-cookie-bite"></i>Pilih Karakter Cokelat</li>
+                            <li class="active step0 text-progress"><i class="icon-progress fa-solid fa-money-bill"></i>Checkout dan Payment</li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="row content mt-3 d-flex">
                     <div class="col-md-8">
@@ -50,8 +54,8 @@
                                 @csrf
                                 <div class="row note-date mt-3">
                                     <div class="col-md-6">
-                                        <label for="notes">Catatan Lainnya</label>
-                                        <textarea class="form-control" id="notes" name="notes" rows="3" required></textarea> 
+                                        <label for="notes">Catatan Lainnya (Optional)</label>
+                                        <textarea class="form-control" id="notes" name="notes" rows="3"></textarea> 
                                     </div>
                                     <div class="col-md-6">
                                         <label for="delivery_date">Tanggal Pengiriman</label>
@@ -61,7 +65,6 @@
                                 </div>
                             </form>
                         </div>
-                        
                         <div class="alamat-pengiriman">
                             <div class="address-title">
                                 <i class="fa-solid fa-location-dot icon-spacing"></i>
@@ -166,8 +169,8 @@
                                 <p class="harga" id="jumlah-harga">Rp {{ number_format($totalPrice, 0, ',', '.') }}</p>
                             </div>
                             <div class="d-flex justify-content-between">
-                                <button type="button" id="cancel-btn" class="btn btn-cancel mt-3">Cancel</button>
-                                <button type="submit" id="submit-btn" class="btn btn-pesan mt-3" data-url="{{ route('user.order.store') }}">Bayar</button>
+                                <button type="button" id="cancel-btn" class="btn btn-cancel mt-3">Batal</button>
+                                <button type="submit" id="submit-btn" class="btn btn-pesan mt-3" data-url="{{ route('user.order.store') }}" disabled>Pesan Sekarang</button>
                             </div>
                         </div>
                     </div>
@@ -291,6 +294,25 @@
                     }
                 });
             });
+            function checkFormValidity() {
+                const deliveryDate = $('#delivery_date').val();
+                const courierSelected = $('input[name="courier_code"]:checked').length > 0;
+                const paymentProof = $('#payment-proof').val();
+                const packageSelected = $('input[name="delivery_package"]:checked').length > 0;
+
+                // Aktifkan tombol jika semua input valid
+                if (deliveryDate && courierSelected && paymentProof && packageSelected) {
+                    $('#submit-btn').prop('disabled', false);
+                } else {
+                    $('#submit-btn').prop('disabled', true);
+                }
+            }
+
+            // Event listeners untuk memeriksa input
+            $('#delivery_date').on('change', checkFormValidity);
+            $('input[name="courier_code"]').on('change', checkFormValidity);
+            $('#payment-proof').on('change', checkFormValidity);
+            $('input[name="delivery_package"]').on('change', checkFormValidity);
         });
     </script>    
     <script src="{{ asset('js/user/main.js') }}"></script>

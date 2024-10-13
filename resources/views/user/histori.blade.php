@@ -32,9 +32,14 @@
                                         <div class="produk-nama">
                                             <h5>{{ $item->jenisCokelat->nama }}</h5>
                                             <div class="produk-karakter">
-                                                @foreach ($item->karakterItems as $karakterItem)
-                                                    <p>{{ $karakterItem->karakterCokelat->nama }}</p>
+                                                @foreach ($item->karakterItems as $index => $karakterItem)
+                                                    @if ($index < 3) <!-- Menampilkan hanya 3 karakter pertama -->
+                                                        <p>{{ $karakterItem->karakterCokelat->nama }}</p>
+                                                    @endif
                                                 @endforeach
+                                                @if ($item->karakterItems->count() > 3) <!-- Jika ada lebih dari 3 karakter -->
+                                                    <p>dan lainnya/p> <!-- Menampilkan "..." jika lebih dari 3 karakter -->
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -64,7 +69,7 @@
                     <div class="col-12 text-center">
                         <img src="{{ asset('img/error.png') }}" alt="Error" class="img-fluid mb-5" style="max-width: 300px;">
                         <h5 style="color: #000; font-weight: 600; font-family: 'Montserrat', sans-serif;">Harap lakukan login terlebih dahulu untuk melihat histori pesanan anda</h5>
-                        <a href="{{ route('user.login') }}" class="btn btn-login">Login</a>
+                        <a href="{{ route('user.login') }}" class="btn btn-login">Masuk Akun Yuk</a>
                     </div>
                 </div>
             @endif

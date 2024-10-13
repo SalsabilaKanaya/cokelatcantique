@@ -14,7 +14,16 @@
         <meta name="selected-karakter" content="{{ json_encode(session()->get('selected_karakter', [])) }}">
         <section class="main-content">
             <div class="container">
-                <div class="row mt-5">
+                <div class="row mt-5 d-flex justify-content-center">
+                    <div class="col-12">
+                        <ul id="progress-tracker" class="progress-tracker">
+                            <li class="active step0 text-progress"><i class="icon-progress fa-solid fa-gift"></i>Pilih Jenis Cokelat</li>
+                            <li class="active step0 text-progress"><i class="icon-progress fa-solid fa-cookie-bite"></i>Pilih Karakter Cokelat</li>
+                            <li class="step0 text-progress"><i class="icon-progress fa-solid fa-money-bill"></i>Checkout dan Payment</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row mt-3">
                     <div class="col-12">
                         <a href="javascript:history.back()" class="btn button-back"><i class="fa-solid fa-chevron-left"></i> Kembali</a>
                     </div>
@@ -22,10 +31,10 @@
                 <div class="row mt-3">
                     <div class="col-12 header">
                         <h2>Pilih Karakter</h2>
-                        <p>Pilihlah karakter sesuai dengan jenis cokelat yang dipilih dan sampai proggress bar 100%</p>
+                        <p>Yuk, pilih karakter yang cocok sama jenis cokelatnya sampai progress bar-nya penuh!</p>
                     </div>
                 </div>
-                <div class="row mt-3 d-flex">
+                <div class="row mt-2 d-flex">
                     @php
                         $kategoriLabels = [
                             'huruf' => 'Huruf',
@@ -43,22 +52,30 @@
                         $progress = $totalKarakter > 0 ? ($selectedJumlah / $totalKarakter) * 100 : 0; // Menghitung persentase progress
                     @endphp
                     <div class="col-md-8">
-                        <div class="produk-filter">
-                            <div class="dropdown">
-                                <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    {{ $selectedLabel }}
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{{ route('user.pilih_karakter') }}">All</a></li>
-                                    @foreach($kategoriLabels as $key => $label)
-                                        <li><a class="dropdown-item" href="{{ route('user.pilih_karakter', ['kategori' => $key]) }}">{{ $label }}</a></li>
-                                    @endforeach
-                                </ul>
+                        <div class="progress-container">
+                            <div class="progress-text d-flex justify-content-between"> 
+                                <h5>Masukkan karakter</h5>
+                                <p>{{ $totalKarakter }} karakter</p> 
+                            </div>
+                            <div class="progress" role="progressbar" aria-label="Example with label 40px high" aria-valuenow="{{ $selectedJumlah }}" aria-valuemin="0" aria-valuemax="{{ $totalKarakter }}">
+                                <div class="progress-bar" id="progress-bar" style="width: {{ $totalKarakter > 0 ? ($selectedJumlah / $totalKarakter) * 100 : 0 }}%">
+                                    {{ $selectedJumlah }}/{{ $totalKarakter }}
+                                </div>
                             </div>
                         </div>
-                        <div class="progress-container mt-3">
-                            <div class="progress" role="progressbar" aria-label="Example with label 40px high" aria-valuenow="{{ $progress }}" aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar" id="progress-bar" style="width: {{ $progress }}%">{{ number_format($progress, 0) }}%</div>
+                        <div class="d-flex justify-content-end">
+                            <div class="produk-filter">
+                                <div class="dropdown">
+                                    <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        {{ $selectedLabel }}
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="{{ route('user.pilih_karakter') }}">All</a></li>
+                                        @foreach($kategoriLabels as $key => $label)
+                                            <li><a class="dropdown-item" href="{{ route('user.pilih_karakter', ['kategori' => $key]) }}">{{ $label }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                         <div class="row mt-3 produk d-flex justify-content-between">
@@ -146,7 +163,7 @@
                                 </form>
                                 <form action="{{ route('user.process_order') }}" method="POST">
                                     @csrf
-                                    <button type="submit" class="btn button-pesan {{ $isDisabled }}" data-id="{{ $cokelat->id }}" {{ $isDisabled ? 'disabled' : '' }}>Pesan</button>
+                                    <button type="submit" class="btn button-pesan {{ $isDisabled }}" data-id="{{ $cokelat->id }}" {{ $isDisabled ? 'disabled' : '' }}>Lanjut Bayar</button>
                                 </form>
                             </div>
                         </div>
@@ -177,9 +194,9 @@
                         </div>
                         <form>
                             <div class="mb-3 catatan">
-                                <label for="deskripsi" class="form-label catatan-title">Catatan Kustomisasi</label>
-                                <p class="note">Masukkan catatan kustomisasi seperti warna, tulisan, dan yang lainnya sesuai dengan keinginan.</p>
-                                <p class="note mt-0">Contoh: Saya ingin karakter pororo saja, Saya ingin warna karakternya biru, dll.</p>
+                                <label for="deskripsi" class="form-label catatan-title">Catatan Kustomisasi (optional)</label>
+                                <p class="note">Masukkan catatan kustomisasi kamu, kayak warna, tulisan, atau apa pun yang kamu mau.</p>
+                                <p class="note mt-0">Contoh: Aku mau karakter Pororo aja, atau aku pingin warna karakternya biru, dan lain-lain.</p>
                                 <textarea class="form-control" id="deskripsi" rows="3"></textarea>
                             </div>
                         </form>

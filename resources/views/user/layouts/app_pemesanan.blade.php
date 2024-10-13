@@ -33,64 +33,7 @@
         @yield('content')
     </main>
 
-    @include('user.partials.footer')
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     
     @stack('scripts')
-
-    <!-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.navbar-item').forEach(function(item) {
-                item.addEventListener('click', function() {
-                    console.log('Navbar item clicked'); 
-                    fetch('/clear-session', {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            'Content-Type': 'application/json'
-                        }
-                    }).then(response => {
-                        console.log('Fetch response received'); 
-                        return response.json();
-                    }).then(data => {
-                        if (data.status === 'Session cleared') {
-                            console.log('Session berhasil dihapus');
-                        } else {
-                            console.error('Gagal menghapus session');
-                        }
-                    }).catch(error => {
-                        console.error('Error:', error);
-                    });
-                });
-            });
-
-            const buttonBack = document.getElementById('button-back');
-            if (buttonBack) {
-                buttonBack.addEventListener('click', function() {
-                    console.log('Button back clicked'); 
-                    fetch('/clear-session', {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            'Content-Type': 'application/json'
-                        }
-                    }).then(response => {
-                        console.log('Fetch response received'); 
-                        return response.json();
-                    }).then(data => {
-                        if (data.status === 'Session cleared') {
-                            alert('Session berhasil dihapus');
-                            history.back();
-                        } else {
-                            alert('Gagal menghapus session');
-                        }
-                    }).catch(error => {
-                        console.error('Error:', error);
-                        alert('Terjadi kesalahan saat menghapus session');
-                    });
-                });
-            }
-        });
-    </script> -->
 </body>

@@ -41,7 +41,7 @@
                 </div>
                 <div class="right-side">
                     <div class="title-text">Kirim kami pesan</div>
-                    <p>Jika anda memiliki pertanyaan dan saran untuk kami, anda dapat mengirimi kami pesan dari sini. Dengan senang hati kami membantu anda.</p>
+                    <p>Kalau kamu punya pertanyaan atau saran, jangan ragu untuk kirim pesan di sini ya! Kami dengan senang hati bakal bantu kamu.</p>
                     <form action="{{ route('user.kontak.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="input-box">
@@ -61,7 +61,7 @@
                             <textarea id="pesan" class="form-control" name="pesan" placeholder="Masukkan Pesan/Masukan" required></textarea>
                         </div>
                         <div class="button">
-                            <button type="submit" class="btn btn-submit">Simpan</button>
+                            <button type="submit" class="btn btn-submit">Kirim Pesan</button>
                         </div>
                     </form>
                 </div>

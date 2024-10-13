@@ -16,7 +16,7 @@
                 <div class="col-12">
                     <img src="{{ asset('img/jenisbanner.JPG')}}" alt="Banner" class="img-fluid">
                     <div class="overlay"></div>
-                    <h1 class="main-title">Sajikan kebahagiaan dalam setiap gigitan dengan cokelat karakter unik dari Cokelat Cantique, cocok untuk berbagai kesempatan istimewa.</h1>
+                    <h1 class="main-title">Suatu hari, aku memberi cokelat kepada sahabatku saat ia sedang down. Senyumnya berubah cerah, dan kami tertawa bersama lagi. Kadang, cokelat adalah cara paling sederhana untuk bilang, ‘Aku ada untukmu.’</h1>
                 </div>
             </div>
             <div class="row header justify-content-between">
@@ -59,7 +59,7 @@
                         <div class="card-body">
                         <h5 class="card-title">{{ $cokelat->nama }}</h5>
                         <p class="card-text">Rp {{ number_format($cokelat->harga, 0, ',', '.') }}</p>
-                        <a class="btn button-detail" href="{{ route('user.detail_jenis_cokelat.show', $cokelat->id) }}" role="button">Lihat Detail</a>
+                        <a class="btn button-detail" href="{{ route('user.detail_jenis_cokelat.show', $cokelat->id) }}" role="button">Cek Detail</a>
                         </div>
                     </div>
                 </div>

@@ -52,8 +52,8 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <a href="javascript:history.back()" type="button" class="btn btn-danger" id="cancelButton">Cancel</a>
-                        <button type="submit" class="btn btn-submit">Tambah</button>
+                        <a href="javascript:history.back()" type="button" class="btn btn-cancel" id="cancelButton">Batal</a>
+                        <button type="submit" class="btn btn-submit">Tambah Alamat</button>
                     </div>
                 </form>
             </div>

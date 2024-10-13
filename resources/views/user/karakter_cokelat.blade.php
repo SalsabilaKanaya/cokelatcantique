@@ -14,7 +14,7 @@
                 <div class="col-12">
                     <img src="{{ asset('img/karakterbanner.JPG')}}" alt="Banner" class="img-fluid">
                     <div class="overlay"></div>
-                    <h1 class="main-title">Hadiahkan cokelat karakter dari Cokelat Cantique untuk menyemarakkan momen-momen spesial dengan kesan manis dan hangat yang tak terlupakan.</h1>
+                    <h1 class="main-title">Di setiap perayaan, cokelat menjadi bagian dari tradisi keluargaku. Kami saling berbagi, memberi, dan tersenyum. Hari raya tak lengkap tanpa manisnya cokelat yang menghubungkan kami semua.</h1>
                 </div>
             </div>
             <div class="row header d-flex justify-content-between">
@@ -23,7 +23,7 @@
                 </div>
                 <div class="col-md-6 produk-filter  d-flex justify-content-end">
                     <div class="button-kustomisasi">
-                        <a class="btn" href="{{route('user.kustomisasi_cokelat')}}" role="button">Kustomisasi Cokelat</a>
+                        <a class="btn" href="{{route('user.kustomisasi_cokelat')}}" role="button">Bikin Cokelatmu</a>
                       </div>
                 </div>
             </div>
@@ -45,7 +45,7 @@
                                 $namaKategori = $kategoriLabels[$cokelat->kategori] ?? 'Kategori Tidak Dikenal';
                             @endphp
                             <p class="card-text">{{ $namaKategori }}</p>
-                            <a class="btn button-detail" href="{{ route('user.detail_karakter_cokelat.show', $cokelat->id) }}" role="button">Lihat Detail</a>
+                            <a class="btn button-detail" href="{{ route('user.detail_karakter_cokelat.show', $cokelat->id) }}" role="button">Cek Detail</a>
                         </div>
                     </div>
                 </div>

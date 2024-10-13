@@ -42,10 +42,10 @@
                         <form action="{{ route('user.store_jenis_cokelat_selection') }}" method="POST">
                             @csrf
                             <input type="hidden" name="jenis_cokelat_id" value="{{ $cokelat->id }}">
-                            <button type="submit" class="btn btn-kustomisasi">Kustomisasi Cokelat</button>
+                            <button type="submit" class="btn btn-kustomisasi">Bikin Cokelatmu</button>
                         </form>
                     @else
-                        <button class="btn btn-kustomisasi" disabled>Harap login untuk kustomisasi</button>
+                        <button class="btn btn-kustomisasi" disabled>Login Dulu untuk Kustomisasi</button>
                     @endauth
                 </div>
             </div>
@@ -59,7 +59,7 @@
                             <div class="card-body">
                             <h5 class="card-title">{{ $relatedCokelat->nama }}</h5>
                             <p class="card-text">Rp {{ number_format($relatedCokelat->harga, 0, ',', '.') }}</p>
-                            <a class="btn button-detail" href="{{ route('user.detail_jenis_cokelat.show', $cokelat->id) }}" role="button">Lihat Detail</a>
+                            <a class="btn button-detail" href="{{ route('user.detail_jenis_cokelat.show', $cokelat->id) }}" role="button">Cek Detail</a>
                             </div>
                         </div>
                     </div>

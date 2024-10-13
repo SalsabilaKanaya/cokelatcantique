@@ -47,15 +47,15 @@
                                         <i class="fa-solid fa-user"></i>
                                     </a>
                                     <ul class="dropdown-menu custom-dropdown-menu" aria-labelledby="userDropdown">
-                                        <li><a class="dropdown-item" href="{{ route('user.profil')}}">Profile</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('user.profil')}}">Profil</a></li>
                                         <form action="{{ route('user.logout') }}" method="POST" id="logout-form">
                                             @csrf
-                                            <button type="submit" class="dropdown-item logout-link">Logout</button>
+                                            <button type="submit" class="dropdown-item logout-link">Keluar</button>
                                         </form>
                                     </ul>
                                 </div>
                             @else
-                                <a href="{{ route('user.login') }}" class="nav-link login-link d-flex align-items-center">Login</a>
+                                <a href="{{ route('user.login') }}" class="nav-link login-link d-flex align-items-center">Masuk Akun</a>
                             @endif
                         </div>
                     </div>
@@ -79,7 +79,7 @@
                                     </ul>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('user.kustomisasi_cokelat')}}">Kustomisasi Cokelat</a>
+                                    <a class="nav-link" href="{{ route('user.kustomisasi_cokelat')}}">Kreasikan Cokelatmu</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('user.kontak')}}">Kontak Kami</a>
@@ -96,11 +96,11 @@
             <div class="container justify-content-between">
                 <div class="row align-items-center">
                     <div class="col-md-6 mb-4">
-                        <div class="slogan">
+                    <div class="slogan">
                             <h1>Sweet Moments, Crafted with Love</h1>
-                            <p>Di sini, kamu bisa menemukan cokelat karakter yang spesial untuk setiap momen berharga kamu. Dengan desain unik dan 
-                                kualitas terbaik, kami hadirkan cokelat yang tidak hanya lezat, tetapi juga penuh dengan cinta dan kebahagiaan.</p>
+                            <p>Di sini, kamu bisa nemuin cokelat karakter yang spesial buat setiap momen berharga kamu. Dengan desain yang unik dan kualitas terbaik, cokelat kami tidak hanya enak, tapi juga penuh cinta dan kebahagiaan.</p>
                         </div>
+                        <a class="btn btn-kustom" href="{{route('user.kustomisasi_cokelat')}}" role="button">Beli Produknya Disini <i class="fa-solid fa-arrow-right ms-2"></i></a>
                     </div>
                     <div class="col-md-6">
                         <div class="header-image">
@@ -132,11 +132,13 @@
                 </div>
                 <div class="col-md-6">
                     <div class="teks">
-                        <h1>Apa itu Cokelat Cantique?</h1>
-                        <p>Cokelat Cantique adalah bisnis cokelat karakter yang telah beroperasi sejak tahun 2016. Berawal dari hobi dan 
-                        inspirasi dari media sosial, kami terinspirasi oleh kreasi di media sosial
-                        untuk menciptakan cokelat karakter yang penuh makna. Setiap cokelat dari Cokelat Cantique dibuat dengan cinta dan perhatian, 
-                        membawa kehangatan dan kebahagiaan ke setiap momen spesial Anda.</p>
+                        <h1>Cokelat Cantique: Perjalanan Penuh Cinta dan Kreativitas Sejak 2016</h1>
+                        <p>Cokelat Cantique lahir pada 2016 dari kecintaan kami pada cokelat dan hasrat untuk membawa 
+                            kebahagiaan ke setiap momen spesial. Berawal dari inspirasi di media sosial, kami menghadapi 
+                            tantangan untuk menciptakan cokelat karakter yang tak hanya indah, tapi juga penuh makna. 
+                            Setiap cokelat dibuat dengan dedikasi, cinta, dan semangat untuk memberikan senyum kepada setiap 
+                            orang yang menikmatinya. Di balik setiap gigitan, ada cerita perjalanan dan tekad kami untuk 
+                            menciptakan pengalaman yang lebih dari sekadar rasa, tetapi juga kehangatan dan kebahagiaan.</p>
                     </div>
                 </div>
             </div>
@@ -170,6 +172,74 @@
                         <p class="text-center">Cokelat Tenteng</p>
                     </div>
                 </div>
+                <div class="text-center">
+                    <a class="btn btn-produk" href="{{route('user.kustomisasi_cokelat')}}" role="button">Beli Produknya Disini <i class="fa-solid fa-arrow-right ms-2"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="momen-area">
+        <div class="container mb-3" id="momen-spesial">
+            <div class="momen-title mt-3">
+                <h1>Highlight Momen Spesial</h1>
+                <p>Rayakan setiap momen berharga dengan cokelat kami yang istimewa.</p>
+            </div>
+            <div class="moment-content owl-carousel owl-theme">
+                <div class="momen-isi">
+                    <div class="momen-info">
+                        <div class="img-moment">
+                            <img src="{{ asset('img/momen1.jpeg')}}" alt="">
+                        </div>
+                        <div class="text-moment">
+                            <h5>Yadi</h5>
+                            <p>" Pas pacarku dapet cokelat ini, dia langsung seneng banget dan bilang kalau dia pengen hadiah cokelat lagi untuk anniversary kita. " </p>
+                        </div>  
+                    </div>
+                </div>
+                <div class="momen-isi">
+                    <div class="momen-info">
+                        <div class="img-moment">
+                            <img src="{{ asset('img/momen2.jpeg')}}" alt="">
+                        </div>
+                        <div class="text-moment">
+                            <h5>Andi</h5>
+                            <p>" Begitu teman saya yang baru menikah melihat bouquet cokelat ini, dia bilang ini hadiah paling unik yang mereka terima. Mereka senang banget, dan sekarang pengen bikin cokelat ini sebagai tradisi setiap ulang tahun pernikahan mereka! "</p>
+                        </div>  
+                    </div>
+                </div>
+                <div class="momen-isi">
+                    <div class="momen-info">
+                        <div class="img-moment">
+                            <img src="{{ asset('img/momen3.jpeg')}}" alt="">
+                        </div>
+                        <div class="text-moment">
+                            <h5>Sukma</h5>
+                            <p>" Ketika idolaku nerima cokelat ini, dia langsung senyum hangat dan bilang terima kasih. Dia bilang cokelatnya spesial dan manis. Momen ini benar-benar bikin aku merasa lebih dekat sama dia! "</p>
+                        </div>  
+                    </div>
+                </div>
+                <div class="momen-isi">
+                    <div class="momen-info">
+                        <div class="img-moment">
+                            <img src="{{ asset('img/momen4.jpeg')}}" alt="">
+                        </div>
+                        <div class="text-moment">
+                            <h5>Yani</h5>
+                            <p>" Untuk ulang tahun anakku, aku beli cokelat Cantique dengan bentuk karakter favoritnya. Pas dia buka kotaknya, wajahnya langsung ceria banget! Nggak nyangka, ternyata hadiah kecil ini bisa bikin momen ulang tahunnya jadi spesial. "</p>
+                        </div>  
+                    </div>
+                </div>
+                <div class="momen-isi">
+                    <div class="momen-info">
+                        <div class="img-moment">
+                            <img src="{{ asset('img/momen5.jpeg')}}" alt="">
+                        </div>
+                        <div class="text-moment">
+                            <h5>Nida</h5>
+                            <p>" Tahun ini, suami dan anakku ulang tahun bareng, jadi aku mau kasih kejutan yang manis. Aku beli cokelat Cantique yang lucu untuk mereka berdua. Mereka seneng banget karena cokelatnya sesuai dengan karakter yang disuka.Momen kecil ini benar-benar bikin ulang tahun mereka berdua terasa luar biasa. "</p>
+                        </div>  
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -183,9 +253,6 @@
                 <div class="single-testimonial">
                     <p>{{ $testimoni->isi_testimoni }}</p>
                     <div class="user-info">
-                        <div class="user-image">
-                            <img src="{{ asset($testimoni->foto) }}" alt="Avatar">
-                        </div>
                         <div class="user-detail">
                             <h6>{{ $testimoni->nama }}</h6>
                             <span>{{ $testimoni->produk }}</span>
@@ -243,6 +310,29 @@
     <script type="text/javascript">
         $(document).ready(function(){
             $('.testimonial-content').owlCarousel({
+                loop:true,
+                nav:false,
+                dots:true,
+                margin:50,
+                autoplay:true,
+                autoplayTimeout:4000,
+                smartSpeed:800,
+                responsive:{
+                    0:{
+                        items:1
+                    },
+                    600:{
+                        items:1
+                    },
+                    1000:{
+                        items:2
+                    }
+                }
+            });
+        });
+
+        $(document).ready(function(){
+            $('.moment-content').owlCarousel({
                 loop:true,
                 nav:false,
                 dots:true,

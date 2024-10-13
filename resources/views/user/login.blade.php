@@ -75,7 +75,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-login">Login</button>
+                            <button type="submit" class="btn btn-login">Masuk</button>
                         </form>
                         <div class="separator">
                             <span>atau dengan akun Google</span>
@@ -85,7 +85,7 @@
                             com%2Fwp-content%2Fuploads%2F2015%2F10%2Fnexus2cee_Search-Thumb-150x150.png&w=150&h=150&zc=3" alt="Google">
                             <span>Masuk dengan Google</span>
                         </a>
-                        <p class="mt-3 register">Belum punya akun? <a href="{{ route('user.register') }}">Registrasi</a></p>
+                        <p class="mt-3 register">Belum punya akun? <a href="{{ route('user.register') }}">Daftar Akun</a></p>
                     </div>
                 </div>
             </div>

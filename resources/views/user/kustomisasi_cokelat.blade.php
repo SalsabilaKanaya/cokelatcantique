@@ -13,7 +13,7 @@
             @if(Auth::check())
                 <div class="row banner justify-content-between align-items-center">
                     <div class="col-12">
-                        <h1 class="banner-title">Create your Chocolate Gift</h1>
+                        <h1 class="banner-title">Ciptakan Hadiah Cokelat Spesialmu</h1>
                         <img src="{{ asset('img/kustomisasibanner.png')}}" alt="Banner" class="img-fluid">
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                     <div class="col-12 text-center">
                         <img src="{{ asset('img/error.png') }}" alt="Error" class="img-fluid mb-5" style="max-width: 300px;">
                         <h5 style="color: #000; font-weight: 600; font-family: 'Montserrat', sans-serif;">Harap lakukan login terlebih dahulu untuk melakukan pemesanan</h5>
-                        <a href="{{ route('user.login') }}" class="btn btn-login">Login</a>
+                        <a href="{{ route('user.login') }}" class="btn btn-login">Masuk Akun Yuk</a>
                     </div>
                 </div>
             @endif

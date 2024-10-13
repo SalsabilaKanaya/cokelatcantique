@@ -60,7 +60,7 @@
                                     $namaKategori = $kategoriLabels[$cokelat->kategori] ?? 'Kategori Tidak Dikenal';
                                 @endphp
                               <p class="card-text">{{ $namaKategori}}</p>
-                              <a class="btn button-detail" href="{{ route('user.detail_karakter_cokelat.show', $relatedCokelat->id) }}" role="button">Lihat Detail</a>
+                              <a class="btn button-detail" href="{{ route('user.detail_karakter_cokelat.show', $relatedCokelat->id) }}" role="button">Cek Detail</a>
                             </div>
                         </div>
                     </div>

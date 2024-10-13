@@ -85,9 +85,9 @@
                                 </div>
                                 <div id="passwordError" class="text-danger mt-2 password-error" style="display: none;">Password tidak cocok</div>
                             </div>
-                            <button type="submit" class="btn btn-register">Register</button>
+                            <button type="submit" class="btn btn-register">Daftar</button>
                         </form>
-                        <p class="mt-3 login">Sudah punya akun? <a href="{{ route('user.login') }}">Login</a></p>
+                        <p class="mt-3 login">Sudah punya akun? <a href="{{ route('user.login') }}">Masuk Akun</a></p>
                     </div>
                 </div>
             </div>

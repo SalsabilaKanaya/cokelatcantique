@@ -20,7 +20,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ $jenisCokelat->nama }}</h5>
                             <p class="card-text">Rp {{ number_format($jenisCokelat->harga, 0, ',', '.') }}</p>
-                            <a class="btn button-detail" href="{{ route('user.detail_jenis_cokelat.show', $jenisCokelat->id) }}" role="button">Lihat Detail</a>
+                            <a class="btn button-detail" href="{{ route('user.detail_jenis_cokelat.show', $jenisCokelat->id) }}" role="button">Cek Detail</a>
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                             $namaKategori = $kategoriLabels[$karakterCokelat->kategori] ?? 'Kategori Tidak Dikenal';
                         @endphp
                         <p class="card-text" style="font-size: 14px; font-weight: 400; color: #404852;">{{ $namaKategori }}</p>
-                        <a class="btn button-detail" href="{{ route('user.detail_karakter_cokelat.show', $karakterCokelat->id) }}" role="button">Lihat Detail</a>
+                        <a class="btn button-detail" href="{{ route('user.detail_karakter_cokelat.show', $karakterCokelat->id) }}" role="button">Cek Detail</a>
                     </div>
                 </div>
             </div>

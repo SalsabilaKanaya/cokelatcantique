@@ -26,9 +26,15 @@
                                         <div>
                                             <h5>{{ $cartItem->jenisCokelat->nama }}</h5>
 
-                                            @foreach($cartItem->karakterItems as $karakterItem)
-                                            <p> {{ $karakterItem->karakterCokelat->nama }} ({{ $karakterItem->quantity }})</p>
+                                            @foreach($cartItem->karakterItems as $index => $karakterItem)
+                                                @if ($index < 3) 
+                                                    <p>{{ $karakterItem->karakterCokelat->nama }} ({{ $karakterItem->quantity }})</p>
+                                                @endif
                                             @endforeach
+
+                                            @if ($cartItem->karakterItems->count() > 3) 
+                                                <p>dan lainnya</p>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -41,7 +47,7 @@
                             </div>
                         @endforeach
                         <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-pesan">Pesan</button>
+                            <button type="submit" class="btn btn-pesan">Pesan Sekarang</button>
                         </div>
                     @else
                         <div class="cart-kosong">
@@ -55,7 +61,7 @@
                     <div class="col-12 text-center">
                         <img src="{{ asset('img/error.png') }}" alt="Error" class="img-fluid mb-5" style="max-width: 300px;">
                         <h5 style="color: #000; font-weight: 600; font-family: 'Montserrat', sans-serif;">Harap lakukan login terlebih dahulu untuk melihat keranjang anda</h5>
-                        <a href="{{ route('user.login') }}" class="btn btn-login">Login</a>
+                        <a href="{{ route('user.login') }}" class="btn btn-login">Masuk Akun Yuk</a>
                     </div>
                 </div>
             @endif

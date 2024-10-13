@@ -7,7 +7,7 @@
             <div class="col-6 d-flex justify-content-end align-items-center">
                 <form action="{{ route('user.logout') }}" method="POST" id="logout-form" class="d-flex align-items-center">
                     @csrf
-                    <button type="submit" class="btn btn-link nav-link logout-link" style="color: #f24848; font-weight: 600;">Logout</button>
+                    <button type="submit" class="btn btn-link nav-link logout-link" style="color: #f24848; font-weight: 600;">Keluar</button>
                 </form>
             </div>
         </div>
