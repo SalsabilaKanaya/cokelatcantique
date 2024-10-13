@@ -13,9 +13,7 @@ return new class extends Migration
     {
         Schema::create('testimoni', function (Blueprint $table) {
             $table->id();
-            $table->string('foto');
             $table->string('nama');
-            $table->string('produk');
             $table->text('isi_testimoni');
             $table->timestamps();
         });

@@ -32,9 +32,6 @@ class ProsesOrderController extends Controller
     // Menampilkan halaman pemesanan dengan detail pesanan terbaru dari pengguna
     public function index(Request $request)
     {
-        // if ($request->query('navbar_click')) {
-        //     event(new NavbarClicked());
-        // }
 
         \Log::info('Pemesanan page accessed');
         \Log::info('Session data on pemesanan page:', session()->all());
