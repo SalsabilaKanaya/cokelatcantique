@@ -80,6 +80,22 @@
                     </div>
                 </div>
             </div>
+
+            <div class="content">
+                <div class="header">
+                    Melalui Whatsapp
+                </div>
+                <div class="body">
+                    <div class="body-content">
+                        <ol>
+                            <li>Buka halaman kontak</li>
+                            <li>Klik nomor telepon yang tertera</li>
+                            <li>Chat admin Cokelat Cantique</li>
+                            <li>Pilih jenis cokelat dan karakter yang diinginkan</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 

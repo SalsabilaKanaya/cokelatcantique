@@ -16,7 +16,7 @@
             <div class="col-md-4 footer-content">
                 <h1>Kontak Kami</h1>
                 <a href=""><i class="bi bi-geo-alt"></i> Perumnas Blok PG/8, Karawang Barat, Jawa Barat</a>
-                <a href=""><i class="bi bi-telephone"></i> 081399977070</a>
+                <a href="https://wa.me/6281399977070" target="_blank"><i class="bi bi-telephone"></i> 081399977070</a>
                 <a href=""><i class="bi bi-envelope"></i> cokelatcantique@gmail.com</a>
             </div>
             <div class="col-md-2 footer-content">

@@ -20,7 +20,7 @@
                     <div class="phone details">
                         <i class="fa solid fa-phone"></i>
                         <div class="title">Phone</div>
-                        <div class="text">081399977070</div>
+                        <a href="https://wa.me/6281399977070" target="_blank" class="text" style="text-decoration: none;"></i> 081399977070</a>
                     </div>
                     <div class="email details">
                         <i class="fa-solid fa-envelope"></i>
