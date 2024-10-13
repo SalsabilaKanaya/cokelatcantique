@@ -9,6 +9,105 @@ body {
     margin-top: 80px;
     margin-bottom:50px;
 }
+
+#progress-tracker{
+    display: flex; /* Menggunakan flexbox */
+    justify-content: center; /* Mengatur konten di tengah secara horizontal */
+    align-items: center; 
+    overflow: hidden;
+    color: #455a64;
+    padding-left: 0;
+    margin-top: 30px;
+}
+
+#progress-tracker li{
+    list-style-type: none;
+    font-size: 14px;
+    width: 25%;
+    text-align: center;
+    position: relative;
+    font-weight: 400;
+}
+
+#progress-tracker .step0::before{
+    font-family: FontAwesome;
+    content: '\f00c';
+    color: #E1CDB2;
+    display: flex; /* Tambahkan ini */
+    justify-content: center; /* Tambahkan ini */
+    align-items: center; /* Tambahkan ini */
+}
+
+#progress-tracker li::before{
+    width: 40px;
+    height: 40px;
+    line-height: 45px;
+    display: block;
+    font-size: 20px;
+    background-color: #F1E8DB;
+    border-radius: 50%;
+    margin: auto;
+    padding: 0;
+}
+
+#progress-tracker li::after{/* Proggress Tracker Connector */
+    content: '';
+    width: 100%;
+    height: 12px;
+    background-color: #F1E8DB;
+    position: absolute;
+    top: 10px;
+    left: 0;
+    z-index: -1;
+}
+
+#progress-tracker li:last-child::after{
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    position: absolute;
+    left: -50%;
+}
+
+#progress-tracker li:nth-child(2)::after,
+#progress-tracker li:nth-child(3)::after{
+    left: -50%;
+}
+
+#progress-tracker li:first-child::after{
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    position: absolute;
+    left: -50%;
+    content: none;
+}
+
+#progress-tracker li.active::before,
+#progress-tracker li.active::after{
+    background-color: #BFA47F;
+}
+
+#progress-tracker li.active::before{
+    font-family: FontAwesome;
+    content: '\f00c';
+    color: #fff;
+}
+
+.icon-progress{
+    font-size: 24px;
+    margin-right: 15px;
+    color: #E1CDB2;
+}
+
+.text-progress {
+    font-family: 'Montserrat',sans-serif;
+    font-weight: 500; /* Contoh perubahan: membuat teks lebih tebal */
+    color: #000;
+}
+
+.icon-content{
+    padding-bottom: 20px;
+}
+
 .produk-order {
     background-color: #fff;
     padding: 20px;
@@ -124,6 +223,14 @@ body {
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
     font-weight: 500;
+}
+
+.courier-options .form-check-input {
+    border: 1.5px solid #dedede;
+}
+
+#inlineRadio2{
+    border: 1.5px solid #dedede;
 }
 
 .courier-cost p{
@@ -266,6 +373,7 @@ h2{
 .payment{
     background-color: #fff;
     padding: 20px;
+    margin-bottom: 20px;
 }
 
 .payment-title h5{
@@ -322,13 +430,29 @@ h2{
     height: 34px;
     border-radius: 100px;
     margin-top: auto;
-    box-shadow: 0 2px 5px #D2B48C;
     box-shadow: 0 5px 10px rgba(210, 180, 140, 0.5);
+    outline: none; 
+    border: none;
 }
 
 .btn-pesan:hover{
-    background-color: #D2B48C;
     color: black;
+    background-color: #BFA47F;
+}
+
+.btn-pesan:active{
+    color: black;
+    background-color: #BFA47F;
+}
+
+.btn-pesan:disabled{
+    background-color: #DEDEDE;
+    color: #AAA;
+    cursor: not-allowed;
+    pointer-events: none;
+    border: 1px solid #dcdcdc;
+    opacity: 0.5;
+    filter: none;
 }
 
 .btn-cancel{
@@ -349,8 +473,17 @@ h2{
     color: #fff;
     background-color: #f24848;
     box-shadow: 0 2px 5px #f24848;
+    outline: none; 
+    border: none;
 }
 
+.btn-cancel:active{
+    color: #fff;
+    background-color: #f24848;
+    box-shadow: 0 2px 5px #f24848;
+    outline: none; 
+    border: none;
+}
 
 /* ----- Main Content -----*/
 

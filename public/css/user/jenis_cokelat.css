@@ -34,7 +34,7 @@
     transform: translate(-50%, -50%);
     z-index: 3;
     color: black;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 600;
     margin-top: 20px;
     text-align: center;
@@ -131,10 +131,17 @@
     border-radius: 100px;
     margin-top: auto;
     box-shadow: 0 5px 10px rgba(210, 180, 140, 0.5);
+    outline: none; 
+    border: none;
 }
 
 .button-detail:hover {
     color: black;
-    background-color: #D2B48C;
+    background-color: #BFA47F;
+}
+
+.button-detail:active {
+    color: black;
+    background-color: #BFA47F;
 }
 /* ----- Main Content -----*/

@@ -41,6 +41,14 @@ body {
     font-weight: 600;
 }
 
+.navbar-icons .nav-link.active i {
+    color: #D2B48C;
+}
+
+.navbar-icons .nav-link:hover i {
+    color: #D2B48C;
+}
+
 .dropdown-menu {
     width: auto; /* Sesuaikan dengan isi */
     padding: 0.5rem 1rem; /* Padding dapat disesuaikan */

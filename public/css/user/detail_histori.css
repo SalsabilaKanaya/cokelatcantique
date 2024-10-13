@@ -13,11 +13,18 @@
     font-size: 14px;
     color: #D2B48C;
     padding: 0px;
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 10px;
+    font-family: 'Montserrat', sans-serif;
+    outline: none; 
+    border: none;
 }
 
 .btn-text:hover{
+    color: #BFA47F;
+}
+
+.btn-text:active{
     color: #BFA47F;
 }
 

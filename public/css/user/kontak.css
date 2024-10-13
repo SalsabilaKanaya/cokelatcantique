@@ -118,19 +118,31 @@
     justify-content: flex-end;
 }
 
-.right-side .button button[type="submit"]{
+.right-side .button button{
     font-family: 'Montserrat', sans-serif;
     font-size: 14px;
     font-weight: 600;
     color: black;
     background-color: #D2B48C;
-    width: 100px;
+    width: auto;
     height: 33px;
     border-radius: 100px;
     padding: 0 12px;
     border: none;
     cursor: pointer;
     box-shadow: 0 5px 10px rgba(210, 180, 140, 0.5);
+    outline: none; 
+    border: none;
+}
+
+.right-side .button button:hover{
+    color: black;
+    background-color: #BFA47F;
+}
+
+.right-side .button button:active{
+    color: black;
+    background-color: #BFA47F;
 }
 
 /* ----- Main Content -----*/

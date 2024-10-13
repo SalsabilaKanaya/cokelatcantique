@@ -73,23 +73,53 @@
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
-.btn-danger {
-    color: white;
+.btn-cancel{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #f24848;
+    background-color: #fff;
     border-radius: 100px;
-    margin-right: 10px;
+    margin-right: 30px;
+    border: 1px solid #f24848;
+    width: 180px;
+    height: 33px;
+}
+
+.btn-cancel:hover{
+    color: #fff;
+    background-color: #f24848;
+    box-shadow: 0 2px 5px #f24848;
+}
+
+.btn-cancel:active{
+    color: #fff;
+    background-color: #f24848;
+    box-shadow: 0 2px 5px #f24848;
 }
 
 .btn-submit{
+    font-family: 'Montserrat', sans-serif;
     background: #D2B48C;
     color: black;
     border-radius: 100px;
     box-shadow: 0 5px 10px rgba(210, 180, 140, 0.5);
     font-weight: 600;
     font-size: 14px;
+    outline: none; 
+    border: none;
+    width: 180px;
+    height: 33px;
 }
 
 .btn-submit:hover{
-    background: #D2B48C;
+    color: black;
+    background-color: #BFA47F;
+}
+
+.btn-submit:active{
+    color: black;
+    background-color: #BFA47F;
 }
 
 .detail-item {
@@ -110,29 +140,6 @@
     margin: 0;
     font-weight: 500;
     color: #111111;
-}
-
-.btn-edit{
-    font-family: 'Montserrat', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    color: black;
-    background-color: #D2B48C;
-    width: 287px;
-    height: 33px;
-    border-radius: 100px;
-    padding: 0 12px;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 5px 10px rgba(210, 180, 140, 0.5);
-    display: block;
-    margin: 20px auto;
-    text-align: center; /* Menyelaraskan teks secara horizontal */
-    line-height: 33px;
-}
-
-.btn-edit:hover{
-    background-color: #D2B48C;
 }
 /* ----- Main Content -----*/
 

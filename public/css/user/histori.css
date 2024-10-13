@@ -147,9 +147,17 @@ body {
     display: block;
     margin: 20px auto;
     text-align: center; /* Menyelaraskan teks secara horizontal */
-    line-height: 33px; 
+    line-height: 33px;
+    outline: none; 
+    border: none;
 }
 
 .btn-login:hover{
-    background-color: #D2B48C;
+    color: black;
+    background-color: #BFA47F;
+}
+
+.btn-login:active{
+    color: black;
+    background-color: #BFA47F;
 }

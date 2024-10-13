@@ -133,11 +133,18 @@
     cursor: pointer;
     margin-top: 20px;
     box-shadow: 0 5px 10px rgba(210, 180, 140, 0.5);
+    outline: none; 
+    border: none;
 }
 
 .btn-register:hover{
-    background-color: #D2B48C;
     color: black;
+    background-color: #BFA47F;
+}
+
+.btn-register:active{
+    color: black;
+    background-color: #BFA47F;
 }
 
 .login p{

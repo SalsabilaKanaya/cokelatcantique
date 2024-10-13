@@ -87,16 +87,16 @@
     border-radius: 100px;
     margin-top: auto;
     box-shadow: 0 5px 10px rgba(210, 180, 140, 0.5);
+    outline: none; 
+    border: none;
 }
 
 .button-detail:hover {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
     color: black;
-    background-color: #D2B48C;
-    width: 200px;
-    height: 33px;
-    border-radius: 100px;
-    margin-top: auto;
+    background-color: #BFA47F;
+}
+
+.button-detail:active {
+    color: black;
+    background-color: #BFA47F;
 }

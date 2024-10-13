@@ -35,7 +35,7 @@
     transform: translate(-50%, -50%);
     z-index: 3;
     color: black;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 600;
     margin-top: 20px;
     text-align: center;
@@ -63,6 +63,18 @@
     height: 33px;
     border-radius: 100px;
     box-shadow: 0 5px 10px rgba(210, 180, 140, 0.5);
+    outline: none;
+    border: none; 
+}
+
+.button-kustomisasi .btn:hover{
+    background-color: #BFA47F;
+    color: black;
+}
+
+.button-kustomisasi .btn:active{
+    background-color: #BFA47F;
+    color: black;
 }
 
 .produk {
@@ -135,10 +147,17 @@
     border-radius: 100px;
     margin-top: auto;
     box-shadow: 0 5px 10px rgba(210, 180, 140, 0.5);
+    outline: none;
+    border: none;
 }
 
 .button-detail:hover {
-    background-color: #D2B48C;
+    background-color: #BFA47F;
+    color: black;
+}
+
+.button-detail:active {
+    background-color: #BFA47F;
     color: black;
 }
 /* ----- Main Content -----*/

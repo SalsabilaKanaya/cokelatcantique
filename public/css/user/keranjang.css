@@ -80,18 +80,25 @@
     font-weight: 600;
     color: black;
     background-color: #D2B48C;
-    width: 100px;
+    width: auto;
     height: 33px;
     border-radius: 100px;
     padding: 0 12px;
     border: none;
     cursor: pointer;
     box-shadow: 0 5px 10px rgba(210, 180, 140, 0.5);
+    outline: none; 
+    border: none;
 }
 
 .btn-pesan:hover{
     color: black;
-    background-color: #D2B48C;
+    background-color: #BFA47F;
+}
+
+.btn-pesan:active{
+    color: black;
+    background-color: #BFA47F;
 }
 
 .cart-kosong {
@@ -127,11 +134,19 @@
     display: block;
     margin: 20px auto;
     text-align: center; /* Menyelaraskan teks secara horizontal */
-    line-height: 33px; 
+    line-height: 33px;
+    outline: none; 
+    border: none;
 }
 
 .btn-login:hover{
-    background-color: #D2B48C;
+    color: black;
+    background-color: #BFA47F;
+}
+
+.btn-login:active{
+    color: black;
+    background-color: #BFA47F;
 }
 
 /* SweetAlert Custom Styles */

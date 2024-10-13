@@ -125,6 +125,30 @@
     margin-bottom: 20px;
 }
 
+.btn-kustom {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: black;
+    background-color: #BFA47F;
+    width: auto;
+    height: 33px;
+    border-radius: 100px;
+    margin-top: auto;
+    box-shadow: 0 5px 10px rgba(210, 180, 140, 0.5);
+    outline: none; 
+    border: none;
+}
+
+.btn-kustom:hover {
+    color: black;
+    background-color: #958063;
+}
+
+.btn-kustom:active {
+    color: black;
+    background-color: #958063;
+}
 
 .header-image {
     position: relative;
@@ -212,13 +236,124 @@
     font-size: 18px;
     font-weight: 500;
 }
+
+.btn-produk {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: black;
+    background-color: #D2B48C;
+    width: auto;
+    height: 33px;
+    border-radius: 100px;
+    margin-top: auto;
+    box-shadow: 0 5px 10px rgba(210, 180, 140, 0.5);
+    outline: none; 
+    border: none;
+}
+
+.btn-produk:hover {
+    color: black;
+    background-color: #BFA47F;
+}
+
+.btn-produk:active {
+    color: black;
+    background-color: #BFA47F;
+}
 /* ----- CONTENT 2-----*/
 
 /* ----- CONTENT 3-----*/
+.momen-area {
+    background-image: 
+        url('http://localhost/cokelatcantique/public/img/bg-img.png');
+    background-size: 100%;
+    padding: 20px; /* Jarak dalam bagian */
+    text-align: center;
+    margin-top: 20px;
+}
+
+.momen-title h1{
+    text-align: center;
+    margin-bottom: 15px;
+    color: #000;
+    font-family: 'playfair display', sans-serif;
+    font-size: 34px;
+    font-weight: 600;
+}
+
+.momen-title p{
+    text-align: center;
+    margin-bottom: 50px;
+    color: #000;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.moment-content {
+    display: flex; /* Menggunakan Flexbox untuk tata letak */
+    flex-direction: row; /* Mengatur elemen dalam kolom */
+    justify-content: center;
+}
+
+.momen-isi {
+    display: flex; /* Menggunakan Flexbox untuk setiap momen */
+    align-items: center; /* Rata tengah secara vertikal */
+    justify-content: center;
+    margin-right: 10px;
+    margin-bottom: -40px;
+}
+
+.momen-info {
+    display: flex; /* Menggunakan Flexbox untuk setiap momen-info */
+    align-items: start; /* Rata tengah secara vertikal */
+    text-align: left;
+}
+
+.img-moment {
+    flex: 1; /* Mengambil ruang yang tersedia */
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+.img-moment img{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.text-moment {
+    flex: 2; /* Mengambil ruang yang lebih besar */
+    margin: 0;
+    text-align: start;
+}
+
+.text-moment h5{
+    color: #000;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.text-moment p{
+    color: #000;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+}
+/* ----- CONTENT 3-----*/
+
+/* ----- CONTENT 4-----*/
 .testimonia-area{
     display: flex;
     justify-conten: center;
     align-items: center;
+    margin-top: 20px;
 }
 
 .testimonial-area .container{
@@ -251,13 +386,13 @@
     padding: 0px 20px;
 }
 
-.owl-carousel .owl-stage-outer{
+.testimonial-area .owl-carousel .owl-stage-outer{
     padding: 30px 50px;
     margin-left: -35px;
     width: calc(100% + 100px);
 }
 
-.single-testimonial{
+.testimonial-area .single-testimonial{
     border: 7px solid #D2B48C;
     text-align: center;
     border-radius: 45px;
@@ -265,7 +400,7 @@
     z-index: 2;
 }
 
-.single-testimonial p{
+.testimonial-area .single-testimonial p{
     color: black;
     font-size: 16px;
     line-height: 24px;
@@ -279,7 +414,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: left;
+    text-align: center;
     padding-bottom: 50px;
 }
 
@@ -330,7 +465,7 @@
     width: 126px;
     height: 100px;
 }
-/* ----- CONTENT 3-----*/
+/* ----- CONTENT 4-----*/
 
 
 /* ----- FOOTER -----*/

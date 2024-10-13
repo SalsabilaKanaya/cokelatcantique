@@ -12,11 +12,20 @@
     font-weight: 600;
     display: flex;
     align-items: center;
+    outline: none; 
+    border: none;
 }
 
 .btn.button-back i {
     color: #D2B48C;
     margin-right: 20px;
+}
+
+.btn.button-back:hover,
+.btn.button-back i:hover,
+.btn.button-back:active,
+.btn.button-back i:active {
+    color: #BFA47F;
 }
 
 .header h2 {
@@ -157,10 +166,17 @@
     border-radius: 100px;
     margin-top: auto;
     box-shadow: 0 5px 10px rgba(210, 180, 140, 0.5);
+    outline: none;
+    border: none;
 }
 
 .button-detail:hover {
-    background-color: #D2B48C;
+    background-color: #BFA47F;
+    color: black;
+}
+
+.button-detail:active {
+    background-color: #BFA47F;
     color: black;
 }
 

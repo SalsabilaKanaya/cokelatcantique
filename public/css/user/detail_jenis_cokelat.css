@@ -12,11 +12,20 @@
     font-weight: 600;
     display: flex;
     align-items: center;
+    outline: none; 
+    border: none;
 }
 
 .btn.button-back i {
     color: #D2B48C;
     margin-right: 20px;
+}
+
+.btn.button-back:hover,
+.btn.button-back i:hover,
+.btn.button-back:active,
+.btn.button-back i:active {
+    color: #BFA47F;
 }
 
 .header h2 {
@@ -103,17 +112,24 @@
     height: 33px;
     border-radius: 100px;
     box-shadow: 0 5px 10px rgba(210, 180, 140, 0.5);
+    outline: none; 
+    border: none;
 }
 
 .btn-kustomisasi:hover{
-    background-color: #D2B48C;
     color: black;
+    background-color: #BFA47F;
+}
+
+.btn-kustomisasi:active{
+    color: black;
+    background-color: #BFA47F;
 }
 
 .btn-kustomisasi:disabled {
-    background-color: #dedede; /* Warna abu-abu untuk background */
-    color: #aaa; /* Warna abu-abu lebih tua untuk teks */
-    cursor: not-allowed; /* Ubah cursor menjadi not-allowed */
+    background-color: #dedede; 
+    color: #aaa;
+    cursor: not-allowed;
     border: none;
     box-shadow: 0 2px 5px rgba(222, 222, 222, 0.25);
 }
@@ -188,11 +204,18 @@
     border-radius: 100px;
     margin-top: auto;
     box-shadow: 0 5px 10px rgba(210, 180, 140, 0.5);
+    outline: none; 
+    border: none;
 }
 
 .button-detail:hover {
     color: black;
-    background-color: #D2B48C;
+    background-color: #BFA47F;
+}
+
+.button-detail:active {
+    color: black;
+    background-color: #BFA47F;
 }
 
 .related-detail .owl-carousel{
@@ -205,6 +228,4 @@
     margin-left: -35px;
     width: calc(100% + 100px);
 }
-
-
 /* ----- Main Content -----*/
