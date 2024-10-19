@@ -12,14 +12,14 @@
         <div class="container">
             <div class="row justify-content-between align-items-center">
                 <div class="col-12 banner">
-                    <img src="{{ asset('img/giftbanner.JPG')}}" alt="Banner" class="img-fluid">
+                    <img src="{{ asset('img/giftbanner.JPG')}}" alt="Banner" class="img-fluid" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                     <div class="overlay"></div>
                     <h1 class="main-title">Setiap kali aku memberi cokelat padamu, aku ingin kamu tahu betapa spesialnya kamu bagiku. Cokelat ini lebih dari sekadar hadiah, ini cara kecilku bilang, 'Aku cinta kamu.'</h1>
                 </div>
             </div>
             <div class="row content justify-content-between">
                 <div class="col-md-6 content-image">
-                    <img src="{{ asset('img/harispesial.JPG')}}" alt="Hari Spesial" class="img-fluid">
+                    <img src="{{ asset('img/harispesial.JPG')}}" alt="Hari Spesial" class="img-fluid" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                 </div>
                 <div class="col-md-6">
                     <h1>Gift Idea untuk Hari Spesial</h1>
@@ -32,12 +32,12 @@
                     <p>Tunjukin rasa sayang dan perhatianmu lewat hadiah manis yang penuh makna. Cokelat Cantique bikin momen-momen spesial buat orang-orang terdekatmu jadi gak terlupakan. Setiap gigitan memberikan kehangatan dan kasih sayang yang gak bisa diungkapin lewat kata-kata.</p>
                 </div>
                 <div class="col-md-6 content-image d-flex justify-content-end">
-                    <img src="{{ asset('img/orangsayang.JPG')}}" alt="Orang Tersayang" class="img-fluid">
+                    <img src="{{ asset('img/orangsayang.JPG')}}" alt="Orang Tersayang" class="img-fluid" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                 </div>
             </div>
             <div class="row content justify-content-between">
                 <div class="col-md-6 content-image">
-                    <img src="{{ asset('img/hariraya.JPG')}}" alt="Hari Raya" class="img-fluid">
+                    <img src="{{ asset('img/hariraya.JPG')}}" alt="Hari Raya" class="img-fluid" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                 </div>
                 <div class="col-md-6">
                     <h1>Gift Idea untuk Hari Raya</h1>
@@ -50,7 +50,7 @@
                     <p>Yuk, manjain diri dengan kelezatan dari Cokelat Cantique. Setiap gigitan memberikan rasa nikmat dan bikin rileks, pas banget buat kasih momen bahagia di keseharianmu. Bikin setiap hari jadi spesial dengan cokelat yang dibuat khusus buat kamu nikmati sendiri—karena kamu juga pantas dapetin cinta dan apresiasi buat dirimu sendiri.</p>
                 </div>
                 <div class="col-md-6 content-image d-flex justify-content-end">
-                    <img src="{{ asset('img/pribadi.PNG')}}" alt="Konsumsi Pribadi" class="img-fluid">
+                    <img src="{{ asset('img/pribadi.PNG')}}" alt="Konsumsi Pribadi" class="img-fluid" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                 </div>
             </div>
         </div>

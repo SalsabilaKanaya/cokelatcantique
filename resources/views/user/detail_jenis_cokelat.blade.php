@@ -22,7 +22,7 @@
             </div>
             <div class="row mt-3 d-flex produk-content">
                 <div class="col-md-6 produk-img">
-                    <img src="{{ asset($cokelat->foto) }}" class="img-fluid" alt="{{ $cokelat->nama }}">
+                    <img src="{{ asset($cokelat->foto) }}" class="img-fluid" alt="{{ $cokelat->nama }}" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                 </div>
                 <div class="col-md-6 produk-detail d-flex flex-column justify-content-center">
                     @php
@@ -55,7 +55,7 @@
                     @foreach ($jenisCokelatLainnya as $relatedCokelat)
                     <div class="col-md-3 produk-card">
                         <div class="card">
-                            <img src="{{ asset($relatedCokelat->foto)}}" class="card-img-top" alt="{{ $relatedCokelat->nama }}">
+                            <img src="{{ asset($relatedCokelat->foto)}}" class="card-img-top" alt="{{ $relatedCokelat->nama }}" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                             <div class="card-body">
                             <h5 class="card-title">{{ $relatedCokelat->nama }}</h5>
                             <p class="card-text">Rp {{ number_format($relatedCokelat->harga, 0, ',', '.') }}</p>

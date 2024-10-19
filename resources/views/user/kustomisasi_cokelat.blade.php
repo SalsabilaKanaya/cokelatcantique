@@ -14,7 +14,7 @@
                 <div class="row banner justify-content-between align-items-center">
                     <div class="col-12">
                         <h1 class="banner-title">Ciptakan Hadiah Cokelat Spesialmu</h1>
-                        <img src="{{ asset('img/kustomisasibanner.png')}}" alt="Banner" class="img-fluid">
+                        <img src="{{ asset('img/kustomisasibanner.png')}}" alt="Banner" class="img-fluid" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                     </div>
                 </div>
                 <div class="row header justify-content-between">
@@ -53,7 +53,7 @@
                     @foreach ($jenisCokelat as $cokelat)
                     <div class="col-md-3 produk-card">
                         <div class="card">
-                            <img src="{{ asset($cokelat->foto)}}" class="card-img-top" alt="{{ $cokelat->nama }}">
+                            <img src="{{ asset($cokelat->foto)}}" class="card-img-top" alt="{{ $cokelat->nama }}" oncontextmenu="return false;" draggable="false" style="pointer-events: none;"> 
                                 <div class="card-body">
                                 <h5 class="card-title">{{ $cokelat->nama }}</h5>
                                 <p class="card-text">Rp {{ number_format($cokelat->harga, 0, ',', '.') }}</p>

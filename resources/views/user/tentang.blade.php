@@ -12,14 +12,14 @@
         <div class="container">
             <div class="row justify-content-between align-items-center">
                 <div class="col-12 banner">
-                    <img src="{{ asset('img/tentangbanner.JPG')}}" alt="Banner" class="img-fluid">
+                    <img src="{{ asset('img/tentangbanner.JPG')}}" alt="Banner" class="img-fluid" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                     <div class="overlay"></div>
                     <h1 class="main-title">Saat kecil, orangtuaku selalu memberi cokelat ketika aku sedih. Sekarang, setiap kali aku memberikan cokelat kepada orang yang kusayangi, aku berharap mereka bisa merasakan cinta dan hangatnya kenangan itu.</h1>
                 </div>
             </div>
             <div class="row content align-items-center">
                 <div class="col-md-6">
-                    <img src="{{ asset('img/logo.png')}}" alt="Cokelat Cantique" class="img-fluid logo">
+                    <img src="{{ asset('img/logo.png')}}" alt="Cokelat Cantique" class="img-fluid logo" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                 </div>
                 <div class="col-md-6">
                     <h1>Cokelat Cantique: Perjalanan Penuh Cinta dan Kreativitas Sejak 2016</h1>
@@ -34,12 +34,12 @@
                     <p>Cokelat Cantique selalu pakai 100% cokelat compound berkualitas tinggi tanpa campuran bahan lain, jadi rasanya enak dan teksturnya pas di lidah. Kami pilih cokelat ini dengan teliti supaya setiap produknya punya rasa yang konsisten dan selalu memuaskan. Bahan-bahan yang kami gunakan nggak cuma bikin cokelat ini nikmat, tapi juga aman untuk dinikmati oleh semua orang.</p>
                 </div>
                 <div class="col-md-6 content-image d-flex justify-content-end">
-                    <img src="{{ asset('img/bahan.jpeg')}}" alt="Bahan yang Digunakan" class="img-fluid">
+                    <img src="{{ asset('img/bahan.jpeg')}}" alt="Bahan yang Digunakan" class="img-fluid" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                 </div>
             </div>
             <div class="row content justify-content-between">
                 <div class="col-md-6 content-image">
-                    <img src="{{ asset('img/cetakan.jpeg')}}" alt="Cara Pembuatannya" class="img-fluid">
+                    <img src="{{ asset('img/cetakan.jpeg')}}" alt="Cara Pembuatannya" class="img-fluid" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                 </div>
                 <div class="col-md-6">
                     <h1>Cara Pembuatannya</h1>

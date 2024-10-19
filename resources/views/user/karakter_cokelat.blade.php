@@ -12,7 +12,7 @@
         <div class="container">
             <div class="row banner d-flex justify-content-between align-items-center">
                 <div class="col-12">
-                    <img src="{{ asset('img/karakterbanner.JPG')}}" alt="Banner" class="img-fluid">
+                    <img src="{{ asset('img/karakterbanner.JPG')}}" alt="Banner" class="img-fluid" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                     <div class="overlay"></div>
                     <h1 class="main-title">Di setiap perayaan, cokelat menjadi bagian dari tradisi keluargaku. Kami saling berbagi, memberi, dan tersenyum. Hari raya tak lengkap tanpa manisnya cokelat yang menghubungkan kami semua.</h1>
                 </div>
@@ -31,7 +31,7 @@
                 @foreach ($karakterCokelat as $cokelat)
                 <div class="col-md-3 produk-card">
                     <div class="card">
-                        <img src="{{ asset($cokelat->foto)}}" class="card-img-top" alt="{{ $cokelat->nama }}">
+                        <img src="{{ asset($cokelat->foto)}}" class="card-img-top" alt="{{ $cokelat->nama }}" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                         <div class="card-body">
                             <h5 class="card-title">{{ $cokelat->nama }}</h5>
                             @php

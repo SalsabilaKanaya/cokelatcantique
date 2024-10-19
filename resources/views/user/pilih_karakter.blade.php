@@ -85,7 +85,7 @@
                                 @endphp
                                 <div class="col-md-3 produk-card">
                                     <div class="card">
-                                        <img src="{{ asset($cokelat->foto)}}" class="card-img-top" alt="{{ $cokelat->nama }}">
+                                        <img src="{{ asset($cokelat->foto)}}" class="card-img-top" alt="{{ $cokelat->nama }}" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                                         <div class="card-body">
                                             <h5 class="card-title">{{ $cokelat->nama }}</h5>
                                             @php
@@ -182,7 +182,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="d-flex align-items-start mb-3">
-                            <img src="{{ asset($cokelat->foto)}}" alt="{{ $cokelat->nama }}" id="modal-foto" class="img-fluid">
+                            <img src="{{ asset($cokelat->foto)}}" alt="{{ $cokelat->nama }}" id="modal-foto" class="img-fluid" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                             <div class="ms-3">
                                 <h5 class="modal-nama" id="modal-nama">{{ $cokelat->nama }}</h5>
                                 <div class="wrapper quantity mb-3">

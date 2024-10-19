@@ -30,7 +30,7 @@
                 <div class="row">
                     <div class="col-12 d-flex justify-content-between align-items-center">
                         <a href="{{ route('beranda')}}">
-                            <img src="{{ asset('img/logo.png')}}" alt="logo" width="150px">
+                            <img src="{{ asset('img/logo.png')}}" alt="logo" width="150px" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                         </a>
                         <div class="search-bar d-flex">
                             <form action="{{ route('user.search') }}" method="GET" class="d-flex w-100">
@@ -104,7 +104,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="header-image">
-                            <img src="{{ asset('img/banner.png')}}" alt="Cokelat">
+                            <img src="{{ asset('img/banner.png')}}" alt="Cokelat" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                         </div>
                     </div>
                 </div>
@@ -127,7 +127,7 @@
             <div class="row justify-content-between align-items-center">
                 <div class="col-md-6">
                     <div class="imageabout">
-                        <img src="{{ asset('img/home_tentang.PNG')}}" alt="">
+                        <img src="{{ asset('img/home_tentang.PNG')}}" alt="" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -150,25 +150,25 @@
             <div class="row justify-content-between align-items-center">
                 <div class="col-md-3">
                     <div class="produk">
-                        <img src="{{ asset('img/cokelatkiloan.JPG') }}" alt="" class="produk-img">
+                        <img src="{{ asset('img/cokelatkiloan.JPG') }}" alt="" class="produk-img" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                         <p class="text-center">Cokelat Kiloan</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="produk">
-                        <img src="{{ asset('img/cokelatloli.JPG') }}" alt="" class="produk-img">
+                        <img src="{{ asset('img/cokelatloli.JPG') }}" alt="" class="produk-img" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                         <p class="text-center">Cokelat Loli</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="produk">
-                        <img src="{{ asset('img/cokelatbox.PNG') }}" alt="" class="produk-img">
+                        <img src="{{ asset('img/cokelatbox.PNG') }}" alt="" class="produk-img" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                         <p class="text-center">Cokelat Box</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="produk">
-                        <img src="{{ asset('img/cokelattenteng.JPG') }}" alt="" class="produk-img">
+                        <img src="{{ asset('img/cokelattenteng.JPG') }}" alt="" class="produk-img" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                         <p class="text-center">Cokelat Tenteng</p>
                     </div>
                 </div>
@@ -188,7 +188,7 @@
                 <div class="momen-isi">
                     <div class="momen-info">
                         <div class="img-moment">
-                            <img src="{{ asset('img/momen1.jpeg')}}" alt="">
+                            <img src="{{ asset('img/momen1.jpeg')}}" alt="" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                         </div>
                         <div class="text-moment">
                             <h5>Yadi</h5>
@@ -199,7 +199,7 @@
                 <div class="momen-isi">
                     <div class="momen-info">
                         <div class="img-moment">
-                            <img src="{{ asset('img/momen2.jpeg')}}" alt="">
+                            <img src="{{ asset('img/momen2.jpeg')}}" alt="" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                         </div>
                         <div class="text-moment">
                             <h5>Andi</h5>
@@ -210,7 +210,7 @@
                 <div class="momen-isi">
                     <div class="momen-info">
                         <div class="img-moment">
-                            <img src="{{ asset('img/momen3.jpeg')}}" alt="">
+                            <img src="{{ asset('img/momen3.jpeg')}}" alt="" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                         </div>
                         <div class="text-moment">
                             <h5>Sukma</h5>
@@ -221,7 +221,7 @@
                 <div class="momen-isi">
                     <div class="momen-info">
                         <div class="img-moment">
-                            <img src="{{ asset('img/momen4.jpeg')}}" alt="">
+                            <img src="{{ asset('img/momen4.jpeg')}}" alt="" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                         </div>
                         <div class="text-moment">
                             <h5>Yani</h5>
@@ -232,7 +232,7 @@
                 <div class="momen-isi">
                     <div class="momen-info">
                         <div class="img-moment">
-                            <img src="{{ asset('img/momen5.jpeg')}}" alt="">
+                            <img src="{{ asset('img/momen5.jpeg')}}" alt="" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                         </div>
                         <div class="text-moment">
                             <h5>Nida</h5>
@@ -272,7 +272,7 @@
                 <div class="col-md-3">
                     <div class="logo-footer">
                         <a href="">
-                            <img src="{{ asset('img/logo.png')}}" alt="" width="150px">
+                            <img src="{{ asset('img/logo.png')}}" alt="" width="150px" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                         </a>
                     </div>
                 </div>

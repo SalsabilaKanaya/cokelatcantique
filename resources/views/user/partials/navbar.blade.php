@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-12 d-flex justify-content-between align-items-center">
                 <a href="{{ route('beranda')}}">
-                    <img src="{{ asset('img/logo.png')}}" alt="logo" width="150px">
+                    <img src="{{ asset('img/logo.png')}}" alt="logo" width="150px" oncontextmenu="return false;" draggable="false" style="pointer-events: none;">
                 </a>
                 <div class="search-bar d-flex">
                     <form action="{{ route('user.search') }}" method="GET" class="d-flex w-100">
