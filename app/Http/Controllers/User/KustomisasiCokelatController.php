@@ -34,21 +34,22 @@ class KustomisasiCokelatController extends Controller
     {
         // Mendapatkan ID jenis cokelat dari request
         $jenisCokelatId = $request->input('jenis_cokelat_id');
-        
+
         // Mencari jenis cokelat berdasarkan ID
         $jenisCokelat = JenisCokelat::find($jenisCokelatId);
 
         if ($jenisCokelat) {
             // Jika jenis cokelat ditemukan, simpan jumlah karakter yang diizinkan dalam session
             session()->put('total_karakter', $jenisCokelat->jumlah_karakter);
+             // Menyimpan ID jenis cokelat yang dipilih ke dalam session
+            session()->put('selected_jenis', $jenisCokelatId);
         }
 
         // Menghapus data karakter yang dipilih sebelumnya dari session
         session()->forget('selected_karakter');
-        // Menyimpan ID jenis cokelat yang dipilih ke dalam session
-        session()->put('selected_jenis', $jenisCokelatId);
 
         // Redirect ke halaman pemilihan karakter
         return redirect()->route('user.pilih_karakter');
     }
 }
+
