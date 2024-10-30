@@ -11,8 +11,8 @@ class WebController extends Controller
 {
     public function beranda()
     {
-        // Mengambil data testimoni dari database
-        $testimoniss = Testimoni::all();
+        // Mengambil data testimoni yang statusnya publish dari database
+        $testimoniss = Testimoni::where('status', 'publish')->get();
         // Mengirim data testimoni ke view beranda
         return view('user.beranda', compact('testimoniss'));
     }

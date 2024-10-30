@@ -101,9 +101,9 @@
                                 <td>{{ $item->isi_testimoni }}</td>
                                 <td>
                                     @if ($item->status === 'publish')
-                                        <span class="badge bg-success">Sudah Dibaca</span> 
+                                        <span class="badge bg-success">Sudah Dipublish</span> 
                                     @elseif ($item->status === 'tolak')
-                                        <span class="badge bg-danger">Rejected</span>
+                                        <span class="badge bg-danger">Tolak Dipublish</span>
                                     @else
                                         <button class="btn btn-success" onclick="confirmPublishTestimoni({{ $item->id }})">Publish</button>
                                         <button class="btn btn-outline-danger" onclick="confirmRejectTestimoni({{ $item->id }})">Tolak</button>
