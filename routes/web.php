@@ -30,6 +30,7 @@ use App\Http\Controllers\Admin\CreateKarakterCokelatController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\KontakMasukController;
 use App\Http\Controllers\Admin\OrderMasukController;
+use App\Http\Controllers\Admin\TestimoniAdminController;
 
 use Illuminate\Support\Facades\Log;
 
@@ -179,6 +180,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('/kontak', [KontakMasukController::class, 'index'])->name('kontak');
         Route::post('/kontak/{id}/mark-as-read', [KontakMasukController::class, 'markAsRead'])->name('admin.kontak.mark_as_read');
+
+        Route::get('/Testimoni', [TestimoniAdminController::class, 'index'])->name('testimoni');
+        Route::post('/testimoni/{id}/publish', [TestimoniAdminController::class, 'publish'])->name('testimoni_publish');
+        Route::post('/testimoni/{id}/reject', [TestimoniAdminController::class, 'reject'])->name('testimoni_reject');
     });
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

@@ -53,6 +53,12 @@
                     <span class="link_name">Pesan</span>
                 </a>
             </li>
+            <li class="{{ request()->routeIs('admin.testimoni') ? 'active' : '' }}">
+                <a href="{{ route('admin.testimoni') }}">
+                    <i class='bx bx-star'></i>
+                    <span class="link_name">Testimoni</span>
+                </a>
+            </li>
             <li>
                 <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <i class='bx bx-log-out' style="color: #dc3545; font-weight: 500;"></i>

@@ -13,5 +13,6 @@ class Testimoni extends Model
     protected $fillable = [
         'nama',
         'isi_testimoni',
+        'status',
     ];
 }

@@ -170,19 +170,24 @@ textarea:focus {
     color: white;
     border-radius: 100px;
     margin-right: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: #f24848;
+    box-shadow: 0 2px 5px #f24848;
 }
 
 .btn-submit{
     background: #D2B48C;
     color: black;
     border-radius: 100px;
-    box-shadow: 0 2px 5px rgba(210, 180, 140, 0.25);
+    box-shadow: 0 5px 10px rgba(210, 180, 140, 0.5);
     font-weight: 600;
     font-size: 14px;
 }
 
 .btn-submit:hover{
-    background: #D2B48C;
+    background-color: #BFA47F;
 }
 
 /* SweetAlert Custom Styles */

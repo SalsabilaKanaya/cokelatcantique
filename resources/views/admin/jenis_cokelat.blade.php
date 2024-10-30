@@ -59,6 +59,12 @@
                     <span class="link_name">Pesan</span>
                 </a>
             </li>
+            <li class="{{ request()->routeIs('admin.testimoni') ? 'active' : '' }}">
+                <a href="{{ route('admin.testimoni') }}">
+                    <i class='bx bx-star'></i>
+                    <span class="link_name">Testimoni</span>
+                </a>
+            </li>
             <li>
                 <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <i class='bx bx-log-out' style="color: #dc3545; font-weight: 500;"></i>
@@ -123,7 +129,7 @@
                             <td>{{ \Illuminate\Support\Str::limit($cokelat->deskripsi, 50, '...') }}</td>
                             <td>
                                 <a href="{{ route('admin.edit_jenis', ['id' => $cokelat->id]) }}" class="btn btn-warning">Edit</a>
-                                <button type="button" class="btn btn-danger btn-delete" data-id="{{ $cokelat->id }}">Hapus</button>
+                                <button type="button" class="btn btn-outline-danger btn-delete" data-id="{{ $cokelat->id }}">Hapus</button>
                                 <form id="delete-form-{{ $cokelat->id }}" action="{{ route('admin.delete_jenis', ['id' => $cokelat->id]) }}" method="POST" style="display: none;">
                                     @csrf
                                     @method('DELETE')

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->text('isi_testimoni');
+            $table->enum('status', ['pending', 'publish', 'tolak'])->default('pending');
             $table->timestamps();
         });
     }

@@ -177,30 +177,46 @@ body{
     border-radius: 100px;
     margin-right: 5px;
     font-size: 12px;
+    box-shadow: 0 2px 5px rgba(255, 193, 7, 0.5);
 }
 
 .btn-warning:hover {
     color: white;
 }
 
-.btn-danger {
-    color: white;
-    border-radius: 100px;
+.btn-outline-danger {
+    font-family: 'Montserrat', sans-serif;
     font-size: 12px;
+    font-weight: 600;
+    color: #f24848;
+    border-radius: 100px;
+    border: 1px solid #f24848;
+}
+
+.btn-outline-danger:hover {
+    color: #fff;
+    background-color: #f24848;
+    box-shadow: 0 2px 5px #f24848;
+}
+
+.btn-outline-danger:active {
+    color: #fff;
+    background-color: #f24848;
+    box-shadow: 0 2px 5px #f24848;
 }
 
 .btn-tambah{
     background: #D2B48C;
     color: black;
     border-radius: 100px;
-    box-shadow: 0 2px 5px rgba(210, 180, 140, 0.25);
     font-weight: 600;
     font-size: 14px;
+    box-shadow: 0 5px 10px rgba(210, 180, 140, 0.5);
 }
 
 .btn-tambah:hover{
-    background: #D2B48C;
     color: black;
+    background-color: #BFA47F;
 }
 
 .table img{

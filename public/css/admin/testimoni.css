@@ -127,43 +127,38 @@ body{
     padding: 20px;
 }
 
-.content-title h1{
-    font-size: 24px;
-    font-weight: 700;
-}
-
 /* Box styling */
 .box {
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 10px;
+    padding: 20px;
+}
+
+.box h1{
+    font-size: 20px;
+    font-weight: 700;
 }
 
 /* Table styling */
 .table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 20px;
 }
 
 .table th, .table td {
-    padding: 0;
-    text-align: center;
+    padding: 12px;
+    text-align: start;
     border-bottom: 1px solid #dee2e6;
-    width: 60px;
-    max-width: 100px;
+    width: 80px;
+    max-width: 120px;
     word-wrap: break-word;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
-
 
 .table th {
     color: black;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
 }
 
@@ -173,25 +168,22 @@ body{
     font-weight: 400;
 }
 
-.btn-warning {
+.btn-success {
+    background-color: #2DCC71;
     color: white;
     border-radius: 100px;
+    box-shadow: 0 2px 4px rgba(45, 204, 113, 0.5);
+    border: none;
     margin-right: 5px;
-    font-size: 12px;
-    box-shadow: 0 2px 5px rgba(255, 193, 7, 0.5);
-}
-
-.btn-warning:hover {
-    color: white;
+    font-size: 14px;
 }
 
 .btn-outline-danger {
+    border-radius: 100px;
     font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     color: #f24848;
-    background-color: #fff;
-    border-radius: 100px;
     border: 1px solid #f24848;
 }
 
@@ -201,28 +193,14 @@ body{
     box-shadow: 0 2px 5px #f24848;
 }
 
-.btn-outline-danger:active{
-    color: #fff;
-    background-color: #f24848;
-    box-shadow: 0 2px 5px #f24848;
+.btn-success:hover {
+    background-color: #219653;
 }
 
-.btn-tambah{
-    background: #D2B48C;
-    color: black;
-    border-radius: 100px;
-    box-shadow: 0 5px 10px rgba(210, 180, 140, 0.5);
-    font-weight: 600;
-    font-size: 14px;
-}
-
-.btn-tambah:hover{
-    background-color: #BFA47F;
-    color: black;
-}
-
-.table img{
-    border-radius: 5px;
+.badge {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
 }
 
 /* SweetAlert Custom Styles */
@@ -255,8 +233,4 @@ body{
 
 .pagination-nav .pagination{
     margin: 0;
-}
-
-.pagination-nav .text{
-    margin-left: 20px;
 }
