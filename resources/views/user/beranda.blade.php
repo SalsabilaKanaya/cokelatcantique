@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Beranda - Cokelat Cantique</title>
@@ -8,6 +9,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/fontawesome.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!--FONT-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -261,8 +264,40 @@
                 </div>
                 @endforeach
             </div>
+            @if(Auth::check())
+                <a href="#" class="btn btn-testimoni" id="openModal">Bagikan Ulasan</a>
+            @endif
         </div>
     </section>
+
+    <!-- Modal -->
+    <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header d-flex justify-content-between align-items-start">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="text-center flex-grow-1">
+                        <h5 class="modal-title" id="exampleModalLabel">Ceritain Pengalaman Kamu, Yuk!</h5>
+                        <p>Pendapat kamu penting banget buat kita! Bantu kita terus jadi lebih baik dengan kasih tahu gimana pengalaman kamu.</p>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form id="reviewForm">
+                        @if(Auth::check()) <!-- Cek apakah pengguna sudah login -->
+                            <p><strong>Nama:</strong> {{ Auth::user()->name }}</p> 
+                        @else
+                            <p><strong>Nama:</strong> Pengguna Tidak Terdaftar</p> <!-- Pesan jika pengguna tidak login -->
+                        @endif
+                        <label for="review">Ulasan:</label>
+                        <textarea class="form-control" id="review" name="review" rows="3" required></textarea> 
+                    </form>
+                </div>
+                <div class="modal-footer d-flex justify-content-end">
+                    <button type="button" class="btn btn-kirim" id="submitReview">Kirim Ulasan</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!--Footer-->
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#D2B48C" fill-opacity="1" d="M0,32L48,69.3C96,107,192,181,288,181.3C384,181,480,107,576,101.3C672,96,768,160,864,165.3C960,171,1056,117,1152,96C1248,75,1344,85,1392,90.7L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
@@ -360,6 +395,61 @@
                 console.log('Session expired message detected in script.');
                 alert('{{ session('session_expired') }}');
             @endif
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("JavaScript loaded"); // Tambahkan log ini
+            var btn = document.getElementById("openModal");
+
+            // Ketika tombol diklik, buka modal menggunakan Bootstrap
+            btn.onclick = function() {
+                console.log("Modal opened");
+                var myModal = new bootstrap.Modal(document.getElementById('reviewModal'));
+                myModal.show();
+            }
+
+            // Menangani pengiriman form
+            document.getElementById("submitReview").onclick = function() {
+                console.log("Submit button clicked"); // Tambahkan log ini
+                var review = document.getElementById("review").value;
+
+                console.log("Fetching URL: ", "{{ route('user.testimoni_store') }}");
+                // Mengirim data ke server menggunakan AJAX
+                fetch("{{ route('user.testimoni_store') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    body: JSON.stringify({ review: review })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data.success); // Tampilkan pesan sukses
+                    // Tampilkan SweetAlert
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Ulasan Berhasil Dikirim!',
+                        text: 'Terima kasih atas ulasan Anda.',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        // Arahkan ke halaman beranda setelah SweetAlert ditutup
+                        window.location.href = "{{ route('beranda') }}?new_testimoni=1"; // Menambahkan parameter query
+                    });
+                    var myModal = bootstrap.Modal.getInstance(document.getElementById('reviewModal'));
+                    myModal.hide();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan: ' + error.message);
+                });
+            }
         });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

@@ -360,6 +360,7 @@
     margin: auto;
     max-width: 1140px;
     width: 100%;
+    text-align: center;
 }
 
 .testimonial-area .container .sec-title{
@@ -465,7 +466,133 @@
     width: 126px;
     height: 100px;
 }
+
+.btn-testimoni {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: black;
+    background-color: #D2B48C;
+    width: auto;
+    height: 33px;
+    border-radius: 100px;
+    margin-top: 30px;
+    box-shadow: 0 5px 10px rgba(210, 180, 140, 0.5);
+    outline: none; 
+    border: none;
+    display: inline-block;
+}
+
+.btn-testimoni:hover {
+    color: black;
+    background-color: #BFA47F;
+}
+
+.btn-testimoni:active {
+    color: black;
+    background-color: #BFA47F;
+}
 /* ----- CONTENT 4-----*/
+
+/* Modal (Pop Up) */
+.modal-body {
+    display: flex;
+    flex-direction: column; /* Mengatur elemen menjadi kolom */
+}
+
+.modal-body .d-flex {
+    align-items: center; /* Menyelaraskan foto dan informasi karakter di tengah */
+}
+
+/* Menghilangkan garis bawah pada judul */
+.modal-header .modal-title {
+    border-bottom: none; /* Hilangkan border bawah jika ada */
+}
+
+.modal-header {
+    display: flex; /* Menggunakan flexbox untuk mengatur elemen */
+    flex-direction: column; /* Mengatur elemen dalam kolom */
+}
+
+.modal-header h5{
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    color: #D2B48C;
+    margin-bottom: 10px; 
+}
+
+.modal-header p{
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+}
+
+.modal-body p{
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.modal-body label{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    color: #404852;
+    font-weight: 600;
+    margin-bottom: 5px;
+    display: block; 
+}
+
+.modal-body textarea{
+    width: 100%; /* Mengatur lebar textarea agar sesuai dengan kontainer */
+    height: 100px; /* Mengatur tinggi textarea sesuai kebutuhan */
+}
+
+.modal-footer{
+    display: flex;
+    justify-content: space-between; 
+}
+
+.btn-kirim {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: black;
+    background-color: #D2B48C;
+    width: 150px;
+    height: 33px;
+    border-radius: 100px;
+    margin-top: auto;
+    box-shadow: 0 5px 10px rgba(210, 180, 140, 0.5);
+    outline: none; 
+    border: none;
+}
+
+.btn-kirim:hover {
+    color: black;
+    background-color: #BFA47F;
+}
+
+.btn-kirim:active {
+    color: black;
+    background-color: #BFA47F;
+}
+
+/* SweetAlert Custom Styles */
+.swal2-popup {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px; /* Ukuran font yang lebih kecil */
+}
+
+.swal2-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px; /* Ukuran font yang lebih kecil untuk judul */
+}
+
+.swal2-confirm, .swal2-cancel {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px; /* Ukuran font yang lebih kecil untuk tombol */
+}
 
 
 /* ----- FOOTER -----*/

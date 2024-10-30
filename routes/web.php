@@ -20,6 +20,7 @@ use App\Http\Controllers\User\OngkirController;
 use App\Http\Controllers\User\AddressController;
 use App\Http\Controllers\User\HistoriController;
 use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\TestimoniController;
 use App\Http\Controllers\SearchController;
 
 // ADMIN
@@ -31,11 +32,6 @@ use App\Http\Controllers\Admin\KontakMasukController;
 use App\Http\Controllers\Admin\OrderMasukController;
 
 use Illuminate\Support\Facades\Log;
-
-// Route::get('/test-log', function () {
-//     Log::info('Test log route triggered.');
-//     return 'Log tested';
-// });
 
 Route::get('/', [WebController::class, 'beranda'])->name('beranda');
 
@@ -86,6 +82,7 @@ Route::prefix('user')->name('user.')->group(function () {
     Route::get('/search', [SearchController::class, 'search'])->name('search');
 
     Route::middleware('auth')->group(function () {
+        Route::post('/testimoni', [TestimoniController::class, 'store'])->name('testimoni_store');
         // Route::get('/beranda', [WebController::class, 'beranda'])->name('beranda');
         // Route::get('/tentang', [WebController::class, 'tentang'])->name('tentang');
 
