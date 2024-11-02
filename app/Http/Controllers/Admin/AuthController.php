@@ -34,7 +34,7 @@ class AuthController extends Controller
 
         // Jika kredensial tidak cocok, mengarahkan kembali dengan pesan error
         return back()->withErrors([
-            'username' => 'The provided credentials do not match our records.',
+            'username' => 'Username atau password salah.',
         ]);
     }
 

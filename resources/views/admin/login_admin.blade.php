@@ -44,6 +44,11 @@
                     <div class="body">
                         <h1>Welcome Admin!</h1>
                         <p>Harap masukkan username dan password admin dengan benar</p>
+                        @if ($errors->has('username'))
+                            <div class="error-message">
+                                {{ $errors->first('username') }}
+                            </div>
+                        @endif
                         <form method="POST" action="{{ route('admin.login') }}">
                             @csrf
                             <div class="mb-3">

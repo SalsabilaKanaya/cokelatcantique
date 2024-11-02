@@ -79,9 +79,21 @@
     width: 100%;
     border-radius: 100px;
     margin-top: 20px;
+    box-shadow: 0 5px 10px rgba(210, 180, 140, 0.5);
 }
 
 .btn:hover{
-    background-color: #D2B48C;
     color: black;
+    background-color: #BFA47F;
+}
+
+.btn:active{
+    color: black;
+    background-color: #BFA47F;
+}
+
+.error-message{
+    color: #f24848;
+    font-size: 14px;
+    font-weight: 400;
 }
