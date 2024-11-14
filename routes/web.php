@@ -165,14 +165,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/order/{order}/mark-as-done', [OrderMasukController::class, 'markAsDone'])->name('mark_as_done');
 
         Route::get('/jenis_cokelat', [CreateJenisCokelatController::class, 'index'])->name('jenis_cokelat');
-        Route::delete('/jenis_cokelat/{id}', [CreateJenisCokelatController::class, 'destroy'])->name('delete_jenis');
+        Route::delete('/jenis_cokelat/{id}', [CreateJenisCokelatController::class, 'deletejenis'])->name('delete_jenis');
         Route::get('/create_jenis', [CreateJenisCokelatController::class, 'create'])->name('create_jenis');
         Route::post('/create_jenis', [CreateJenisCokelatController::class, 'store'])->name('create_jenis.store');
         Route::get('/edit_jenis/{id}', [CreateJenisCokelatController::class, 'edit'])->name('edit_jenis');
         Route::put('/edit_jenis/{id}', [CreateJenisCokelatController::class, 'update'])->name('edit_jenis.update');
 
         Route::get('/karakter_cokelat', [CreateKarakterCokelatController::class, 'index'])->name('karakter_cokelat');
-        Route::delete('/karakter_cokelat/{id}', [CreateKarakterCokelatController::class, 'destroy'])->name('delete_karakter');
+        Route::delete('/karakter_cokelat/{id}', [CreateKarakterCokelatController::class, 'deletekarakter'])->name('delete_karakter');
         Route::get('/create_karakter', [CreateKarakterCokelatController::class, 'create'])->name('create_karakter');
         Route::post('/create_karakter', [CreateKarakterCokelatController::class, 'store'])->name('create_karakter.store');
         Route::get('/edit_karakter/{id}', [CreateKarakterCokelatController::class, 'edit'])->name('edit_karakter');

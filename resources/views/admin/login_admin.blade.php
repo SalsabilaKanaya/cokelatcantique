@@ -45,7 +45,7 @@
                         <h1>Welcome Admin!</h1>
                         <p>Harap masukkan username dan password admin dengan benar</p>
                         @if ($errors->has('username'))
-                            <div class="error-message">
+                            <div class="alert alert-error-message">
                                 {{ $errors->first('username') }}
                             </div>
                         @endif

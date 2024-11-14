@@ -55,8 +55,13 @@
                     <div class="body">
                         <h1>Welcome!</h1>
                         <p>Harap memasukkan email dan password dengan benar</p>
+                        @if(session('success'))
+                            <div class="alert alert-register-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                         @if ($errors->has('email'))
-                            <div class="error-message">
+                            <div class="alert alert-error-message">
                                 {{ $errors->first('email') }}
                             </div>
                         @endif
