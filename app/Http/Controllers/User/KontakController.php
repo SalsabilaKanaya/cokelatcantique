@@ -8,18 +8,18 @@ use App\Http\Controllers\Controller;
 
 class KontakController extends Controller
 {
-    // Menampilkan daftar jenis cokelat
+    // Menampilkan daftar kontak
     public function index() {
         $kontak = Kontak::all();
         return view('user.kontak', compact('kontak')); // Pastikan view ini ada
     }
 
-    // Menampilkan form untuk menambah jenis cokelat
+    // Menampilkan form untuk menambah kontak
     public function create() {
         return view('user.kontak'); // Pastikan view ini ada
     }
 
-    // Menyimpan data jenis cokelat
+    // Menyimpan data kontak
     public function store(Request $request) {
         // Validasi input yang diterima dari form
         $request->validate([

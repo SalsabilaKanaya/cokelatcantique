@@ -83,7 +83,7 @@ class SocialController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('user.login')->with('success', 'Registrasi berhasil. Silakan login.');
+        return redirect()->route('user.login')->with('success', 'Registrasi berhasil. Silakan lakukan login.');
     }
 
     public function logout(Request $request)

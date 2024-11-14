@@ -4,9 +4,6 @@ namespace App\Http\Controllers\User;
 
 use App\Models\KarakterCokelat; // Menggunakan model KarakterCokelat untuk mengakses data dari database
 use App\Models\JenisCokelat; // Menggunakan model JenisCokelat untuk mengakses data dari database
-use App\Models\Order; // Menggunakan model Order untuk menyimpan data pesanan
-use App\Models\OrderItem; // Menggunakan model OrderItem untuk menyimpan item pesanan
-use App\Models\OrderItemKarakter; // Menggunakan model OrderItemKarakter untuk menyimpan karakter item pesanan
 use App\Models\Cart; 
 use App\Models\CartItem;
 use App\Models\CartItemKarakter;
@@ -105,7 +102,7 @@ class PilihKarakterController extends Controller
         ]);
     }
 
-    // Metode untuk memproses pesanan dan menyimpan data pesanan ke database
+    // Metode untuk memproses pesanan dan menyimpan data pesanan ke sesi
     public function processOrder()
     {
         // Ambil data pengguna yang sedang login
@@ -143,7 +140,6 @@ class PilihKarakterController extends Controller
         // Redirect ke halaman pemesanan
         return redirect()->route('user.pemesanan');
     }
-
 
     public function addToCart(Request $request)
     {
@@ -186,11 +182,11 @@ class PilihKarakterController extends Controller
 
     public function removeCharacter($id)
     {
-    $selectedKarakter = session()->get('selected_karakter', []);
-    if (isset($selectedKarakter[$id])) {
-        unset($selectedKarakter[$id]); // Hapus karakter dari sesi
-        session()->put('selected_karakter', $selectedKarakter); // Simpan kembali ke sesi
-    }
-    return redirect()->back()->with('message', 'Karakter berhasil dihapus.');
+        $selectedKarakter = session()->get('selected_karakter', []);
+            if (isset($selectedKarakter[$id])) {
+                unset($selectedKarakter[$id]); // Hapus karakter dari sesi
+                session()->put('selected_karakter', $selectedKarakter); // Simpan kembali ke sesi
+            }
+        return redirect()->back()->with('message', 'Karakter berhasil dihapus.');
     }
 }
