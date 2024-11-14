@@ -6,8 +6,6 @@
     box-sizing: border-box;
 }
 
-// ... existing code ...
-
 .container-fluid{
     height: 100vh;
 }
@@ -210,8 +208,18 @@
     margin-left: .25em;
 }
 
-.error-message{
-    color: red;
+.alert-register-success{
+    background-color: #B8EFCF;
+    color: #219653;
     font-size: 14px;
-    font-weight: 400;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+.alert-error-message{
+    background-color: #FCCECE;
+    color: #F24848;
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
 }
