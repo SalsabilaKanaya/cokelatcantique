@@ -82,7 +82,7 @@ class CreateKarakterCokelatController extends Controller
     }
 
     // Menghapus data karakter cokelat
-    public function destroy($id){
+    public function deletekarakter($id){
         $cokelat = KarakterCokelat::findOrFail($id); // Mencari karakter cokelat berdasarkan ID
         $cokelat->delete(); // Menghapus data dari database
 

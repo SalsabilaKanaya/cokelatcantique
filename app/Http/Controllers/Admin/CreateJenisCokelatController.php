@@ -90,7 +90,7 @@ class CreateJenisCokelatController extends Controller
     }
 
     // Menghapus data jenis cokelat
-    public function destroy($id){
+    public function deletejenis($id){
         $cokelat = JenisCokelat::findOrFail($id); // Mencari jenis cokelat berdasarkan ID
         $cokelat->delete(); // Menghapus data dari database
 
