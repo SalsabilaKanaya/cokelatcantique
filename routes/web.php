@@ -74,7 +74,7 @@ Route::prefix('user')->name('user.')->group(function () {
     Route::get('/keranjang', [CartController::class, 'showCart'])->name('showCart');
     Route::get('/histori', [HistoriController::class, 'showHistori'])->name('histori');
 
-    Route::get('/kontak', [KontakController::class, 'create'])->name('kontak');
+    Route::get('/kontak', [KontakController::class, 'index'])->name('kontak');
     Route::post('/kontak', [KontakController::class, 'store'])->name('kontak.store');
 
     Route::get('/faq', [WebController::class, 'faq'])->name('faq');

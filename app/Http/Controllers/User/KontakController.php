@@ -10,12 +10,6 @@ class KontakController extends Controller
 {
     // Menampilkan daftar kontak
     public function index() {
-        $kontak = Kontak::all();
-        return view('user.kontak', compact('kontak')); // Pastikan view ini ada
-    }
-
-    // Menampilkan form untuk menambah kontak
-    public function create() {
         return view('user.kontak'); // Pastikan view ini ada
     }
 
